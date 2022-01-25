@@ -9,7 +9,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle'
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatListModule} from '@angular/material/list';
+
 const modules: any[] = [
+  MatListModule,
   MatNativeDateModule,
   MatDialogModule,
   MatSlideToggleModule,
