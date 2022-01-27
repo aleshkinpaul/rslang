@@ -1,0 +1,26 @@
+mat-sidenav{
+  height: 100%;
+}
+mat-sidenav-container{
+  min-width: 100%;
+  min-height: 100vh;
+}
+h1{
+  margin: auto;
+}
+.footer-bar{
+position: fixed;
+bottom: 0;
+width:100%;
+}
+.chevron-button{
+  cursor: pointer;
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+  right:0;
+  position: absolute;
+  float: right;
+  &.rotated{
+    transform: rotate(180deg);
+  }
+}
