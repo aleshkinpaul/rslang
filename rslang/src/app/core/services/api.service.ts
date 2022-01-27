@@ -136,5 +136,20 @@ export class ApiService {
       }
     });
   }
+
+  getSettings(id: string, token: string): Observable<ISettings> {
+    return this.http.get<ISettings>(`${BACKEND_PATH}/users/${id}/settings`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  upsertSettings(id: string, settings: ISettings, token: string): Observable<ISettings> {
+    return this.http.put<ISettings>(`${BACKEND_PATH}/users/${id}/settings`, settings, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
   }
 }
