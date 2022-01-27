@@ -1,5 +1,12 @@
+type WordDifficultyType = 'easy' | 'hard';
+
 export interface IUser {
   name: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserData {
   email: string;
   password: string;
 }
@@ -29,8 +36,15 @@ export interface IWord {
   textExampleTranslate: string;
 }
 
+export interface IAggregatedRequestParams {
+  group: string;
+  page: string;
+  wordsPerPage: string;
+  filter: string;
+}
+
 export interface IUserWord {
-  difficulty: string;
+  difficulty: WordDifficultyType;
   optional: {
     tempParam: string;
   };
