@@ -63,5 +63,62 @@ export class ApiService {
       }
     });
   }
+
+  getAllUserWords(id: string, token: string): Observable<IUserWord[]> {
+    return this.http.get<IUserWord[]>(`${BACKEND_PATH}/users/${id}/words`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  createUserWord(id: string, wordId: string, word: IWord, token: string): Observable<IUserWord> {
+    return this.http.post<IUserWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  getUserWordById(id: string, wordId: string, token: string): Observable<IWord> {
+    return this.http.get<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  updateUserWord(id: string, wordId: string, word: IWord, token: string): Observable<IWord> {
+    return this.http.put<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  deleteUserWord(id: string, wordId: string, word: IWord, token: string) {
+    return this.http.delete(`${BACKEND_PATH}/users/${id}/words/${wordId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  getAllUserAggregatedWords(id: string, requestParams: IAggregatedRequestParams, token: string): Observable<IWord[]> {
+    return this.http.get<IWord[]>(`${BACKEND_PATH}/users/${id}/aggregatedWords`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      params: { ...requestParams }
+    });
+  }
+
+  getUserAggregatedWordById(id: string, wordId: string, token: string): Observable<IWord> {
+    return this.http.get<IWord>(`${BACKEND_PATH}/users/${id}/aggregatedWords/${wordId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
   }
 }
