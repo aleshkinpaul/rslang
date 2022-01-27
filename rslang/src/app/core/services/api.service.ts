@@ -120,5 +120,21 @@ export class ApiService {
       }
     });
   }
+
+  getStatistics(id: string, token: string): Observable<IStatistic> {
+    return this.http.get<IStatistic>(`${BACKEND_PATH}/users/${id}/statistics`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
+
+  upsertStatistics(id: string, statistics: IStatistic, token: string): Observable<IStatistic> {
+    return this.http.put<IStatistic>(`${BACKEND_PATH}/users/${id}/statistics`, statistics, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      }
+    });
+  }
   }
 }
