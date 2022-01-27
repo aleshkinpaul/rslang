@@ -24,19 +24,19 @@
       </mat-list-item>
       <mat-divider color="accent"></mat-divider>
       <mat-list-item>
-        <mat-icon matListIcon>auto_stories</mat-icon>
+        <mat-icon matListIcon [routerLink]="'learnbook'">auto_stories</mat-icon>
         <a matLine *ngIf="isExpanded">Учебник</a>
       </mat-list-item>
       <mat-list-item>
-        <mat-icon matListIcon>smart_toy</mat-icon>
+        <mat-icon matListIcon [routerLink]="'games'">smart_toy</mat-icon>
         <a matLine *ngIf="isExpanded">Игры</a>
       </mat-list-item>
       <mat-list-item>
-        <mat-icon matListIcon>signal_cellular_alt</mat-icon>
+        <mat-icon matListIcon [routerLink]="'statistics'">signal_cellular_alt</mat-icon>
         <a matLine *ngIf="isExpanded">Статистика</a>
       </mat-list-item>
       <mat-list-item>
-        <mat-icon matListIcon>emoji_people</mat-icon>
+        <mat-icon matListIcon [routerLink]="'aboutteam'">emoji_people</mat-icon>
         <a matLine *ngIf="isExpanded">Команда</a>
       </mat-list-item>
       <mat-divider></mat-divider>

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageComponent } from './main-page/main-page.component';
+import { MainPageComponent } from 'src/app/features/pages/main-page/main-page.component';
+import { PagesModule } from 'src/app/features/pages/pages.module';
+
 import { WrapperComponent } from './wrapper/wrapper.component';
 
 const routes: Routes = [
@@ -9,18 +11,19 @@ const routes: Routes = [
   component: WrapperComponent,
   children: [
     {
-      path:'',
-      component:MainPageComponent,
+      path: '',
+      loadChildren: () => import ('./../../../features/pages/pages.module').then(m => m.PagesModule)
     },
     {
-      path:'mainpage',
-      component:MainPageComponent,
+      path: 'mainpage',
+      loadChildren: () => import ('./../../../features/pages/pages.module').then(m => m.PagesModule)
     }
+
   ]
 },
 {
   path: '**',
-  redirectTo: '/mainpage',
+  redirectTo: '',
   pathMatch: 'full'
 }
 ];
