@@ -17,7 +17,7 @@ export class AboutTeamComponent {
   }
 
   onClickGetWordButton() {
-    this.api.getWord('61f30c12eb87140016ebfd14').subscribe((response) => {
+    this.api.getWord('5e9f5ee35eb9e72bc21af4a0').subscribe((response) => {
       console.log('resp:', response);
     });
   }
