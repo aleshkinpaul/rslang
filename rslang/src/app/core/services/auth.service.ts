@@ -77,7 +77,7 @@ export class AuthService {
   }
 
   private setData(response: IAuth) {
-    this.expDate = new Date(localStorage.getItem('fb-token-exp')!);
+    this.expDate = new Date(new Date().getTime() + EXP_TIME);
     this.userId = response.userId;
     this.token = response.token;
     this.refreshToken = response.refreshToken;
