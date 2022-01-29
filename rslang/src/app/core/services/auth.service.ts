@@ -9,8 +9,8 @@ import { ApiService } from './api.service';
   providedIn: 'root'
 })
 export class AuthService {
-  public loginError$: Subject<string> = new Subject<string>();
-  public updateLoginError$: Subject<string> = new Subject<string>();
+  public loginError$ = new Subject<string>();
+  public updateLoginError$ = new Subject<string>();
   public isAuthenticated = false;
   public userId = '';
   public token = '';
@@ -22,8 +22,7 @@ export class AuthService {
   }
 
   initAuth() {
-    const expDateFromLocal = localStorage.getItem('lang-token-exp');
-    if (expDateFromLocal !== null) {
+    if (localStorage.getItem('lang-token') !== null) {
       this.loadFromLocal();
       if (this.IsSessionEnd()) {
         this.updateLogin();
@@ -97,14 +96,14 @@ export class AuthService {
     localStorage.setItem('lang-token', this.token);
     localStorage.setItem('lang-refresh-token', this.refreshToken);
     localStorage.setItem('lang-is-authenticated', this.isAuthenticated.toString());
-    localStorage.setItem('lang-token-exp', this.expDate!.toString());
+    localStorage.setItem('lang-exp-date', this.expDate!.toString());
   }
 
   loadFromLocal() {
-    this.expDate = new Date(localStorage.getItem('lang-user-exp')!);
     this.userId = localStorage.getItem('lang-user-id')!;
     this.token = localStorage.getItem('lang-token')!;
-    this.isAuthenticated = JSON.parse(localStorage.getItem('lang-is-authenticated')!);
     this.refreshToken = localStorage.getItem('lang-refresh-token')!;
+    this.isAuthenticated = JSON.parse(localStorage.getItem('lang-is-authenticated')!);
+    this.expDate = new Date(localStorage.getItem('lang-exp-date')!);
   }
 }
