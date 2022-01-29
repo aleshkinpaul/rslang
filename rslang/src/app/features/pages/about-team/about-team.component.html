@@ -1,9 +1,12 @@
 <p>about-team works!</p>
+<div *ngIf="auth.loginError$ | async as error">{{error}}</div>
+<div *ngIf="auth.updateLoginError$ | async as error">{{error}}</div>
 <button (click)="onClickGetWordsButton()">getWords</button>
 <button (click)="onClickGetWordButton()">getWord</button>
 <button (click)="onClickCreateNewUserButton()">createNewUser</button>
-<button (click)="onClickGetUserButton()">getUser</button>
-<button (click)="onClickSignInButton()">singIn</button>
+<button [disabled]="!auth.isAuthenticated" (click)="onClickGetUserButton()">getUser</button>
+<button (click)="onClickLoginButton()">Login</button>
+<button (click)="onClickLogoutButton()">Logout</button>
 <button (click)="onClickUpdateUserButton()">UpdateUser</button>
 <button (click)="onClickDeleteUserButton()">DeleteUser</button>
 <button (click)="onClickGetNewTokenButton()">GetNewToken</button>
