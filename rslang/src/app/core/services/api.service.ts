@@ -11,7 +11,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getWords(page: number, group: number): Observable<IWord[]> {
+  public getWords(page: number, group: number): Observable<IWord[]> {
     return this.http.get<IWord[]>(`${BACKEND_PATH}/words`, {
       params: {
         page: page,
@@ -20,19 +20,19 @@ export class ApiService {
     });
   }
 
-  getWord(id: string): Observable<IWord> {
+  public getWord(id: string): Observable<IWord> {
     return this.http.get<IWord>(`${BACKEND_PATH}/words/${id}`);
   }
 
-  signIn(userData: IUserData): Observable<IAuth> {
+  public signIn(userData: IUserData): Observable<IAuth> {
     return this.http.post<IAuth>(`${BACKEND_PATH}/signin`, userData);
   }
 
-  createNewUser(user: IUser): Observable<IUser> {
+  public createNewUser(user: IUser): Observable<IUser> {
     return this.http.post<IUser>(`${BACKEND_PATH}/users`, user);
   }
 
-  getUser(id: string, token: string): Observable<IUser> {
+  public getUser(id: string, token: string): Observable<IUser> {
     return this.http.get<IUser>(`${BACKEND_PATH}/users/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -40,7 +40,7 @@ export class ApiService {
     });
   }
 
-  updateUser(id: string, token: string, userData: IUserData): Observable<IUser> {
+  public updateUser(id: string, token: string, userData: IUserData): Observable<IUser> {
     return this.http.put<IUser>(`${BACKEND_PATH}/users/${id}`, userData, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -48,7 +48,7 @@ export class ApiService {
     });
   }
 
-  deleteUser(id: string, token: string) {
+  public deleteUser(id: string, token: string) {
     return this.http.delete(`${BACKEND_PATH}/users/${id}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -56,7 +56,7 @@ export class ApiService {
     });
   }
 
-  getNewUserTokens(id: string, refreshToken: string): Observable<IRefreshAuth> {
+  public getNewUserTokens(id: string, refreshToken: string): Observable<IRefreshAuth> {
     return this.http.get<IAuth>(`${BACKEND_PATH}/users/${id}/tokens`, {
       headers: {
         'Authorization': `Bearer ${refreshToken}`,
@@ -64,7 +64,7 @@ export class ApiService {
     });
   }
 
-  getAllUserWords(id: string, token: string): Observable<IUserWord[]> {
+  public getAllUserWords(id: string, token: string): Observable<IUserWord[]> {
     return this.http.get<IUserWord[]>(`${BACKEND_PATH}/users/${id}/words`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -72,7 +72,7 @@ export class ApiService {
     });
   }
 
-  createUserWord(id: string, wordId: string, word: IWord, token: string): Observable<IUserWord> {
+  public createUserWord(id: string, wordId: string, word: IWord, token: string): Observable<IUserWord> {
     return this.http.post<IUserWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -80,7 +80,7 @@ export class ApiService {
     });
   }
 
-  getUserWordById(id: string, wordId: string, token: string): Observable<IWord> {
+  public getUserWordById(id: string, wordId: string, token: string): Observable<IWord> {
     return this.http.get<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -88,7 +88,7 @@ export class ApiService {
     });
   }
 
-  updateUserWord(id: string, wordId: string, word: IWord, token: string): Observable<IWord> {
+  public updateUserWord(id: string, wordId: string, word: IWord, token: string): Observable<IWord> {
     return this.http.put<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -96,7 +96,7 @@ export class ApiService {
     });
   }
 
-  deleteUserWord(id: string, wordId: string, word: IWord, token: string) {
+  public deleteUserWord(id: string, wordId: string, word: IWord, token: string) {
     return this.http.delete(`${BACKEND_PATH}/users/${id}/words/${wordId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -104,7 +104,7 @@ export class ApiService {
     });
   }
 
-  getAllUserAggregatedWords(id: string, requestParams: IAggregatedRequestParams, token: string): Observable<IWord[]> {
+  public getAllUserAggregatedWords(id: string, requestParams: IAggregatedRequestParams, token: string): Observable<IWord[]> {
     return this.http.get<IWord[]>(`${BACKEND_PATH}/users/${id}/aggregatedWords`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -113,7 +113,7 @@ export class ApiService {
     });
   }
 
-  getUserAggregatedWordById(id: string, wordId: string, token: string): Observable<IWord> {
+  public getUserAggregatedWordById(id: string, wordId: string, token: string): Observable<IWord> {
     return this.http.get<IWord>(`${BACKEND_PATH}/users/${id}/aggregatedWords/${wordId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -121,7 +121,7 @@ export class ApiService {
     });
   }
 
-  getStatistics(id: string, token: string): Observable<IStatistic> {
+  public getStatistics(id: string, token: string): Observable<IStatistic> {
     return this.http.get<IStatistic>(`${BACKEND_PATH}/users/${id}/statistics`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -129,7 +129,7 @@ export class ApiService {
     });
   }
 
-  upsertStatistics(id: string, statistics: IStatistic, token: string): Observable<IStatistic> {
+  public upsertStatistics(id: string, statistics: IStatistic, token: string): Observable<IStatistic> {
     return this.http.put<IStatistic>(`${BACKEND_PATH}/users/${id}/statistics`, statistics, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -137,7 +137,7 @@ export class ApiService {
     });
   }
 
-  getSettings(id: string, token: string): Observable<ISettings> {
+  public getSettings(id: string, token: string): Observable<ISettings> {
     return this.http.get<ISettings>(`${BACKEND_PATH}/users/${id}/settings`, {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -145,7 +145,7 @@ export class ApiService {
     });
   }
 
-  upsertSettings(id: string, settings: ISettings, token: string): Observable<ISettings> {
+  public upsertSettings(id: string, settings: ISettings, token: string): Observable<ISettings> {
     return this.http.put<ISettings>(`${BACKEND_PATH}/users/${id}/settings`, settings, {
       headers: {
         'Authorization': `Bearer ${token}`,

@@ -14,14 +14,14 @@ export class AuthService {
   public isAuthenticated = false;
   public userId = '';
   public token = '';
-  public refreshToken = '';
+  private refreshToken = '';
   private expDate: Date | null = null;
 
   constructor(private api: ApiService) {
     this.initAuth();
   }
 
-  initAuth() {
+  private initAuth() {
     if (localStorage.getItem('lang-token') !== null) {
       this.loadFromLocal();
       if (this.IsSessionEnd()) {
@@ -30,7 +30,7 @@ export class AuthService {
     }
   }
 
-  login(user: IUserData) {
+  public login(user: IUserData) {
     this.api.signIn(user)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -46,7 +46,7 @@ export class AuthService {
       });
   }
 
-  logout() {
+  public logout() {
     this.isAuthenticated = false;
     this.userId = '';
     this.token = '';
@@ -91,14 +91,14 @@ export class AuthService {
     this.saveToLocal();
   }
 
-  IsSessionEnd() {
+  private IsSessionEnd() {
     if (this.expDate !== null && new Date() < this.expDate) {
       return true;
     }
     return false;
   }
 
-  saveToLocal() {
+  private saveToLocal() {
     localStorage.setItem('lang-user-id', this.userId);
     localStorage.setItem('lang-token', this.token);
     localStorage.setItem('lang-refresh-token', this.refreshToken);
@@ -106,7 +106,7 @@ export class AuthService {
     localStorage.setItem('lang-exp-date', this.expDate!.toString());
   }
 
-  loadFromLocal() {
+  private loadFromLocal() {
     this.userId = localStorage.getItem('lang-user-id')!;
     this.token = localStorage.getItem('lang-token')!;
     this.refreshToken = localStorage.getItem('lang-refresh-token')!;
