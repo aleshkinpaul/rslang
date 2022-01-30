@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IAggregatedRequestParams, IAuth, ISettings, IStatistic, IUser, IUserData, IUserWord, IWord } from 'src/app/shared/interfaces';
+import { IAggregatedRequestParams, IAuth, IRefreshAuth, ISettings, IStatistic, IUser, IUserData, IUserWord, IWord } from 'src/app/shared/interfaces';
 import { BACKEND_PATH } from '../constants/constant';
 
 @Injectable({
@@ -56,7 +56,7 @@ export class ApiService {
     });
   }
 
-  getNewUserTokens(id: string, refreshToken: string): Observable<IAuth> {
+  getNewUserTokens(id: string, refreshToken: string): Observable<IRefreshAuth> {
     return this.http.get<IAuth>(`${BACKEND_PATH}/users/${id}/tokens`, {
       headers: {
         'Authorization': `Bearer ${refreshToken}`,

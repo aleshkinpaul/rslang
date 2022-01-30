@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Subject, throwError } from 'rxjs';
-import { IAuth, IUserData } from 'src/app/shared/interfaces';
+import { IAuth, IRefreshAuth, IUserData } from 'src/app/shared/interfaces';
 import { ERROR_MESSAGE, EXP_TIME } from '../constants/constant';
 import { ApiService } from './api.service';
 
@@ -71,7 +71,7 @@ export class AuthService {
       )
       .subscribe((response) => {
         this.updateLoginError$.next('');
-        this.setData(response);
+        this.updateData(response);
       })
   }
 
@@ -81,6 +81,13 @@ export class AuthService {
     this.token = response.token;
     this.refreshToken = response.refreshToken;
     this.isAuthenticated = true;
+    this.saveToLocal();
+  }
+
+  private updateData(response: IRefreshAuth) {
+    this.expDate = new Date(new Date().getTime() + EXP_TIME);
+    this.token = response.token;
+    this.refreshToken = response.refreshToken;
     this.saveToLocal();
   }
 

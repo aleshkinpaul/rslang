@@ -19,6 +19,14 @@ export interface IAuth {
   name: string;
 }
 
+export interface IRefreshAuth {
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name: string;
+}
+
 export interface IWord {
   id: string;
   group: number;
