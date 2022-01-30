@@ -59,14 +59,14 @@ export class AuthService {
     this.api.getNewUserTokens(this.userId, this.refreshToken)
       .pipe(
         catchError((error: HttpErrorResponse) => {
+          this.logout();
           if (error.status === 403) {
             this.updateLoginError$.next(ERROR_MESSAGE.updateLogin);
           }
           if (error.status === 401) {
             this.updateLoginError$.next(ERROR_MESSAGE.unauthorized);
           }
-
-          return throwError(() => error)
+          return throwError(() => error);
         })
       )
       .subscribe((response) => {
