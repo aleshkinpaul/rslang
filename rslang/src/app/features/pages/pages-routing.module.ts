@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutTeamComponent } from './about-team/about-team.component';
+import { AudioChallengeComponent } from './audio-challenge/audio-challenge.component';
 import { GamesComponent } from './games/games.component';
 import { LearnbookComponent } from './learnbook/learnbook.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -38,6 +39,10 @@ const routes: Routes = [
     path:'games',
     component: GamesComponent
 
+  },
+  {
+    path: 'audiochallenge',
+    component: AudioChallengeComponent
   },
   {
     path: '**',

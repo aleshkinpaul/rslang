@@ -1,0 +1,25 @@
+<mat-card *ngIf="!gameMode">
+  <mat-card-title>Аудиовызов</mat-card-title>
+  <mat-card-content>Описание игры</mat-card-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Выберите уровень</mat-label>
+    <mat-select [(ngModel)]="selectedLevel">
+      <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i"
+        >Уровень {{ i + 1 }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+  <mat-card-actions>
+    <app-button-accent
+      [title]="'Начать игру'"
+      (click)="startGame()"
+    ></app-button-accent>
+  </mat-card-actions>
+</mat-card>
+<mat-card *ngIf="gameMode">
+  <mat-icon (click)="getAudio()">hearing</mat-icon>
+  <mat-card-content>
+    <button mat-stroked-button color="primary" *ngFor="let option of options; let i=index">{{i+1}} {{option.wordTranslate}}</button>
+  </mat-card-content>
+</mat-card>
+<audio src="" #audioPlayer></audio>
