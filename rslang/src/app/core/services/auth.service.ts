@@ -92,7 +92,7 @@ export class AuthService {
   }
 
   private IsSessionEnd() {
-    if (this.expDate !== null && new Date() < this.expDate) {
+    if (this.expDate !== null && new Date() > this.expDate) {
       return true;
     }
     return false;
