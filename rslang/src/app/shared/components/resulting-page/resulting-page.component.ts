@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { BACKEND_PATH } from 'src/app/core/constants/constant';
 
 import { IResults } from '../../interfaces';
@@ -16,6 +16,12 @@ negativeResults:IResults[]=[];
 @Output() byPressCloseButton = new EventEmitter();
 @ViewChild('audioPlayer', { static: false })
   audio: ElementRef | undefined;
+
+  @HostListener('window:keydown.enter', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    this.closeResults();
+
+  }
   constructor() { }
   ngOnInit(): void {
     if (this.resultsArray){

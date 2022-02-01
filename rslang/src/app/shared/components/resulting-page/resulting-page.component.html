@@ -1,10 +1,9 @@
 <div class="overlay">
-  <mat-card class="modal">
+  <mat-card class="modal mat-app-background">
   <div class="modal__close">
     <mat-icon color="primary" (click)="closeResults()">cancel</mat-icon>
   </div>
-    <mat-card-title>Аудиовызов</mat-card-title>
-    <mat-card-content>Результаты игры: {{positiveResults.length}}/{{resultsArray.length}}</mat-card-content>
+    <mat-card-title>Результаты игры: {{positiveResults.length}}/{{resultsArray.length}}</mat-card-title>
     <mat-card-subtitle>Правильные</mat-card-subtitle>
     <mat-list class="results__list">
       <mat-list-item *ngFor="let answer of positiveResults; let i = index">

@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { AudioChallengeComponent } from '../audio-challenge/audio-challenge.component';
 
 @Component({
   selector: 'app-about-team',
   templateUrl: './about-team.component.html',
-  styleUrls: ['./about-team.component.scss']
+  styleUrls: ['./about-team.component.scss'],
 })
 export class AboutTeamComponent {
 
-  constructor(private api: ApiService, public auth: AuthService) { }
+  constructor(private api: ApiService, public auth: AuthService, public route:Router) { }
 
   onClickGetWordsButton() {
     this.api.getWords(0, 0).subscribe((response) => {
@@ -65,4 +67,8 @@ export class AboutTeamComponent {
       console.log('resp:', response);
     });
   }
+  startAudioChallenge(){
+      this.route.navigate(['/audiochallenge', {page:15, level:0}]);
+    };
+
 }
