@@ -7,5 +7,6 @@ export const ERROR_MESSAGE = {
 }
 export const LEVELS_IN_GAME=6;
 export const PAGES_IN_LEVEL=30;
-export const WORDS_IN_GAME=20;
+export const WORDS_IN_GAME=10;
+export const WORDS_ON_PAGE=20;
 export const OPTIONS_IN_AUDIOCHALLENGE = 5;

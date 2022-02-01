@@ -4,13 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ButtonAccentComponent } from './components/button-accent/button-accent.component';
 import { MaterialModule } from '../material/material.module';
 import { ButtonPrimaryComponent } from './components/button-primary/button-primary.component';
+import { ResultingPageComponent } from './components/resulting-page/resulting-page.component';
 
 
 
 @NgModule({
   declarations: [
     ButtonAccentComponent,
-    ButtonPrimaryComponent
+    ButtonPrimaryComponent,
+    ResultingPageComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,8 @@ import { ButtonPrimaryComponent } from './components/button-primary/button-prima
   exports: [
     HttpClientModule,
     ButtonAccentComponent,
-    ButtonPrimaryComponent
+    ButtonPrimaryComponent,
+    ResultingPageComponent
   ],
 })
 export class SharedModule { }

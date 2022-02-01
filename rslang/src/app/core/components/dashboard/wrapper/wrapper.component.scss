@@ -8,6 +8,9 @@ mat-sidenav-container{
 h1{
   margin: auto;
 }
+mat-sidenav-content{
+  min-height: 100vh;
+}
 .footer-bar{
 position: fixed;
 bottom: 0;

@@ -71,3 +71,7 @@ export interface ISettings {
     tempParam: string;
   };
 }
+export interface IResults {
+  word: IWord;
+  isCorrect: boolean;
+}

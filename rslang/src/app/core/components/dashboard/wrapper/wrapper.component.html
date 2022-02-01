@@ -43,7 +43,7 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <div>
+  <mat-sidenav-content>
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <mat-slide-toggle [(ngModel)]="isDarkTheme">
@@ -55,7 +55,9 @@
       <app-button-accent [title]="'Войти'"></app-button-accent>
       </mat-toolbar-row>
     </mat-toolbar>
+
     <router-outlet></router-outlet>
-  </div>
-  <app-footer class="footer-bar"></app-footer>
+    <app-footer class="footer-bar"></app-footer>
+  </mat-sidenav-content>
+
 </mat-sidenav-container>
