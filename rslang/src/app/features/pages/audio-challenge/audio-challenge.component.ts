@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -5,12 +6,12 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { forkJoin, map, Observable} from 'rxjs';
 import {
   LEVELS_IN_GAME,
-  WORDS_IN_GAME,
+  WORDS_IN_GAME_CHOICE,
   PAGES_IN_LEVEL,
   OPTIONS_IN_AUDIOCHALLENGE,
   BACKEND_PATH,
@@ -33,7 +34,9 @@ export class AudioChallengeComponent implements OnInit {
 
   loadingProgress: boolean = false;
   showResultsPage: boolean = false;
+  learnBookMode:boolean=false;
   isUserRight: string | null = null;
+  learnBookData:Params={}
   gameMode = false;
   currentQuestion: number=0;
   options: IWord[]|undefined = [];
@@ -41,6 +44,9 @@ export class AudioChallengeComponent implements OnInit {
   selectedLevel: number = 0;
   wordsForGame: IWord[] = [];
   results: IResults[] = [];
+  selectedWordsAmount:number=5;
+  wordsAmountSlection=WORDS_IN_GAME_CHOICE;
+
 
 
   @HostListener('window:keydown.enter', ['$event'])
@@ -49,6 +55,7 @@ export class AudioChallengeComponent implements OnInit {
       this.nextQuestion();
     }
   }
+
   @HostListener('window:keydown', ['$event'])
   handleKeyChoice(event: KeyboardEvent) {
     if (this.isUserRight === null && this.gameMode&&this.options) {
@@ -86,14 +93,28 @@ export class AudioChallengeComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((data:Params)=>{
       console.log(data)
-      if (data['page']) this.startFromLearnbook(data);
+      if (data['page']) {
+        this.learnBookMode=true;
+        this.learnBookData=data;
+      } else {
+        this.selectedWordsAmount=10;
+        this.selectedLevel = 0;
+
+      }
     });
-    this.selectedLevel = 0;
+
     this.results = [];
+  }
+  returnToInitials(){
+    this.gameMode=false;
+    this.showResultsPage=false;
+    this.results = [];
+
+
   }
   startGame() {
     this.gameMode = !this.gameMode;
-    this.getRandomWordsForGame(WORDS_IN_GAME).subscribe((res) => {
+    this.getRandomWordsForGame(this.selectedWordsAmount).subscribe((res) => {
       this.wordsForGame = res;
       this.results = [];
       this.currentQuestion = 0;
@@ -106,6 +127,7 @@ export class AudioChallengeComponent implements OnInit {
     this.server.getWords(data['page'],data['level']).subscribe((res)=>{
     this.results = [];
     this.wordsForGame = res;
+    this.wordsForGame.sort(()=> 0.5-Math.random())
     this.currentQuestion = 0;
     this.selectedLevel = data['level'];
     console.log(this.wordsForGame);
@@ -158,7 +180,8 @@ export class AudioChallengeComponent implements OnInit {
     };
     this.results.push(result);
   }
-  nextQuestion() {
+  async nextQuestion() {
+
     this.isUserRight = null;
     this.options = [];
     if (this.currentQuestion + 1 === this.wordsForGame.length) {

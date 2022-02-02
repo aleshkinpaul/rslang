@@ -5,18 +5,32 @@
     'Enter' - следующий вопрос<br>
     '1...5' - выбор варианта<br>
     '0' - прослушать слово еще раз</mat-card-content>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" *ngIf="!learnBookMode">
     <mat-label>Выберите уровень</mat-label>
-    <mat-select [(ngModel)]="selectedLevel">
+    <mat-select [(ngModel)]="selectedLevel"  >
       <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i"
         >Уровень {{ i + 1 }}</mat-option
       >
     </mat-select>
   </mat-form-field>
+  <mat-form-field appearance="fill" *ngIf="!learnBookMode">
+  <mat-label>Выберите количество слов в игре</mat-label>
+    <mat-select [(ngModel)]="selectedWordsAmount">
+      <mat-option *ngFor="let amount of wordsAmountSlection; let i = index" [value]="amount"
+        >{{ amount}}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
   <mat-card-actions>
     <app-button-accent
+    *ngIf="!learnBookMode"
       [title]="'Начать игру'"
       (click)="startGame()"
+    ></app-button-accent>
+    <app-button-accent
+      *ngIf="learnBookMode"
+      [title]="'Начать игру'"
+      (click)="startFromLearnbook(learnBookData)"
     ></app-button-accent>
   </mat-card-actions>
 </mat-card>
@@ -75,7 +89,7 @@
 </mat-card>
 <app-resulting-page
   [resultsArray]="results"
-  (byPressCloseButton)="showResultsPage = !showResultsPage"
+  (byPressCloseButton)="returnToInitials()"
   *ngIf="showResultsPage"
 ></app-resulting-page>
 <audio src="" #audioPlayer></audio>
