@@ -27,10 +27,7 @@ export class AuthService {
       if (this.IsSessionEnd()) {
         this.updateLogin();
       } else {
-        const endSessionTime = (this.expDate!.getTime() - new Date().getTime()) * 1000;
-        setTimeout(() => {
-          this.updateLogin();
-        }, endSessionTime - REFRESH_TIME);
+        this.setTimeoutToRefreshLogin();
       }
     }
   }
@@ -77,7 +74,15 @@ export class AuthService {
       .subscribe((response) => {
         this.updateLoginError$.next('');
         this.updateData(response);
+        this.setTimeoutToRefreshLogin();
       })
+  }
+
+  private setTimeoutToRefreshLogin() {
+    const endSessionTime = (this.expDate!.getTime() - new Date().getTime()) * 1000;
+    setTimeout(() => {
+      this.updateLogin();
+    }, endSessionTime - REFRESH_TIME);
   }
 
   private setData(response: IAuth) {
