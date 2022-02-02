@@ -10,8 +10,13 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle'
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatListModule} from '@angular/material/list';
+import {MatSelectModule} from '@angular/material/select';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 const modules: any[] = [
+
+  MatProgressSpinnerModule,
   MatListModule,
   MatNativeDateModule,
   MatDialogModule,
@@ -22,6 +27,7 @@ const modules: any[] = [
   MatIconModule,
   MatToolbarModule,
   MatSidenavModule,
+  MatSelectModule
 ];
 
 

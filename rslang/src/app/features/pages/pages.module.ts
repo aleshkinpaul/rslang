@@ -7,16 +7,22 @@ import { AboutTeamComponent } from './about-team/about-team.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { GamesComponent } from './games/games.component';
 import { LearnbookComponent } from './learnbook/learnbook.component';
+import { AudioChallengeComponent } from './audio-challenge/audio-challenge.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
 
 @NgModule({
-  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent],
+  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent],
   imports: [
     CommonModule,
     MaterialModule,
-    PagesRoutingModule
-  ]
+    PagesRoutingModule,
+    SharedModule,
+    FormsModule
+  ],
+
 })
 export class PagesModule { }
