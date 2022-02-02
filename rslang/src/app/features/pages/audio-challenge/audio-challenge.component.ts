@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { forkJoin, map, Observable, of } from 'rxjs';
+import { forkJoin, map, Observable} from 'rxjs';
 import {
   LEVELS_IN_GAME,
   WORDS_IN_GAME,
@@ -30,17 +30,18 @@ export class AudioChallengeComponent implements OnInit {
   @ViewChild('imageAnswer', { static: false })
   image: ElementRef | undefined;
 
-  currentQuestion: number;
+
   loadingProgress: boolean = false;
-  isUserRight: string | null = null;
   showResultsPage: boolean = false;
+  isUserRight: string | null = null;
+  gameMode = false;
+  currentQuestion: number=0;
   options: IWord[]|undefined = [];
   levelsInGame = new Array(LEVELS_IN_GAME);
   selectedLevel: number = 0;
-  selectedPage: number = 0;
   wordsForGame: IWord[] = [];
   results: IResults[] = [];
-  gameMode = false;
+
 
   @HostListener('window:keydown.enter', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
@@ -80,16 +81,14 @@ export class AudioChallengeComponent implements OnInit {
     }
   }
   constructor(public server: ApiService, public route:ActivatedRoute) {
-    this.currentQuestion = 0;
+
   }
-  sub:any
   ngOnInit(): void {
     this.route.params.subscribe((data:Params)=>{
       console.log(data)
       if (data['page']) this.startFromLearnbook(data);
     });
     this.selectedLevel = 0;
-    this.selectedPage = 0;
     this.results = [];
   }
   startGame() {
