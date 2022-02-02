@@ -5,8 +5,9 @@ export const ERROR_MESSAGE = {
   updateLogin: 'Токен отсутствует, истек или недействителен',
   unauthorized: 'Пользователь не авторизован',
 }
-export const LEVELS_IN_GAME=6;
-export const PAGES_IN_LEVEL=30;
-export const WORDS_IN_GAME=10;
-export const WORDS_ON_PAGE=20;
+export const LEVELS_IN_GAME = 6;
+export const PAGES_IN_LEVEL = 30;
+export const WORDS_IN_GAME = 10;
+export const WORDS_ON_PAGE = 20;
 export const OPTIONS_IN_AUDIOCHALLENGE = 5;
+export const REFRESH_TIME = 300000;
