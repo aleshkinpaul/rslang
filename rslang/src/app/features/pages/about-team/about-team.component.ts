@@ -11,7 +11,7 @@ import { AudioChallengeComponent } from '../audio-challenge/audio-challenge.comp
 })
 export class AboutTeamComponent {
 
-  constructor(private api: ApiService, public auth: AuthService, public route:Router) { }
+  constructor(private api: ApiService, public auth: AuthService, public route: Router) { }
 
   onClickGetWordsButton() {
     this.api.getWords(0, 0).subscribe((response) => {
@@ -32,7 +32,7 @@ export class AboutTeamComponent {
   }
 
   onClickGetUserButton() {
-    this.api.getUser(this.auth.userId, this.auth.token).subscribe((response) => {
+    this.api.getUser(this.auth.userId).subscribe((response) => {
       console.log('resp:', response);
     });
   }
@@ -47,13 +47,13 @@ export class AboutTeamComponent {
   }
 
   onClickUpdateUserButton() {
-    this.api.updateUser(this.auth.userId, this.auth.token, { email: 'sss@jd.ru', password: '87654321' }).subscribe((response) => {
+    this.api.updateUser(this.auth.userId, { email: 'sss@jd.ru', password: '87654321' }).subscribe((response) => {
       console.log('resp:', response);
     });
   }
 
   onClickDeleteUserButton() {
-    this.api.deleteUser(this.auth.userId, this.auth.token).subscribe((response) => {
+    this.api.deleteUser(this.auth.userId).subscribe((response) => {
       console.log('resp:', response);
     });
   }
@@ -63,12 +63,12 @@ export class AboutTeamComponent {
   }
 
   onClickGetAllUserWordsButton() {
-    this.api.getAllUserWords(this.auth.userId, this.auth.token).subscribe((response) => {
+    this.api.getAllUserWords(this.auth.userId).subscribe((response) => {
       console.log('resp:', response);
     });
   }
-  startAudioChallenge(){
-      this.route.navigate(['/audiochallenge', {page:15, level:0}]);
-    };
+  startAudioChallenge() {
+    this.route.navigate(['/audiochallenge', { page: 15, level: 0 }]);
+  };
 
 }
