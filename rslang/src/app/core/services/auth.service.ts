@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Subject, throwError } from 'rxjs';
 import { IAuth, IRefreshAuth, IUserData } from 'src/app/shared/interfaces';
-import { ERROR_MESSAGE, EXP_TIME } from '../constants/constant';
+import { ERROR_MESSAGE, EXP_TIME, REFRESH_TIME } from '../constants/constant';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -26,6 +26,8 @@ export class AuthService {
       this.loadFromLocal();
       if (this.IsSessionEnd()) {
         this.updateLogin();
+      } else {
+        this.setTimeoutToRefreshLogin();
       }
     }
   }
@@ -72,7 +74,15 @@ export class AuthService {
       .subscribe((response) => {
         this.updateLoginError$.next('');
         this.updateData(response);
+        this.setTimeoutToRefreshLogin();
       })
+  }
+
+  private setTimeoutToRefreshLogin() {
+    const endSessionTime = (this.expDate!.getTime() - new Date().getTime()) * 1000;
+    setTimeout(() => {
+      this.updateLogin();
+    }, endSessionTime - REFRESH_TIME);
   }
 
   private setData(response: IAuth) {
