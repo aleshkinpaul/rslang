@@ -135,9 +135,10 @@ export class AudioChallengeComponent implements OnInit {
     })
 
   }
-  getQuestion() {
-    this.getOptions();
-    this.getAudio();
+  async getQuestion() {
+    await this.getAudio();
+    await this.getOptions();
+    this.loadingProgress = true;
   }
   async getOptions() {
     do {
@@ -167,7 +168,7 @@ export class AudioChallengeComponent implements OnInit {
         this.wordsForGame[this.currentQuestion].audio
       }`;
       await this.audio.nativeElement.play();
-      this.loadingProgress = true;
+
     }
   }
   checkAnswer(wordChoosed: string) {
@@ -180,7 +181,7 @@ export class AudioChallengeComponent implements OnInit {
     };
     this.results.push(result);
   }
-  async nextQuestion() {
+  nextQuestion() {
 
     this.isUserRight = null;
     this.options = [];

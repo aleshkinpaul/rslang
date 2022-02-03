@@ -5,6 +5,7 @@ import { ButtonAccentComponent } from './components/button-accent/button-accent.
 import { MaterialModule } from '../material/material.module';
 import { ButtonPrimaryComponent } from './components/button-primary/button-primary.component';
 import { ResultingPageComponent } from './components/resulting-page/resulting-page.component';
+import { MilkywayAnimationComponent } from './components/milkyway-animation/milkyway-animation.component';
 
 
 
@@ -12,7 +13,8 @@ import { ResultingPageComponent } from './components/resulting-page/resulting-pa
   declarations: [
     ButtonAccentComponent,
     ButtonPrimaryComponent,
-    ResultingPageComponent
+    ResultingPageComponent,
+    MilkywayAnimationComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { ResultingPageComponent } from './components/resulting-page/resulting-pa
     HttpClientModule,
     ButtonAccentComponent,
     ButtonPrimaryComponent,
-    ResultingPageComponent
+    ResultingPageComponent,
+    MilkywayAnimationComponent
   ],
 })
 export class SharedModule { }
