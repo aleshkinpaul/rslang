@@ -1,1 +1,43 @@
-<p>sprint works!</p>
+<div class="game">
+  <mat-card *ngIf="!gameMode">
+    <mat-card-title>Спринт</mat-card-title>
+    <mat-card-content>Управление клавишами:<br>
+      Чтобы выбрать вариант ответа используйте мышь или клавиши влево, вправо<br>
+      '0' - прослушать слово</mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите уровень</mat-label>
+      <mat-select [(ngModel)]="selectedLevel">
+        <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i">Уровень {{ i + 1 }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-card-actions>
+      <app-button-accent [title]="'Начать игру'" (click)="startGame()"></app-button-accent>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card *ngIf="gameMode">
+    <mat-spinner *ngIf="loadingProgress"></mat-spinner>
+    <div *ngIf="!loadingProgress">
+      <p>
+        <span>{{currentQuestion + 1}}</span> / <span>{{wordsForGame.length}}</span>
+      </p>
+      <button mat-fab color="accent" (click)="getAudio()">
+        <mat-icon>hearing</mat-icon>
+      </button>
+      <mat-card-subtitle>{{
+        wordsForGame[this.currentQuestion].word
+        }}</mat-card-subtitle>
+      <mat-card-subtitle>{{
+        wordsForGame[this.currentTranslateVariant].wordTranslate
+        }}</mat-card-subtitle>
+      <mat-card-content>
+        <button mat-raised-button color="warn" (click)="checkAnswer(false)">Неверно</button>
+        <button mat-raised-button color="success" (click)="checkAnswer(true)">Верно</button>
+      </mat-card-content>
+    </div>
+  </mat-card>
+  <app-resulting-page [resultsArray]="results" (byPressCloseButton)="showResultsPage = !showResultsPage"
+    *ngIf="showResultsPage">
+  </app-resulting-page>
+  <audio src="" #audioPlayer></audio>
+</div>
