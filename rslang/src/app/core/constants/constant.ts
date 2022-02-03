@@ -11,3 +11,5 @@ export const WORDS_IN_GAME = 10;
 export const WORDS_ON_PAGE = 20;
 export const OPTIONS_IN_AUDIOCHALLENGE = 5;
 export const REFRESH_TIME = 300000;
+export const DEFAULT_SPRINT_LEVEL = 0;
+export const WORDS_IN_SPRINT_GAME = 20;
