@@ -10,6 +10,12 @@
         <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i">Уровень {{ i + 1 }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите время</mat-label>
+      <mat-select [(ngModel)]="selectedTime">
+        <mat-option *ngFor="let time of timesInGame" [value]="time">{{ time }} секунд</mat-option>
+      </mat-select>
+    </mat-form-field>
     <mat-card-actions>
       <app-button-accent [title]="'Начать игру'" (click)="startGame()"></app-button-accent>
     </mat-card-actions>
@@ -32,8 +38,13 @@
         wordsForGame[this.currentTranslateVariant].wordTranslate
         }}</mat-card-subtitle>
       <mat-card-content>
-        <button mat-raised-button color="warn" (click)="checkAnswer(false)">Неверно</button>
-        <button mat-raised-button color="success" (click)="checkAnswer(true)">Верно</button>
+        <button [ngClass]="'answer-button'" mat-raised-button color="warn" (click)="checkAnswer(false)">
+          <mat-icon>arrow_backward</mat-icon><span>Неверно</span>
+        </button>
+        <button [ngClass]="'answer-button'" mat-raised-button color="success" (click)="checkAnswer(true)">
+          <span>Верно</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
       </mat-card-content>
     </div>
   </mat-card>

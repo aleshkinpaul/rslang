@@ -4,8 +4,10 @@ import { forkJoin, map, Observable } from 'rxjs';
 import {
   BACKEND_PATH,
   DEFAULT_SPRINT_LEVEL,
+  DEFAULT_SPRINT_TIME,
   LEVELS_IN_GAME,
   PAGES_IN_LEVEL,
+  TIMES_TO_SPRINT,
   WORDS_IN_SPRINT_GAME,
   WORDS_ON_PAGE,
 } from 'src/app/core/constants/constant';
@@ -27,7 +29,9 @@ export class SprintComponent implements OnInit {
   showResultsPage = false;
   gameMode = false;
   selectedLevel = DEFAULT_SPRINT_LEVEL;
+  selectedTime = DEFAULT_SPRINT_TIME;
   levelsInGame = new Array(LEVELS_IN_GAME);
+  timesInGame = TIMES_TO_SPRINT;
   isUserRight = false;
   currentQuestion = 0;
   timeToEndGame = 0;
@@ -141,7 +145,7 @@ export class SprintComponent implements OnInit {
 
   createTimer() {
     if (this.interval !== null) clearInterval(this.interval);
-    this.timeToEndGame = 60;
+    this.timeToEndGame = this.selectedTime;
     this.interval = setInterval(() => {
       if (this.timeToEndGame <= 0) {
         if (this.interval !== null) clearInterval(this.interval);
