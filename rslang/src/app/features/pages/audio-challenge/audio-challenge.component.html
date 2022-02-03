@@ -1,5 +1,7 @@
 <div class="game">
-<mat-card *ngIf="!gameMode" >
+
+<mat-card *ngIf="!gameMode" class="audio-game">
+
   <mat-card-title>Аудиовызов</mat-card-title>
   <mat-card-content>Управление клавишами:<br>
     'Enter' - следующий вопрос<br>
@@ -35,7 +37,7 @@
   </mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="gameMode">
+<mat-card *ngIf="gameMode" class="audio-game">
   <mat-spinner *ngIf="!loadingProgress"></mat-spinner>
   <div *ngIf="loadingProgress">
     <span>
@@ -48,7 +50,7 @@
         >do_not_disturb_on</mat-icon
       >
     </span>
-    <button mat-fab color="accent">
+    <button mat-fab color="accent" (click)="getAudio()">
       <img
         mat-card-avatar
         [src]="getImage()"
@@ -56,7 +58,7 @@
         #imageAnswer
         *ngIf="isUserRight !== null"
       />
-      <mat-icon (click)="getAudio()" *ngIf="isUserRight === null"
+      <mat-icon  *ngIf="isUserRight === null"
         >hearing</mat-icon
       >
     </button>
@@ -94,3 +96,4 @@
 ></app-resulting-page>
 <audio src="" #audioPlayer></audio>
 </div>
+<app-milkyway-animation></app-milkyway-animation>
