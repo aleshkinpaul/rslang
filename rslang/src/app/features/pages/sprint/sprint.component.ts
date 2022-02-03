@@ -22,6 +22,7 @@ export class SprintComponent implements OnInit {
   @ViewChild('audioPlayer', { static: false })
   audio: ElementRef | undefined;
 
+  interval: ReturnType<typeof setInterval> | null = null;
   loadingProgress = false;
   showResultsPage = false;
   gameMode = false;
@@ -29,6 +30,7 @@ export class SprintComponent implements OnInit {
   levelsInGame = new Array(LEVELS_IN_GAME);
   isUserRight = false;
   currentQuestion = 0;
+  timeToEndGame = 0;
   currentTranslateVariant = 0;
   wordsForGame: IWord[] = [];
   results: IResults[] = [];
@@ -70,6 +72,7 @@ export class SprintComponent implements OnInit {
       this.results = [];
       this.wordsForGame = shuffleArr(<[]>res);
       this.currentQuestion = 0;
+      this.createTimer();
       this.getQuestion();
     });
   }
@@ -82,6 +85,7 @@ export class SprintComponent implements OnInit {
       this.results = [];
       this.currentQuestion = 0;
       this.currentTranslateVariant = 0;
+      this.createTimer();
       this.getQuestion();
     });
   }
@@ -135,6 +139,19 @@ export class SprintComponent implements OnInit {
     return forkJoin<IWord[]>(observables);
   }
 
+  createTimer() {
+    if (this.interval !== null) clearInterval(this.interval);
+    this.timeToEndGame = 60;
+    this.interval = setInterval(() => {
+      this.timeToEndGame -= 1;
+      if (this.timeToEndGame <= 0) {
+        if (this.interval !== null) clearInterval(this.interval);
+        this.showResults();
+        this.gameMode = false;
+      }
+    }, 1000);
+  }
+
   checkAnswer(isRight: boolean) {
     const isRightTranslate = this.currentQuestion === this.currentTranslateVariant;
     if (isRightTranslate === isRight) {
@@ -154,7 +171,9 @@ export class SprintComponent implements OnInit {
   nextQuestion() {
     if (this.currentQuestion + 1 === this.wordsForGame.length) {
       this.showResults();
-      this.gameMode = !this.gameMode;
+      if (this.interval !== null) clearInterval(this.interval);
+      this.interval = null;
+      this.gameMode = false;
     } else {
       this.currentQuestion += 1;
       this.loadingProgress = true;
