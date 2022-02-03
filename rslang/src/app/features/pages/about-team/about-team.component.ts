@@ -67,8 +67,13 @@ export class AboutTeamComponent {
       console.log('resp:', response);
     });
   }
+
   startAudioChallenge() {
     this.route.navigate(['/audiochallenge', { page: 15, level: 0 }]);
+  };
+
+  startSprint() {
+    this.route.navigate(['/sprint', { page: 9, level: 4 }]);
   };
 
 }
