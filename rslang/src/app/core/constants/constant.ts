@@ -15,3 +15,4 @@ export const DEFAULT_SPRINT_LEVEL = 0;
 export const WORDS_IN_SPRINT_GAME = 20;
 export const TIMES_TO_SPRINT = [30, 60, 90];
 export const DEFAULT_SPRINT_TIME = 60;
+export const TIME_TO_SHOW_SPRINT_QUESTION_RESULT = 1000;

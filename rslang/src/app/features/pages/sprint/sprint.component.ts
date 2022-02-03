@@ -8,6 +8,7 @@ import {
   LEVELS_IN_GAME,
   PAGES_IN_LEVEL,
   TIMES_TO_SPRINT,
+  TIME_TO_SHOW_SPRINT_QUESTION_RESULT,
   WORDS_IN_SPRINT_GAME,
   WORDS_ON_PAGE,
 } from 'src/app/core/constants/constant';
@@ -38,6 +39,7 @@ export class SprintComponent implements OnInit {
   currentTranslateVariant = 0;
   wordsForGame: IWord[] = [];
   results: IResults[] = [];
+  showResultQuestion = false
 
   @HostListener('window:keydown', ['$event'])
   handleKeyChoice(event: KeyboardEvent) {
@@ -169,7 +171,11 @@ export class SprintComponent implements OnInit {
       word: this.wordsForGame[this.currentQuestion],
     };
     this.results.push(result);
-    this.nextQuestion();
+    this.showResultQuestion = true;
+    setTimeout(() => {
+      this.showResultQuestion = false;
+      this.nextQuestion();
+    }, TIME_TO_SHOW_SPRINT_QUESTION_RESULT);
   }
 
   nextQuestion() {
