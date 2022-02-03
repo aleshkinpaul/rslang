@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { forkJoin, map, Observable } from 'rxjs';
 import {
@@ -32,6 +32,26 @@ export class SprintComponent implements OnInit {
   currentTranslateVariant = 0;
   wordsForGame: IWord[] = [];
   results: IResults[] = [];
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyChoice(event: KeyboardEvent) {
+    if (this.gameMode && !this.loadingProgress) {
+      switch (event.key) {
+        case 'ArrowLeft': {
+          this.checkAnswer(false);
+          break;
+        }
+        case 'ArrowRight': {
+          this.checkAnswer(true);
+          break;
+        }
+        case '0': {
+          this.getAudio();
+          break;
+        }
+      }
+    }
+  }
 
   constructor(private api: ApiService, public route: ActivatedRoute) { }
 
