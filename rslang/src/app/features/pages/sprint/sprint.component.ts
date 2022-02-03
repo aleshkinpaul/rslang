@@ -143,12 +143,12 @@ export class SprintComponent implements OnInit {
     if (this.interval !== null) clearInterval(this.interval);
     this.timeToEndGame = 60;
     this.interval = setInterval(() => {
-      this.timeToEndGame -= 1;
       if (this.timeToEndGame <= 0) {
         if (this.interval !== null) clearInterval(this.interval);
         this.showResults();
         this.gameMode = false;
       }
+      this.timeToEndGame -= 1;
     }, 1000);
   }
 
