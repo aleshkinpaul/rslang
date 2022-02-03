@@ -10,12 +10,13 @@ import { LearnbookComponent } from './learnbook/learnbook.component';
 import { AudioChallengeComponent } from './audio-challenge/audio-challenge.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule } from '@angular/forms';
+import { SprintComponent } from './sprint/sprint.component';
 
 
 
 
 @NgModule({
-  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent],
+  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent, SprintComponent],
   imports: [
     CommonModule,
     MaterialModule,

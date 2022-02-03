@@ -5,44 +5,49 @@ import { AudioChallengeComponent } from './audio-challenge/audio-challenge.compo
 import { GamesComponent } from './games/games.component';
 import { LearnbookComponent } from './learnbook/learnbook.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { SprintComponent } from './sprint/sprint.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 
 
 
 const routes: Routes = [
   {
-    path:'',
+    path: '',
     component: MainPageComponent
 
   },
   {
-    path:'mainpage',
+    path: 'mainpage',
     component: MainPageComponent
 
   },
   {
-    path:'aboutteam',
+    path: 'aboutteam',
     component: AboutTeamComponent
 
   },
   {
-    path:'statistics',
+    path: 'statistics',
     component: StatisticsComponent
 
   },
   {
-    path:'learnbook',
+    path: 'learnbook',
     component: LearnbookComponent
 
   },
   {
-    path:'games',
+    path: 'games',
     component: GamesComponent
 
   },
   {
     path: 'audiochallenge',
     component: AudioChallengeComponent
+  },
+  {
+    path: 'sprint',
+    component: SprintComponent
   },
   {
     path: '**',
@@ -55,4 +60,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }
