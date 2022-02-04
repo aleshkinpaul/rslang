@@ -4,9 +4,10 @@
 
   <mat-card-title>Аудиовызов</mat-card-title>
   <mat-card-content>Управление клавишами:<br>
-    'Enter' - следующий вопрос<br>
-    '1...5' - выбор варианта<br>
-    '0' - прослушать слово еще раз</mat-card-content>
+    <span class="audio-game__highlight">'Enter'</span> - следующий вопрос<br>
+    <span class="audio-game__highlight">'1...5'</span> - выбор варианта<br>
+    <span class="audio-game__highlight">'0'</span> - прослушать слово еще раз</mat-card-content>
+    <div class="game__selectors">
   <mat-form-field appearance="fill" *ngIf="!learnBookMode">
     <mat-label>Выберите уровень</mat-label>
     <mat-select [(ngModel)]="selectedLevel"  >
@@ -23,6 +24,7 @@
       >
     </mat-select>
   </mat-form-field>
+</div>
   <mat-card-actions>
     <app-button-accent
     *ngIf="!learnBookMode"
@@ -68,7 +70,7 @@
     <mat-card-subtitle *ngIf="isUserRight !== null">{{
       wordsForGame[this.currentQuestion].wordTranslate
     }}</mat-card-subtitle>
-    <mat-card-content>
+    <mat-card-content class="audio-game__options">
       <button
         mat-stroked-button
         color="primary"
@@ -96,4 +98,4 @@
 ></app-resulting-page>
 <audio src="" #audioPlayer></audio>
 </div>
-<app-milkyway-animation></app-milkyway-animation>
+

@@ -43,11 +43,14 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content class="wrapper__content">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
-        <mat-slide-toggle [(ngModel)]="isDarkTheme">
+        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isDarkTheme">
           <mat-icon>bedtime</mat-icon>
+        </mat-slide-toggle>
+        <mat-slide-toggle  class="settings__toggle" [(ngModel)]="isBubble">
+          <mat-icon>bubble_chart</mat-icon>
         </mat-slide-toggle>
         <span style="flex: auto"></span>
         <h1>RSLang</h1>
@@ -55,7 +58,7 @@
       <app-button-accent [title]="'Войти'"></app-button-accent>
       </mat-toolbar-row>
     </mat-toolbar>
-
+    <app-milkyway-animation *ngIf ="isBubble"></app-milkyway-animation>
     <router-outlet></router-outlet>
     <app-footer class="footer-bar"></app-footer>
   </mat-sidenav-content>

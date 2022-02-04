@@ -31,7 +31,7 @@ export class AudioChallengeComponent implements OnInit {
   @ViewChild('imageAnswer', { static: false })
   image: ElementRef | undefined;
 
-
+  isBubble:boolean=true;
   loadingProgress: boolean = false;
   showResultsPage: boolean = false;
   learnBookMode:boolean=false;

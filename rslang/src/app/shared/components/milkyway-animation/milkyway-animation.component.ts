@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+//Animation was taken from: https://codepen.io/stufreen/pen/KOWKBw with serious changes due to Angular and Typescript adaptation
+import { Component, OnInit } from '@angular/core';
 interface IBubble {
   x:number,
   y:number,
@@ -21,10 +22,6 @@ export class MilkywayAnimationComponent implements OnInit {
   BUBBLE_SIZE = 0.8;
   SPEED = 20000;
   bubbles: IBubble[] = [];
-
-  @ViewChild('milkyway', { static: false })
-  canvas!: ElementRef;
-  constructor() {}
 
   ngOnInit(): void {
     if (document.readyState !== 'loading') {

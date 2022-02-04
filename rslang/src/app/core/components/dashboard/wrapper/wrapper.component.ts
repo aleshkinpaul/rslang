@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class WrapperComponent  {
   isExpanded: boolean = false;
   isDarkTheme:boolean = false;
+  isBubble:boolean=true;
 
   constructor() { }
 
