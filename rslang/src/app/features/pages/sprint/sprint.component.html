@@ -1,0 +1,58 @@
+<div class="game">
+  <mat-card *ngIf="!gameMode">
+    <mat-card-title>Спринт</mat-card-title>
+    <mat-card-content>Управление клавишами:<br>
+      Чтобы выбрать вариант ответа используйте мышь или клавиши влево, вправо<br>
+      '0' - прослушать слово</mat-card-content>
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите уровень</mat-label>
+      <mat-select [(ngModel)]="selectedLevel">
+        <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i">Уровень {{ i + 1 }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Выберите время</mat-label>
+      <mat-select [(ngModel)]="selectedTime">
+        <mat-option *ngFor="let time of timesInGame" [value]="time">{{ time }} секунд</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-card-actions>
+      <app-button-accent [title]="'Начать игру'" (click)="startGame()"></app-button-accent>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card *ngIf="gameMode">
+    <mat-spinner *ngIf="loadingProgress"></mat-spinner>
+    <div *ngIf="!loadingProgress">
+      <div *ngIf="showResultQuestion">{{ isUserRight? 'Правильный ответ' : 'Неправильный ответ'}}</div>
+      <p>
+        <span>{{currentQuestion + 1}}</span> / <span>{{wordsForGame.length}}</span>
+      </p>
+      <div>{{timeToEndGame}}</div>
+      <button mat-fab color="accent" (click)="getAudio()">
+        <mat-icon>hearing</mat-icon>
+      </button>
+      <mat-card-subtitle>{{
+        wordsForGame[this.currentQuestion].word
+        }}</mat-card-subtitle>
+      <mat-card-subtitle>{{
+        wordsForGame[this.currentTranslateVariant].wordTranslate
+        }}</mat-card-subtitle>
+      <mat-card-content>
+        <button [ngClass]="'answer-button'" mat-raised-button color="warn" (click)="checkAnswer(false)"
+          [disabled]="showResultQuestion">
+          <mat-icon>arrow_backward</mat-icon><span>Неверно</span>
+        </button>
+        <button [ngClass]="'answer-button'" mat-raised-button color="success" (click)="checkAnswer(true)"
+          [disabled]="showResultQuestion">
+          <span>Верно</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </mat-card-content>
+    </div>
+  </mat-card>
+  <app-resulting-page [resultsArray]="results" (byPressCloseButton)="showResultsPage = !showResultsPage"
+    *ngIf="showResultsPage">
+  </app-resulting-page>
+  <audio src="" #audioPlayer></audio>
+</div>

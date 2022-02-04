@@ -1,0 +1,27 @@
+.game{
+  min-height: 100%;
+  text-align: center;
+  padding: 5%;
+  display: block
+}
+
+.mat-spinner {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.answer-button {
+  min-width: 120px;
+  display: inline-flex;
+  justify-content: space-between;
+
+  & .mat-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.answer-button .mat-button-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
