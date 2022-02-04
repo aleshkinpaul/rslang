@@ -46,7 +46,9 @@
         <span style="flex: auto"></span>
         <h1>RSLang</h1>
         <span style="flex: auto"></span>
-        <app-button-accent [title]="'Войти'" [routerLink]="'login'"></app-button-accent>
+        <span class="user-name" *ngIf="auth.isAuthenticated">{{ auth.name }}</span>
+        <app-button-accent [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'" (click)="onLoginButtonClick()">
+        </app-button-accent>
       </mat-toolbar-row>
     </mat-toolbar>
     <app-milkyway-animation *ngIf="isBubble"></app-milkyway-animation>
