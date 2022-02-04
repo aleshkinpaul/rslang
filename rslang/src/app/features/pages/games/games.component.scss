@@ -1,0 +1,55 @@
+.button__outer-wrapper {
+  padding: 3% 5%;
+  width: 40%;
+  border-radius: 4px;
+  .button__inner-wrapper {
+    padding: 5%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+}
+.button-start{
+  transition: 0.4s ease-in-out;
+  &:hover{
+    opacity: 80%;
+  }
+}
+.button__icon-wrapper {
+  text-align: center;
+  padding:5%;
+  &:first-child{
+    animation: animate_grow 2s infinite;
+  }
+  &:hover{
+    animation: none;
+  }
+}
+.games-buttons{
+width: 80%;
+margin: auto;
+display: flex;
+justify-content: center;
+padding: 15vh 10vh;
+}
+@keyframes animate_grow {
+	0% {
+		transform: scale3d(1, 1, 1);
+	}
+	50% {
+		transform: scale3d(1.05, 1.05, 1.05);
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+	}
+}
+.button__icon{
+font-size: 10rem;
+text-align: center;
+width:auto;
+
+
+}
+
