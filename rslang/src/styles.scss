@@ -48,10 +48,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .audio-game{
   background:#ffffff8f;
+  .audio-game__highlight{
+    color: mat-color($rslang-primary);
+  }
 }
+
 .dark-theme-mode{
   .audio-game{
   background: #424242e3;
+  .audio-game__highlight{
+    color: mat-color($rslang-accent-dark);
+  }
   }
 
 }
