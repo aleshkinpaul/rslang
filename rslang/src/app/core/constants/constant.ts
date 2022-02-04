@@ -4,13 +4,14 @@ export const ERROR_MESSAGE = {
   login: 'Неверный Email или пароль',
   updateLogin: 'Токен отсутствует, истек или недействителен',
   unauthorized: 'Пользователь не авторизован',
+  create: 'Пользователь с таким email уже существует',
 }
 
 export const LEVELS_IN_GAME = 6;
 export const PAGES_IN_LEVEL = 30;
 export const WORDS_IN_GAME = 10;
 export const WORDS_ON_PAGE = 20;
-export const WORDS_IN_GAME_CHOICE = [5,10,15,20, 25,30]
+export const WORDS_IN_GAME_CHOICE = [5, 10, 15, 20, 25, 30]
 export const OPTIONS_IN_AUDIOCHALLENGE = 5;
 export const REFRESH_TIME = 300000;
 export const DEFAULT_SPRINT_LEVEL = 0;

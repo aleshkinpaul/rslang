@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Subject, throwError } from 'rxjs';
+import { catchError, map, Observable, Subject, throwError } from 'rxjs';
 import { IAuth, IRefreshAuth, IUserData } from 'src/app/shared/interfaces';
 import { ERROR_MESSAGE, EXP_TIME, REFRESH_TIME } from '../constants/constant';
 import { ApiService } from './api.service';
@@ -14,8 +14,10 @@ export class AuthService {
   public isAuthenticated = false;
   public userId = '';
   public token = '';
+  public name = '';
   private refreshToken = '';
   private expDate: Date | null = null;
+
 
   constructor(private api: ApiService) {
     this.initAuth();
@@ -32,20 +34,26 @@ export class AuthService {
     }
   }
 
-  public login(user: IUserData) {
-    this.api.signIn(user)
+  public login(user: IUserData): Observable<IAuth> {
+    return this.api.signIn(user)
       .pipe(
+        map((response) => {
+          this.loginError$.next('');
+          this.setData(response);
+          return response;
+        }),
         catchError((error: HttpErrorResponse) => {
           if (error.status === 403) {
             this.loginError$.next(ERROR_MESSAGE.login);
           }
+          if (error.status === 404) {
+            this.loginError$.next(ERROR_MESSAGE.login);
+            console.log('404');
+
+          }
           return throwError(() => error)
         })
-      )
-      .subscribe((response) => {
-        this.loginError$.next('');
-        this.setData(response);
-      });
+      );
   }
 
   public logout() {
@@ -53,6 +61,7 @@ export class AuthService {
     this.userId = '';
     this.token = '';
     this.refreshToken = '';
+    this.name = '';
     this.expDate = null;
     localStorage.clear();
   }
@@ -91,6 +100,7 @@ export class AuthService {
     this.token = response.token;
     this.refreshToken = response.refreshToken;
     this.isAuthenticated = true;
+    this.name = response.name;
     this.saveToLocal();
   }
 
@@ -114,6 +124,7 @@ export class AuthService {
     localStorage.setItem('lang-refresh-token', this.refreshToken);
     localStorage.setItem('lang-is-authenticated', this.isAuthenticated.toString());
     localStorage.setItem('lang-exp-date', this.expDate!.toString());
+    localStorage.setItem('lang-name', this.name.toString());
   }
 
   private loadFromLocal() {
@@ -122,5 +133,6 @@ export class AuthService {
     this.refreshToken = localStorage.getItem('lang-refresh-token')!;
     this.isAuthenticated = JSON.parse(localStorage.getItem('lang-is-authenticated')!);
     this.expDate = new Date(localStorage.getItem('lang-exp-date')!);
+    this.name = localStorage.getItem('lang-name')!;
   }
 }
