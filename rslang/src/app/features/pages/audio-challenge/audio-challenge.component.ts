@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
 import { forkJoin, map, Observable} from 'rxjs';
 import {
@@ -58,7 +58,7 @@ export class AudioChallengeComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   handleKeyChoice(event: KeyboardEvent) {
-    if (this.isUserRight === null && this.gameMode&&this.options) {
+    if (this.isUserRight === null && this.gameMode&&this.options&&this.loadingProgress) {
       switch (event.key) {
         case '1': {
           this.checkAnswer(this.options[0].word);
@@ -92,7 +92,6 @@ export class AudioChallengeComponent implements OnInit {
   }
   ngOnInit(): void {
     this.route.params.subscribe((data:Params)=>{
-      console.log(data)
       if (data['page']) {
         this.learnBookMode=true;
         this.learnBookData=data;
@@ -118,7 +117,6 @@ export class AudioChallengeComponent implements OnInit {
       this.wordsForGame = res;
       this.results = [];
       this.currentQuestion = 0;
-      console.log(this.wordsForGame);
       this.getQuestion();
     });
   }
@@ -130,15 +128,18 @@ export class AudioChallengeComponent implements OnInit {
     this.wordsForGame.sort(()=> 0.5-Math.random())
     this.currentQuestion = 0;
     this.selectedLevel = data['level'];
-    console.log(this.wordsForGame);
     this.getQuestion();
     })
 
   }
   async getQuestion() {
-    await this.getAudio();
     await this.getOptions();
-    this.loadingProgress = true;
+    await this.getAudio();
+    this.loadingProgress=true;
+
+
+
+
   }
   async getOptions() {
     do {
@@ -196,7 +197,6 @@ export class AudioChallengeComponent implements OnInit {
   }
   showResults() {
     this.showResultsPage = true;
-    console.log(this.results);
   }
   getRandomWordsForGame(n: number): Observable<IWord[]> {
     let observables: Observable<IWord>[] = [];

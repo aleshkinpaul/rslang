@@ -1,12 +1,10 @@
-
-
-
 .game {
   min-height: 100%;
   text-align: center;
   padding: 5%;
   display: block;
   margin-top: auto;
+
   .audio-game {
     min-height: 50vh;
     display: flex;
@@ -14,10 +12,43 @@
     justify-content: center;
     .audio-game__options {
       display: flex;
-     gap: 0.5rem 4%;
+      gap: 0.5rem 4%;
       justify-content: center;
       flex-wrap: wrap;
       margin-top: 5%;
+    }
+    .audio-game__translation {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      justify-content: center;
+    }
+    .audio-game__icons-result {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .audio-game__image {
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .audio-game__result {
+      display: inline-flex;
+      column-gap: 2%;
+      min-width: 25%;
+      width:auto;
+      justify-content: center;
+      margin: auto;
+      border: 4px solid #87eba094;
+      border-radius: 4px;
+      &.audio-game__result_wrong {
+        border: 4px solid #e74e5694;
+      }
+    }
+    .audio-game__button {
+      &:hover {
+        opacity: 80%;
+      }
     }
   }
 }

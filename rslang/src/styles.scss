@@ -46,6 +46,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   padding: 0;
   border: 0;
 }
+.background-primary{
+  background-color: mat-color($rslang-primary);
+}
+
 .audio-game{
   background:#ffffff8f;
   .audio-game__highlight{
@@ -54,6 +58,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .dark-theme-mode{
+  .background-primary{
+    background-color: mat-color($rslang-primary-dark);
+  }
   .audio-game{
   background: #424242e3;
   .audio-game__highlight{
