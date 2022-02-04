@@ -1,5 +1,5 @@
 <div class="game">
-  <mat-card *ngIf="!gameMode">
+  <mat-card *ngIf="!gameMode" class="transparent-background">
     <mat-card-title>Спринт</mat-card-title>
     <mat-card-content>Управление клавишами:<br>
       Чтобы выбрать вариант ответа используйте мышь или клавиши влево, вправо<br>
@@ -21,7 +21,7 @@
     </mat-card-actions>
   </mat-card>
 
-  <mat-card *ngIf="gameMode">
+  <mat-card *ngIf="gameMode" class="transparent-background">
     <mat-spinner *ngIf="loadingProgress"></mat-spinner>
     <div *ngIf="!loadingProgress">
       <div *ngIf="showResultQuestion">{{ isUserRight? 'Правильный ответ' : 'Неправильный ответ'}}</div>

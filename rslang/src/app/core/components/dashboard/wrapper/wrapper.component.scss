@@ -9,13 +9,21 @@ h1{
   margin: auto;
 }
 mat-sidenav-content{
+  position: relative;
   min-height: 100vh;
+}
+.wrapper__content{
+  padding-bottom: 2.5rem;
+}
+.settings__toggle{
+margin-right: 2%;
 }
 .footer-bar{
 position: absolute;
 left:0;
 bottom: 0;
 width:100%;
+height:2.5rem;
 }
 .chevron-button{
   cursor: pointer;

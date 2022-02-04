@@ -1,2 +1,27 @@
-<app-button-primary [title]="'Аудиовызов'" routerLink="/audiochallenge"></app-button-primary>
-<app-button-primary [title]="'Спринт'" routerLink="/sprint"></app-button-primary>
+
+
+<div class="games-buttons">
+  <div class="button__outer-wrapper background-primary mat-elevation-z8">
+    <mat-card class="button__inner-wrapper">
+      <div class="button__icon-wrapper">
+      <mat-icon class="button__icon " color="primary">headset_mic</mat-icon>
+      <app-button-accent
+      class="button-start mat-elevation-z8"
+      [title]="'Аудиовызов'"
+      routerLink="/audiochallenge"
+    ></app-button-accent>
+    </div>
+
+    </mat-card>
+  </div>
+  <div class="button__outer-wrapper background-primary mat-elevation-z8">
+    <mat-card class="button__inner-wrapper">
+      <div class="button__icon-wrapper">
+      <mat-icon class="button__icon " color="primary">av_timer</mat-icon>
+      <app-button-accent  class="button-start mat-elevation-z8" [title]="'Спринт'" routerLink="/sprint"></app-button-accent>
+
+    </div>
+
+    </mat-card>
+  </div>
+</div>
