@@ -4,6 +4,7 @@ import { AboutTeamComponent } from './about-team/about-team.component';
 import { AudioChallengeComponent } from './audio-challenge/audio-challenge.component';
 import { GamesComponent } from './games/games.component';
 import { LearnbookComponent } from './learnbook/learnbook.component';
+import { LoginComponent } from './login/login.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { SprintComponent } from './sprint/sprint.component';
 import { StatisticsComponent } from './statistics/statistics.component';
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path: 'sprint',
     component: SprintComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '**',
