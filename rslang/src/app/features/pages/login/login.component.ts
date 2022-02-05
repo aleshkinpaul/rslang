@@ -90,9 +90,15 @@ export class LoginComponent implements OnInit {
       password: this.form.value.password,
     }
 
-    this.auth.login(user).subscribe(() => {
+    this.auth.login(user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.submitted = false;
+        return throwError(() => error);
+      })
+    ).subscribe(() => {
       this.form.reset();
       this.route.navigate(['/mainpage']);
+      this.submitted = false;
       this.api.getSettings(this.auth.userId).subscribe((response) => {
         if (response.optional.avatar !== 'none') {
           this.auth.avatarPath = response.optional.avatar;
@@ -114,6 +120,7 @@ export class LoginComponent implements OnInit {
         if (error.status === 417) {
           this.createUserError$.next(ERROR_MESSAGE.create);
         }
+        this.submitted = false;
         return throwError(() => error);
       })
     ).subscribe((response) => {
@@ -130,12 +137,13 @@ export class LoginComponent implements OnInit {
     this.auth.login(newUser).subscribe(() => {
       this.form.reset();
       this.route.navigate(['/mainpage']);
+      this.submitted = false;
       if (this.isAvatarAdd) {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.result && typeof reader.result === 'string') {
             this.api.uploadAvatar(reader.result).subscribe((response) => {
-              this.uploadImagePath = response.secure_url;
+              this.uploadImagePath = response.secure_url.replace('upload/', 'upload/c_fill,h_100,w_100/');
               const settings = {
                 wordsPerDay: 1,
                 optional: {
