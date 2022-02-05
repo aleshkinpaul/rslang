@@ -6,6 +6,12 @@ export interface IUser {
   password: string;
 }
 
+export interface IUserCreate {
+  name: string;
+  email: string;
+  id: string;
+}
+
 export interface IUserData {
   email: string;
   password: string;
@@ -68,7 +74,7 @@ export interface IStatistic {
 export interface ISettings {
   wordsPerDay: number;
   optional: {
-    tempParam: string;
+    avatar: string;
   };
 }
 export interface IResults {
