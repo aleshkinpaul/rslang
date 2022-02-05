@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, Subject, throwError } from 'rxjs';
@@ -14,14 +14,19 @@ import { IUser, IUserData } from 'src/app/shared/interfaces';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('uploadImage') uploadImage!: ElementRef<HTMLImageElement>;
   public createUserError$ = new Subject<string>();
   isLoginPage = true;
   isHidePassword = true;
+
   name = new FormControl('');
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.minLength(8)]);
   form!: FormGroup;
   submitted = false;
+  uploadImagePath = '';
+  isAvatarAdd = false;
+  file!: File;
 
   constructor(public auth: AuthService, private api: ApiService, private route: Router) { }
 
@@ -69,6 +74,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log('form', this.form.value);
+
     if (this.form.invalid) return;
     this.submitted = true;
 
@@ -88,6 +95,12 @@ export class LoginComponent implements OnInit {
     this.auth.login(user).subscribe(() => {
       this.form.reset();
       this.route.navigate(['/mainpage']);
+      this.api.getSettings(this.auth.userId).subscribe((response) => {
+        if (response.optional.avatar !== 'none') {
+          this.auth.avatarPath = response.optional.avatar;
+          this.auth.saveToLocal();
+        }
+      });
     });
   }
 
@@ -119,11 +132,57 @@ export class LoginComponent implements OnInit {
     this.auth.login(newUser).subscribe(() => {
       this.form.reset();
       this.route.navigate(['/mainpage']);
+      if (this.isAvatarAdd) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.result && typeof reader.result === 'string') {
+            this.api.uploadAvatar(reader.result).subscribe((response) => {
+              this.uploadImagePath = response.secure_url;
+              const settings = {
+                wordsPerDay: 1,
+                optional: {
+                  avatar: this.uploadImagePath,
+                }
+              }
+              this.api.upsertSettings(this.auth.userId, settings).subscribe((response) => {
+                this.auth.avatarPath = this.uploadImagePath;
+                this.auth.saveToLocal();
+              });
+            });
+          }
+        };
+        reader.readAsDataURL(this.file);
+      } else {
+        const settings = {
+          wordsPerDay: 1,
+          optional: {
+            avatar: 'none',
+          }
+        }
+        this.api.upsertSettings(this.auth.userId, settings).subscribe((response) => {
+          this.auth.avatarPath = this.uploadImagePath;
+          this.auth.saveToLocal();
+        });
+      }
     });
   }
 
   changeMode() {
     this.isLoginPage = !this.isLoginPage;
     this.changeNameValidators();
+  }
+
+  onFileInput(event: Event) {
+    if (event.target) {
+      this.file = (event.target as HTMLInputElement).files![0];
+      this.isAvatarAdd = true;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.result && typeof reader.result === 'string') {
+          this.uploadImage.nativeElement.src = reader.result;
+        }
+      };
+      reader.readAsDataURL(this.file);
+    }
   }
 }
