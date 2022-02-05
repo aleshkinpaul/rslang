@@ -68,6 +68,24 @@ export class AboutTeamComponent {
     });
   }
 
+  onClickUpsertButton() {
+    const settings = {
+      wordsPerDay: 10,
+      optional: {
+        avatar: 'path',
+      }
+    }
+    this.api.upsertSettings(this.auth.userId, settings).subscribe((response) => {
+      console.log('av', response);
+    });
+  }
+
+  onClickGetUpsertButton() {
+    this.api.getSettings(this.auth.userId).subscribe((response) => {
+      console.log('av', response);
+    });
+  }
+
   startAudioChallenge() {
     this.route.navigate(['/audiochallenge', { page: 15, level: 0 }]);
   };
@@ -76,4 +94,6 @@ export class AboutTeamComponent {
     this.route.navigate(['/sprint', { page: 9, level: 4 }]);
   };
 
+
 }
+
