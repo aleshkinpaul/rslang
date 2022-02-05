@@ -13,11 +13,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatFormFieldControl, MatFormFieldModule } from '@angular/material/form-field';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 const modules: any[] = [
-
   MatProgressSpinnerModule,
   MatListModule,
   MatNativeDateModule,
@@ -34,9 +32,9 @@ const modules: any[] = [
   MatInputModule
 ];
 
-
 @NgModule({
   imports: [...modules],
   exports: [...modules],
 })
+
 export class MaterialModule { }
