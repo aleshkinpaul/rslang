@@ -17,6 +17,7 @@ export class AuthService {
   public name = '';
   private refreshToken = '';
   private expDate: Date | null = null;
+  public avatarPath = '';
 
 
   constructor(private api: ApiService) {
@@ -48,8 +49,6 @@ export class AuthService {
           }
           if (error.status === 404) {
             this.loginError$.next(ERROR_MESSAGE.login);
-            console.log('404');
-
           }
           return throwError(() => error)
         })
@@ -63,6 +62,7 @@ export class AuthService {
     this.refreshToken = '';
     this.name = '';
     this.expDate = null;
+    this.avatarPath = '';
     localStorage.clear();
   }
 
@@ -118,13 +118,14 @@ export class AuthService {
     return false;
   }
 
-  private saveToLocal() {
+  public saveToLocal() {
     localStorage.setItem('lang-user-id', this.userId);
     localStorage.setItem('lang-token', this.token);
     localStorage.setItem('lang-refresh-token', this.refreshToken);
     localStorage.setItem('lang-is-authenticated', this.isAuthenticated.toString());
     localStorage.setItem('lang-exp-date', this.expDate!.toString());
     localStorage.setItem('lang-name', this.name.toString());
+    localStorage.setItem('lang-avatar', this.avatarPath.toString());
   }
 
   private loadFromLocal() {
@@ -134,5 +135,6 @@ export class AuthService {
     this.isAuthenticated = JSON.parse(localStorage.getItem('lang-is-authenticated')!);
     this.expDate = new Date(localStorage.getItem('lang-exp-date')!);
     this.name = localStorage.getItem('lang-name')!;
+    this.avatarPath = localStorage.getItem('lang-avatar')!;
   }
 }

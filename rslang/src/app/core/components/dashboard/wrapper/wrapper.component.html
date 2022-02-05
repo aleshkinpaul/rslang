@@ -47,6 +47,7 @@
         <h1>RSLang</h1>
         <span style="flex: auto"></span>
         <span class="user-name" *ngIf="auth.isAuthenticated">{{ auth.name }}</span>
+        <img class="avatar-image" *ngIf="auth.avatarPath" alt="" [src]="auth.avatarPath">
         <app-button-accent [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'" (click)="onLoginButtonClick()">
         </app-button-accent>
       </mat-toolbar-row>

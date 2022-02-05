@@ -38,5 +38,14 @@ height:2.5rem;
 }
 
 .user-name {
-  margin: 0 20px;
+  margin: 0 10px;
+}
+
+.avatar-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }

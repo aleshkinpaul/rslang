@@ -1,8 +1,15 @@
 <mat-card>
   <mat-card-title>{{ isLoginPage ? 'Вход в аккаунт' : 'Регистрация'}}</mat-card-title>
   <mat-card-content>
-    <div class="error-message" *ngIf="isLoginPage && (auth.loginError$ | async) as error">{{ error }}</div>
-    <div class="error-message" *ngIf="!isLoginPage && (createUserError$ | async) as error">{{ error }}</div>
+    <mat-error class="error-message" *ngIf="isLoginPage && (auth.loginError$ | async) as error">{{ error }}</mat-error>
+    <mat-error class="error-message" *ngIf="!isLoginPage && (createUserError$ | async) as error">{{ error }}</mat-error>
+    <button *ngIf="!isLoginPage" class="avatar-button" color="primary" mat-fab aria-label="Загрузите свой аватар"
+      (click)="fileInput.click()">
+      <img *ngIf="isAvatarAdd" class="upload-image" #uploadImage src="" alt="">
+      <mat-icon>add_a_photo</mat-icon>
+      <input class="file-input" #fileInput type="file" accept="image/png, image/gif, image/jpeg, image/jpg"
+        (change)="onFileInput($event)">
+    </button>
     <mat-form-field appearance="fill" *ngIf="!isLoginPage">
       <mat-label>Введите имя</mat-label>
       <input matInput placeholder="name" [formControl]="name" required>
