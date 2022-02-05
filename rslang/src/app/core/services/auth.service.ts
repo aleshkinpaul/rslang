@@ -49,8 +49,6 @@ export class AuthService {
           }
           if (error.status === 404) {
             this.loginError$.next(ERROR_MESSAGE.login);
-            console.log('404');
-
           }
           return throwError(() => error)
         })
