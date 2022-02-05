@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IAggregatedRequestParams, IAuth, IRefreshAuth, ISettings, IStatistic, IUser, IUserData, IUserWord, IWord } from 'src/app/shared/interfaces';
-import { BACKEND_PATH } from '../constants/constant';
+import { IAggregatedRequestParams, IAuth, IRefreshAuth, ISettings, IStatistic, IUser, IUserCreate, IUserData, IUserWord, IWord } from 'src/app/shared/interfaces';
+import { BACKEND_PATH, UPLOAD_IMAGES_PATH, UPLOAD_IMAGES_PRESET } from '../constants/constant';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,8 @@ export class ApiService {
     return this.http.post<IAuth>(`${BACKEND_PATH}/signin`, userData);
   }
 
-  public createNewUser(user: IUser): Observable<IUser> {
-    return this.http.post<IUser>(`${BACKEND_PATH}/users`, user);
+  public createNewUser(user: IUser): Observable<IUserCreate> {
+    return this.http.post<IUserCreate>(`${BACKEND_PATH}/users`, user);
   }
 
   public getUser(id: string): Observable<IUser> {
@@ -96,5 +96,12 @@ export class ApiService {
 
   public upsertSettings(id: string, settings: ISettings): Observable<ISettings> {
     return this.http.put<ISettings>(`${BACKEND_PATH}/users/${id}/settings`, settings);
+  }
+
+  public uploadAvatar(image: string): Observable<{ secure_url: string }> {
+    return this.http.post<{ secure_url: string }>(UPLOAD_IMAGES_PATH, {
+      file: image,
+      upload_preset: UPLOAD_IMAGES_PRESET,
+    });
   }
 }

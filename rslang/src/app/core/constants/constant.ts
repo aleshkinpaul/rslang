@@ -19,5 +19,6 @@ export const WORDS_IN_SPRINT_GAME = 20;
 export const TIMES_TO_SPRINT = [30, 60, 90];
 export const DEFAULT_SPRINT_TIME = 60;
 export const TIME_TO_SHOW_SPRINT_QUESTION_RESULT = 1000;
-
+export const UPLOAD_IMAGES_PATH = 'https://api.cloudinary.com/v1_1/rslang-media/image/upload';
+export const UPLOAD_IMAGES_PRESET = 'hbkvusoj';
 
