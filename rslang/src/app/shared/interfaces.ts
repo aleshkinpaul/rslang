@@ -4,6 +4,7 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
+  avatar?: string;
 }
 
 export interface IUserCreate {
@@ -23,6 +24,7 @@ export interface IAuth {
   refreshToken: string;
   userId: string;
   name: string;
+  avatar?: string;
 }
 
 export interface IRefreshAuth {
@@ -74,7 +76,7 @@ export interface IStatistic {
 export interface ISettings {
   wordsPerDay: number;
   optional: {
-    avatar: string;
+    tempParam: string;
   };
 }
 export interface IResults {

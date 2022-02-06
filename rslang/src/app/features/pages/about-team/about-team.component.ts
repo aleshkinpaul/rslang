@@ -26,7 +26,7 @@ export class AboutTeamComponent {
   }
 
   onClickCreateNewUserButton() {
-    this.api.createNewUser({ name: 'tempName', email: 'sss@jd.ru', password: '87654321' }).subscribe((response) => {
+    this.api.createNewUser({ name: 'tempName', email: 'ppp@jd.ru', password: '87654321', avatar: 'rrr' }).subscribe((response) => {
       console.log('resp:', response);
     });
   }
@@ -38,7 +38,7 @@ export class AboutTeamComponent {
   }
 
   onClickLoginButton() {
-    this.auth.login({ email: 'sss@jd.ru', password: '87654321' });
+    this.auth.login({ email: 'ppp@jd.ru', password: '87654321' });
   }
 
   onClickLogoutButton() {
@@ -72,7 +72,7 @@ export class AboutTeamComponent {
     const settings = {
       wordsPerDay: 10,
       optional: {
-        avatar: 'path',
+        tempParam: 'path',
       }
     }
     this.api.upsertSettings(this.auth.userId, settings).subscribe((response) => {

@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   uploadImagePath = '';
   isAvatarAdd = false;
-  file!: File;
+  avatarFile!: string;
 
   constructor(public auth: AuthService, private api: ApiService, private route: Router) { }
 
@@ -90,15 +90,15 @@ export class LoginComponent implements OnInit {
       password: this.form.value.password,
     }
 
-    this.auth.login(user).subscribe(() => {
+    this.auth.login(user).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.submitted = false;
+        return throwError(() => error);
+      })
+    ).subscribe(() => {
       this.form.reset();
       this.route.navigate(['/mainpage']);
-      this.api.getSettings(this.auth.userId).subscribe((response) => {
-        if (response.optional.avatar !== 'none') {
-          this.auth.avatarPath = response.optional.avatar;
-          this.auth.saveToLocal();
-        }
-      });
+      this.submitted = false;
     });
   }
 
@@ -106,14 +106,27 @@ export class LoginComponent implements OnInit {
     const user: IUser = {
       name: this.form.value.name,
       email: this.form.value.email,
-      password: this.form.value.password,
+      password: this.form.value.password
     }
 
+    if (this.isAvatarAdd) {
+      this.api.uploadAvatar(this.avatarFile).subscribe((response) => {
+        this.uploadImagePath = response.secure_url.replace('upload/', 'upload/c_fill,h_100,w_100/');
+        user.avatar = this.uploadImagePath;
+        this.createUser(user);
+      });
+    } else {
+      this.createUser(user);
+    }
+  }
+
+  createUser(user: IUser) {
     this.api.createNewUser(user).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 417) {
           this.createUserError$.next(ERROR_MESSAGE.create);
         }
+        this.submitted = false;
         return throwError(() => error);
       })
     ).subscribe((response) => {
@@ -130,38 +143,7 @@ export class LoginComponent implements OnInit {
     this.auth.login(newUser).subscribe(() => {
       this.form.reset();
       this.route.navigate(['/mainpage']);
-      if (this.isAvatarAdd) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.result && typeof reader.result === 'string') {
-            this.api.uploadAvatar(reader.result).subscribe((response) => {
-              this.uploadImagePath = response.secure_url;
-              const settings = {
-                wordsPerDay: 1,
-                optional: {
-                  avatar: this.uploadImagePath,
-                }
-              }
-              this.api.upsertSettings(this.auth.userId, settings).subscribe((response) => {
-                this.auth.avatarPath = this.uploadImagePath;
-                this.auth.saveToLocal();
-              });
-            });
-          }
-        };
-        reader.readAsDataURL(this.file);
-      } else {
-        const settings = {
-          wordsPerDay: 1,
-          optional: {
-            avatar: 'none',
-          }
-        }
-        this.api.upsertSettings(this.auth.userId, settings).subscribe((response) => {
-          this.auth.avatarPath = this.uploadImagePath;
-          this.auth.saveToLocal();
-        });
-      }
+      this.submitted = false;
     });
   }
 
@@ -172,15 +154,16 @@ export class LoginComponent implements OnInit {
 
   onFileInput(event: Event) {
     if (event.target) {
-      this.file = (event.target as HTMLInputElement).files![0];
       this.isAvatarAdd = true;
+      const file = (event.target as HTMLInputElement).files![0];
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result && typeof reader.result === 'string') {
           this.uploadImage.nativeElement.src = reader.result;
+          this.avatarFile = reader.result;
         }
       };
-      reader.readAsDataURL(this.file);
+      reader.readAsDataURL(file);
     }
   }
 }

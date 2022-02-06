@@ -50,7 +50,7 @@ export class AuthService {
           if (error.status === 404) {
             this.loginError$.next(ERROR_MESSAGE.login);
           }
-          return throwError(() => error)
+          return throwError(() => error);
         })
       );
   }
@@ -101,6 +101,7 @@ export class AuthService {
     this.refreshToken = response.refreshToken;
     this.isAuthenticated = true;
     this.name = response.name;
+    this.avatarPath = response.avatar ? response.avatar : this.avatarPath;
     this.saveToLocal();
   }
 
