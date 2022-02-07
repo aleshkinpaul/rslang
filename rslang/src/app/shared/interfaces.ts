@@ -70,22 +70,27 @@ export interface IUserWord {
 }
 
 export interface IStatisticParam {
-  [key: string]: {
-    newWords: number;
-    correctAnswers: number;
-    wrongAnswers: number;
-    correctSeries: number;
-  }
+  newWords: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+  correctSeries: number;
 }
 
 export interface IStatistic {
+  id?: string;
   learnedWords: number;
   optional: {
     games: {
-      audio: IStatisticParam;
-      sprint: IStatisticParam;
+      audio: {
+        [key: string]: IStatisticParam;
+      };
+      sprint: {
+        [key: string]: IStatisticParam;
+      };
     };
-    words: IStatisticParam;
+    words: {
+      [key: string]: IStatisticParam;
+    };
   }
 }
 
@@ -125,3 +130,5 @@ export interface IAggregatedResponseWords {
     count: number;
   }[]
 }
+
+export type GameType = 'sprint' | 'audio';

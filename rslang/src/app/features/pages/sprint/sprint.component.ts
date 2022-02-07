@@ -15,8 +15,9 @@ import {
 } from 'src/app/core/constants/constant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { StatisticService } from 'src/app/core/services/statistic.service';
 import { shuffleArr } from 'src/app/core/utils/utils';
-import { IAggregatedResponseWord, IResults, IUserWord, IWord } from 'src/app/shared/interfaces';
+import { IAggregatedResponseWord, IResults, IWord } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-sprint',
@@ -64,7 +65,7 @@ export class SprintComponent implements OnInit {
     }
   }
 
-  constructor(private api: ApiService, public route: ActivatedRoute, private auth: AuthService) { }
+  constructor(private api: ApiService, public route: ActivatedRoute, private auth: AuthService, private stat: StatisticService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -231,7 +232,8 @@ export class SprintComponent implements OnInit {
       word: <IWord>this.wordsForGame[this.currentQuestion],
     };
     this.results.push(result);
-    this.addWordToUser();
+    const word = this.wordsForGame[this.currentQuestion];
+    this.stat.addWordToUser(word as IAggregatedResponseWord, this.isUserRight);
     this.showResultQuestion = true;
     setTimeout(() => {
       this.showResultQuestion = false;
@@ -239,45 +241,10 @@ export class SprintComponent implements OnInit {
     }, TIME_TO_SHOW_SPRINT_QUESTION_RESULT);
   }
 
-  addWordToUser() {
-    const word = this.wordsForGame[this.currentQuestion];
-    if ((word as IAggregatedResponseWord).userWord) {
-      const wordSettings = (word as IAggregatedResponseWord).userWord!;
-
-      if (this.isUserRight) {
-        wordSettings.optional.correctAnswers += 1;
-        wordSettings.optional.correctSeries += 1;
-      } else {
-        wordSettings.optional.wrongAnswers += 1;
-        wordSettings.optional.correctSeries = 0;
-        wordSettings.optional.isStudied = false;
-      }
-
-      if (wordSettings.difficulty === 'hard') {
-        wordSettings.difficulty = wordSettings.optional.correctSeries >= 5 ? 'easy' : 'hard';
-        wordSettings.optional.isStudied = wordSettings.optional.correctSeries >= 5 ? true : false;
-      } else {
-        wordSettings.optional.isStudied = wordSettings.optional.correctSeries >= 3 ? true : false;
-      }
-
-      this.api.updateUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings);
-    } else {
-      const wordSettings: IUserWord = {
-        difficulty: 'easy',
-        optional: {
-          isStudied: false,
-          correctAnswers: this.isUserRight ? 1 : 0,
-          wrongAnswers: this.isUserRight ? 0 : 1,
-          correctSeries: this.isUserRight ? 1 : 0,
-        }
-      }
-      this.api.createUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings);
-    }
-  }
-
   nextQuestion() {
     if (this.currentQuestion + 1 === this.wordsForGame.length) {
       this.showResults();
+      this.stat.setStatistic(this.wordsForGame as IAggregatedResponseWord[], this.results, 'sprint');
       if (this.interval !== null) clearInterval(this.interval);
       this.interval = null;
       this.gameMode = false;
