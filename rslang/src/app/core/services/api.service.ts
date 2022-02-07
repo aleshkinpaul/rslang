@@ -64,7 +64,7 @@ export class ApiService {
     return this.http.get<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`);
   }
 
-  public updateUserWord(id: string, wordId: string, word: IWord): Observable<IWord> {
+  public updateUserWord(id: string, wordId: string, word: IUserWord): Observable<IWord> {
     return this.http.put<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word);
   }
 

@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { forkJoin, map, Observable } from 'rxjs';
 import {
   AGGREGATED_REQUESTS,
   BACKEND_PATH,
@@ -17,7 +16,7 @@ import {
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { shuffleArr } from 'src/app/core/utils/utils';
-import { IResults, IUserWord, IWord } from 'src/app/shared/interfaces';
+import { IAggregatedResponseWord, IResults, IUserWord, IWord } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-sprint',
@@ -41,9 +40,9 @@ export class SprintComponent implements OnInit {
   currentQuestion = 0;
   timeToEndGame = 0;
   currentTranslateVariant = 0;
-  wordsForGame: IWord[] = [];
+  wordsForGame: IAggregatedResponseWord[] | IWord[] = [];
   results: IResults[] = [];
-  showResultQuestion = false
+  showResultQuestion = false;
 
   @HostListener('window:keydown', ['$event'])
   handleKeyChoice(event: KeyboardEvent) {
@@ -107,13 +106,44 @@ export class SprintComponent implements OnInit {
   startGame() {
     this.loadingProgress = true;
     this.gameMode = true;
-    this.getRandomWordsForGame(WORDS_IN_SPRINT_GAME).subscribe((res) => {
-      this.wordsForGame = res;
+    const needWords: IAggregatedResponseWord[] = [];
+    const wordsReqParams: { word: number; page: number }[] = [];
+
+    while (wordsReqParams.length < WORDS_IN_SPRINT_GAME) {
+      const newReqParam = {
+        word: this.getRandomNumber(WORDS_ON_PAGE - 1),
+        page: this.getRandomNumber(PAGES_IN_LEVEL - 1),
+      };
+
+      const isUniqReqParam = !wordsReqParams.find(
+        (el) => el.page === newReqParam.page && el.word === newReqParam.word
+      );
+
+      if (isUniqReqParam) {
+        wordsReqParams.push(newReqParam);
+      }
+    }
+
+    const params = {
+      group: this.selectedLevel,
+      page: 0,
+      wordsPerPage: 600,
+      filter: AGGREGATED_REQUESTS.allUnstudiedWords,
+    }
+    this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
+      const responseWords = response[0].paginatedResults;
+
+      wordsReqParams.forEach((el) => {
+        const word = responseWords.filter((word) => word.group === this.selectedLevel && word.page === el.page)[el.word];
+        needWords.push(word)
+      });
+
+      this.wordsForGame = needWords;
       this.results = [];
       this.currentQuestion = 0;
       this.createTimer();
       this.getQuestion();
-    });
+    })
   }
 
   async getQuestion() {
@@ -133,8 +163,8 @@ export class SprintComponent implements OnInit {
     return variants[this.getRandomNumber(variants.length - 1)];
   }
 
-  getRandomWordsForGame(wordsCount: number): Observable<IWord[]> {
-    const observables: Observable<IWord>[] = [];
+  getRandomWordsForGame(wordsCount: number) {
+    const needWords: IAggregatedResponseWord[] = [];
     const wordsReqParams: { word: number; page: number }[] = [];
 
     while (wordsReqParams.length < wordsCount) {
@@ -152,17 +182,27 @@ export class SprintComponent implements OnInit {
       }
     }
 
-    wordsReqParams.forEach((el) => {
-      observables.push(
-        this.api.getWords(el.page, this.selectedLevel).pipe(
-          map((gettingPage) => {
-            return gettingPage[el.word];
-          })
-        )
-      );
-    });
+    const params = {
+      group: this.selectedLevel,
+      page: 0,
+      wordsPerPage: 600,
+      filter: AGGREGATED_REQUESTS.allUnstudiedWords,
+    }
 
-    return forkJoin<IWord[]>(observables);
+    this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
+      const responseWords = response[0].paginatedResults;
+
+      wordsReqParams.forEach((el) => {
+        const word = responseWords.filter((word) => word.group === this.selectedLevel && word.page === el.page)[el.word];
+        needWords.push(word)
+      });
+    })
+
+    this.wordsForGame = needWords;
+    this.results = [];
+    this.currentQuestion = 0;
+    this.createTimer();
+    this.getQuestion();
   }
 
   createTimer() {
@@ -188,14 +228,51 @@ export class SprintComponent implements OnInit {
 
     const result: IResults = {
       isCorrect: this.isUserRight,
-      word: this.wordsForGame[this.currentQuestion],
+      word: <IWord>this.wordsForGame[this.currentQuestion],
     };
     this.results.push(result);
+    this.addWordToUser();
     this.showResultQuestion = true;
     setTimeout(() => {
       this.showResultQuestion = false;
       this.nextQuestion();
     }, TIME_TO_SHOW_SPRINT_QUESTION_RESULT);
+  }
+
+  addWordToUser() {
+    const word = this.wordsForGame[this.currentQuestion];
+    if ((word as IAggregatedResponseWord).userWord) {
+      const wordSettings = (word as IAggregatedResponseWord).userWord!;
+
+      if (this.isUserRight) {
+        wordSettings.optional.correctAnswers += 1;
+        wordSettings.optional.correctSeries += 1;
+      } else {
+        wordSettings.optional.wrongAnswers += 1;
+        wordSettings.optional.correctSeries = 0;
+        wordSettings.optional.isStudied = false;
+      }
+
+      if (wordSettings.difficulty === 'hard') {
+        wordSettings.difficulty = wordSettings.optional.correctSeries >= 5 ? 'easy' : 'hard';
+        wordSettings.optional.isStudied = wordSettings.optional.correctSeries >= 5 ? true : false;
+      } else {
+        wordSettings.optional.isStudied = wordSettings.optional.correctSeries >= 3 ? true : false;
+      }
+
+      this.api.updateUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings);
+    } else {
+      const wordSettings: IUserWord = {
+        difficulty: 'easy',
+        optional: {
+          isStudied: false,
+          correctAnswers: this.isUserRight ? 1 : 0,
+          wrongAnswers: this.isUserRight ? 0 : 1,
+          correctSeries: this.isUserRight ? 1 : 0,
+        }
+      }
+      this.api.createUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings);
+    }
   }
 
   nextQuestion() {
