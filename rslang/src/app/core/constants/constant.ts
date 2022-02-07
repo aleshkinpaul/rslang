@@ -7,6 +7,10 @@ export const ERROR_MESSAGE = {
   create: 'Пользователь с таким email уже существует',
 }
 
+export const AGGREGATED_REQUESTS = {
+  allUnstudiedWords: '{"$or":[{"userWord.optional.isStudied":false},{"userWord":null}]}',
+}
+
 export const LEVELS_IN_GAME = 6;
 export const PAGES_IN_LEVEL = 30;
 export const WORDS_IN_GAME = 10;
@@ -21,4 +25,5 @@ export const DEFAULT_SPRINT_TIME = 60;
 export const TIME_TO_SHOW_SPRINT_QUESTION_RESULT = 1000;
 export const UPLOAD_IMAGES_PATH = 'https://api.cloudinary.com/v1_1/rslang-media/image/upload';
 export const UPLOAD_IMAGES_PRESET = 'hbkvusoj';
+export const DEFAULT_SPRINT_PAGE = 0;
 
