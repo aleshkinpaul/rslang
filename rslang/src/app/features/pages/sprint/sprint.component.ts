@@ -2,8 +2,10 @@ import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular
 import { ActivatedRoute, Params } from '@angular/router';
 import { forkJoin, map, Observable } from 'rxjs';
 import {
+  AGGREGATED_REQUESTS,
   BACKEND_PATH,
   DEFAULT_SPRINT_LEVEL,
+  DEFAULT_SPRINT_PAGE,
   DEFAULT_SPRINT_TIME,
   LEVELS_IN_GAME,
   PAGES_IN_LEVEL,
@@ -13,8 +15,9 @@ import {
   WORDS_ON_PAGE,
 } from 'src/app/core/constants/constant';
 import { ApiService } from 'src/app/core/services/api.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { shuffleArr } from 'src/app/core/utils/utils';
-import { IResults, IWord } from 'src/app/shared/interfaces';
+import { IResults, IUserWord, IWord } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-sprint',
@@ -30,6 +33,7 @@ export class SprintComponent implements OnInit {
   showResultsPage = false;
   gameMode = false;
   selectedLevel = DEFAULT_SPRINT_LEVEL;
+  selectedPage = DEFAULT_SPRINT_PAGE
   selectedTime = DEFAULT_SPRINT_TIME;
   levelsInGame = new Array(LEVELS_IN_GAME);
   timesInGame = TIMES_TO_SPRINT;
@@ -61,7 +65,7 @@ export class SprintComponent implements OnInit {
     }
   }
 
-  constructor(private api: ApiService, public route: ActivatedRoute) { }
+  constructor(private api: ApiService, public route: ActivatedRoute, private auth: AuthService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -73,14 +77,30 @@ export class SprintComponent implements OnInit {
   startGameFromLearnbook(data: Params) {
     this.loadingProgress = true;
     this.selectedLevel = Number(data['level'] - 1);
+    this.selectedPage = Number(data['page'] - 1);
     this.gameMode = true;
-    this.api.getWords(data['page'], data['level'] - 1).subscribe((res) => {
-      this.results = [];
-      this.wordsForGame = shuffleArr(<[]>res);
+
+    const params = {
+      group: this.selectedLevel,
+      page: 0,
+      wordsPerPage: 600,
+      filter: AGGREGATED_REQUESTS.allUnstudiedWords,
+    }
+    this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
+      let needWords = response[0].paginatedResults.filter((word) => word.page === this.selectedPage);
+
+      if (needWords.length < 20) {
+        const otherWords = response[0].paginatedResults.filter((word) => word.page !== this.selectedPage);
+        const addWords = shuffleArr(<[]>otherWords).slice(0, 20 - needWords.length);
+        this.wordsForGame = shuffleArr(<[]>[...needWords, ...addWords]);
+      } else {
+        this.wordsForGame = shuffleArr(<[]>needWords);
+      }
+
       this.currentQuestion = 0;
       this.createTimer();
       this.getQuestion();
-    });
+    })
   }
 
   startGame() {

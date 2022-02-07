@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IAggregatedRequestParams, IAuth, IRefreshAuth, ISettings, IStatistic, IUser, IUserCreate, IUserData, IUserWord, IWord } from 'src/app/shared/interfaces';
+import { IAggregatedRequestParams, IAggregatedResponseWords, IAuth, IRefreshAuth, ISettings, IStatistic, IUser, IUserCreate, IUserData, IUserWord, IWord } from 'src/app/shared/interfaces';
 import { BACKEND_PATH, UPLOAD_IMAGES_PATH, UPLOAD_IMAGES_PRESET } from '../constants/constant';
 
 @Injectable({
@@ -56,7 +56,7 @@ export class ApiService {
     return this.http.get<IUserWord[]>(`${BACKEND_PATH}/users/${id}/words`);
   }
 
-  public createUserWord(id: string, wordId: string, word: IWord): Observable<IUserWord> {
+  public createUserWord(id: string, wordId: string, word: IUserWord): Observable<IUserWord> {
     return this.http.post<IUserWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word);
   }
 
@@ -72,8 +72,8 @@ export class ApiService {
     return this.http.delete(`${BACKEND_PATH}/users/${id}/words/${wordId}`);
   }
 
-  public getAllUserAggregatedWords(id: string, requestParams: IAggregatedRequestParams): Observable<IWord[]> {
-    return this.http.get<IWord[]>(`${BACKEND_PATH}/users/${id}/aggregatedWords`, {
+  public getAllUserAggregatedWords(id: string, requestParams: IAggregatedRequestParams): Observable<IAggregatedResponseWords[]> {
+    return this.http.get<IAggregatedResponseWords[]>(`${BACKEND_PATH}/users/${id}/aggregatedWords`, {
       params: { ...requestParams }
     });
   }
