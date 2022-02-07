@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { IUserWord } from 'src/app/shared/interfaces';
 import { AudioChallengeComponent } from '../audio-challenge/audio-challenge.component';
 
 @Component({
@@ -86,12 +87,27 @@ export class AboutTeamComponent {
     });
   }
 
+  onClickCreateUserWordButton() {
+    const wordSettings: IUserWord = {
+      difficulty: 'easy',
+      optional: {
+        isStudied: false,
+        correctAnswers: 2,
+        wrongAnswers: 3,
+        correctSeries: 1,
+      }
+    }
+    this.api.createUserWord(this.auth.userId, '5e9f5ee35eb9e72bc21af4af', wordSettings).subscribe((response) => {
+      console.log('word', response);
+    });
+  }
+
   startAudioChallenge() {
     this.route.navigate(['/audiochallenge', { page: 15, level: 0 }]);
   };
 
   startSprint() {
-    this.route.navigate(['/sprint', { page: 9, level: 4 }]);
+    this.route.navigate(['/sprint', { page: 1, level: 3 }]);
   };
 
 
