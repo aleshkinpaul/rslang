@@ -101,22 +101,27 @@ export interface IResults {
   isCorrect: boolean;
 }
 
+export interface IAggregatedResponseWord {
+  _id: string;
+  group: number;
+  page: number;
+  word: string;
+  image: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  textMeaning: string;
+  textExample: string;
+  transcription: string;
+  wordTranslate: string;
+  textMeaningTranslate: string;
+  textExampleTranslate: string;
+  userWord?: IUserWord;
+}
+
 export interface IAggregatedResponseWords {
-  paginatedResults: {
-    _id: string;
-    group: number;
-    page: number;
-    word: string;
-    image: string;
-    audio: string;
-    audioMeaning: string;
-    audioExample: string;
-    textMeaning: string;
-    textExample: string;
-    transcription: string;
-    wordTranslate: string;
-    textMeaningTranslate: string;
-    textExampleTranslate: string;
-    userWord?: IUserWord;
+  paginatedResults: IAggregatedResponseWord[];
+  totalCount: {
+    count: number;
   }[]
 }
