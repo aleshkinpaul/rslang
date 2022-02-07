@@ -4,3 +4,26 @@
 .mat-toolbar-multiple-rows {
   min-height: 2.5rem;
 }
+.footer-bar__names{
+display: flex;
+gap:5%;
+}
+.footer-bar__link{
+  text-decoration: none;
+  color:white;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+.school-icon{
+  width: 5rem;
+  opacity: 70%;
+  vertical-align: bottom;
+  &:hover {
+    opacity: 100%;
+    cursor: pointer;
+  }
+  img {
+    width: 3rem;
+  }
+}
