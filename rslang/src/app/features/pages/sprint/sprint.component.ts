@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { forkJoin, map, Observable } from 'rxjs';
 import {
   AGGREGATED_REQUESTS,
   BACKEND_PATH,
@@ -80,28 +81,38 @@ export class SprintComponent implements OnInit {
     this.selectedPage = Number(data['page'] - 1);
     this.gameMode = true;
 
-    const params = {
-      group: this.selectedLevel,
-      page: 0,
-      wordsPerPage: 600,
-      filter: AGGREGATED_REQUESTS.allUnstudiedWords,
-    }
-    this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
-      let needWords = response[0].paginatedResults.filter((word) => word.page === this.selectedPage);
-
-      if (needWords.length < 20) {
-        const otherWords = response[0].paginatedResults.filter((word) => word.page !== this.selectedPage);
-        const addWords = shuffleArr(<[]>otherWords).slice(0, 20 - needWords.length);
-        this.wordsForGame = shuffleArr(<[]>[...needWords, ...addWords]);
-      } else {
-        this.wordsForGame = shuffleArr(<[]>needWords);
+    if (this.auth.isAuthenticated) {
+      const params = {
+        group: this.selectedLevel,
+        page: 0,
+        wordsPerPage: 600,
+        filter: AGGREGATED_REQUESTS.allUnstudiedWords,
       }
+      this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
+        let needWords = response[0].paginatedResults.filter((word) => word.page === this.selectedPage);
 
-      this.results = [];
-      this.currentQuestion = 0;
-      this.createTimer();
-      this.getQuestion();
-    })
+        if (needWords.length < 20) {
+          const otherWords = response[0].paginatedResults.filter((word) => word.page !== this.selectedPage);
+          const addWords = shuffleArr(<[]>otherWords).slice(0, 20 - needWords.length);
+          this.wordsForGame = shuffleArr(<[]>[...needWords, ...addWords]);
+        } else {
+          this.wordsForGame = shuffleArr(<[]>needWords);
+        }
+
+        this.results = [];
+        this.currentQuestion = 0;
+        this.createTimer();
+        this.getQuestion();
+      })
+    } else {
+      this.api.getWords(this.selectedPage, this.selectedLevel).subscribe((res) => {
+        this.wordsForGame = shuffleArr(<[]>res);
+        this.results = [];
+        this.currentQuestion = 0;
+        this.createTimer();
+        this.getQuestion();
+      });
+    }
   }
 
   startGame() {
@@ -125,26 +136,48 @@ export class SprintComponent implements OnInit {
       }
     }
 
-    const params = {
-      group: this.selectedLevel,
-      page: 0,
-      wordsPerPage: 600,
-      filter: AGGREGATED_REQUESTS.allUnstudiedWords,
-    }
-    this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
-      const responseWords = response[0].paginatedResults;
+    if (this.auth.isAuthenticated) {
+      const params = {
+        group: this.selectedLevel,
+        page: 0,
+        wordsPerPage: 600,
+        filter: AGGREGATED_REQUESTS.allUnstudiedWords,
+      }
+      this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
+        const responseWords = response[0].paginatedResults;
 
+        wordsReqParams.forEach((el) => {
+          const word = responseWords.filter((word) => word.group === this.selectedLevel && word.page === el.page)[el.word];
+          needWords.push(word);
+        });
+
+        this.wordsForGame = needWords;
+        this.results = [];
+        this.currentQuestion = 0;
+        this.createTimer();
+        this.getQuestion();
+      })
+    } else {
+      const observables: Observable<IWord>[] = [];
       wordsReqParams.forEach((el) => {
-        const word = responseWords.filter((word) => word.group === this.selectedLevel && word.page === el.page)[el.word];
-        needWords.push(word)
+        observables.push(
+          this.api.getWords(el.page, this.selectedLevel).pipe(
+            map((gettingPage) => {
+              return gettingPage[el.word];
+            })
+          )
+        );
       });
 
-      this.wordsForGame = needWords;
-      this.results = [];
-      this.currentQuestion = 0;
-      this.createTimer();
-      this.getQuestion();
-    })
+      forkJoin<IWord[]>(observables).subscribe((res) => {
+        this.wordsForGame = res;
+        this.results = [];
+        this.currentQuestion = 0;
+        this.currentTranslateVariant = 0;
+        this.createTimer();
+        this.getQuestion();
+      });
+    }
   }
 
   async getQuestion() {
@@ -162,48 +195,6 @@ export class SprintComponent implements OnInit {
     const variants = [this.currentQuestion, wrongVariant];
 
     return variants[this.getRandomNumber(variants.length - 1)];
-  }
-
-  getRandomWordsForGame(wordsCount: number) {
-    const needWords: IAggregatedResponseWord[] = [];
-    const wordsReqParams: { word: number; page: number }[] = [];
-
-    while (wordsReqParams.length < wordsCount) {
-      const newReqParam = {
-        word: this.getRandomNumber(WORDS_ON_PAGE - 1),
-        page: this.getRandomNumber(PAGES_IN_LEVEL - 1),
-      };
-
-      const isUniqReqParam = !wordsReqParams.find(
-        (el) => el.page === newReqParam.page && el.word === newReqParam.word
-      );
-
-      if (isUniqReqParam) {
-        wordsReqParams.push(newReqParam);
-      }
-    }
-
-    const params = {
-      group: this.selectedLevel,
-      page: 0,
-      wordsPerPage: 600,
-      filter: AGGREGATED_REQUESTS.allUnstudiedWords,
-    }
-
-    this.api.getAllUserAggregatedWords(this.auth.userId, params).subscribe((response) => {
-      const responseWords = response[0].paginatedResults;
-
-      wordsReqParams.forEach((el) => {
-        const word = responseWords.filter((word) => word.group === this.selectedLevel && word.page === el.page)[el.word];
-        needWords.push(word)
-      });
-    })
-
-    this.wordsForGame = needWords;
-    this.results = [];
-    this.currentQuestion = 0;
-    this.createTimer();
-    this.getQuestion();
   }
 
   createTimer() {
@@ -233,7 +224,9 @@ export class SprintComponent implements OnInit {
     };
     this.results.push(result);
     const word = this.wordsForGame[this.currentQuestion];
-    this.stat.addWordToUser(word as IAggregatedResponseWord, this.isUserRight);
+    if (this.auth.isAuthenticated) {
+      this.stat.addWordToUser(word as IAggregatedResponseWord, this.isUserRight);
+    }
     this.showResultQuestion = true;
     setTimeout(() => {
       this.showResultQuestion = false;
@@ -244,7 +237,9 @@ export class SprintComponent implements OnInit {
   nextQuestion() {
     if (this.currentQuestion + 1 === this.wordsForGame.length) {
       this.showResults();
-      this.stat.setStatistic(this.wordsForGame as IAggregatedResponseWord[], this.results, 'sprint');
+      if (this.auth.isAuthenticated) {
+        this.stat.setStatistic(this.wordsForGame as IAggregatedResponseWord[], this.results, 'sprint');
+      }
       if (this.interval !== null) clearInterval(this.interval);
       this.interval = null;
       this.gameMode = false;

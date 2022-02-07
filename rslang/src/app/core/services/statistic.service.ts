@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 import { GameType, IAggregatedResponseWord, IResults, IStatistic, IStatisticParam, IUserWord } from 'src/app/shared/interfaces';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
@@ -13,24 +15,47 @@ export class StatisticService {
 
   setStatistic(words: IAggregatedResponseWord[], results: IResults[], gameType: GameType) {
     const date = this.datePipe.transform(new Date(), 'dd.MM.yyy')!;
+    const newWords = (words as IAggregatedResponseWord[]).filter((word) => !word.userWord).length;
+    console.log('nnn', words);
 
-    this.api.getStatistics(this.auth.userId).subscribe((response) => {
-      const statistic: IStatistic = response;
-      const newWords = (words as IAggregatedResponseWord[]).filter((word) => word.userWord).length;
-      const correctAnswers = results.filter((word) => word.isCorrect).length;
-      const wrongAnswers = results.filter((word) => !word.isCorrect).length;
-      const correctSeries = this.getCorrectSeries(results);
+    const correctAnswers = results.filter((word) => word.isCorrect).length;
+    const wrongAnswers = results.filter((word) => !word.isCorrect).length;
+    const correctSeries = this.getCorrectSeries(results);
 
-      const newStat = {
-        [date]: {
-          newWords: newWords,
-          correctAnswers: correctAnswers,
-          wrongAnswers: wrongAnswers,
-          correctSeries: correctSeries,
-        }
+    const newStat = {
+      [date]: {
+        newWords: newWords,
+        correctAnswers: correctAnswers,
+        wrongAnswers: wrongAnswers,
+        correctSeries: correctSeries,
       }
+    }
 
-      if (statistic.optional.games[gameType]) {
+    this.api.getStatistics(this.auth.userId).pipe(
+      catchError((error: HttpErrorResponse) => {
+        const stat = {
+          learnedWords: 0,
+          optional: {
+            games: {
+              audio: {},
+              sprint: {},
+            },
+            words: {},
+          }
+        }
+
+        stat.optional.games[gameType] = newStat;
+        stat.optional.words = newStat;
+
+        this.api.upsertStatistics(this.auth.userId, stat).subscribe((response) => {
+          console.log('stat', response);
+        });
+        return throwError(() => error);
+      })
+    ).subscribe((response) => {
+      const statistic: IStatistic = response;
+
+      if (statistic.optional && statistic.optional.games[gameType][date]) {
         const newCorrectSeries = statistic.optional.games[gameType][date].correctSeries > correctSeries
           ? statistic.optional.games[gameType][date].correctSeries
           : correctSeries;
@@ -60,7 +85,7 @@ export class StatisticService {
         statistic.optional.words = newStat;
       }
       delete statistic.id;
-      this.api.upsertStatistics(this.auth.userId, statistic);
+      this.api.upsertStatistics(this.auth.userId, statistic).subscribe((res) => { });
     });
   }
 
@@ -84,7 +109,8 @@ export class StatisticService {
         wordSettings.optional.isStudied = wordSettings.optional.correctSeries >= 3 ? true : false;
       }
 
-      this.api.updateUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings);
+      this.api.updateUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings).subscribe((res) => {
+      });
     } else {
       const wordSettings: IUserWord = {
         difficulty: 'easy',
@@ -95,7 +121,10 @@ export class StatisticService {
           correctSeries: isUserRight ? 1 : 0,
         }
       }
-      this.api.createUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings);
+      console.log('bef', word);
+
+      this.api.createUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings).subscribe((res) => {
+      });
     }
   }
 
@@ -116,5 +145,20 @@ export class StatisticService {
     });
 
     return maxSeries;
+  }
+
+  addDefaultStatisticToNewUser() {
+    const stat = {
+      learnedWords: 0,
+      optional: {
+        games: {
+          audio: {},
+          sprint: {},
+        },
+        words: {},
+      }
+    }
+
+    this.api.upsertStatistics(this.auth.userId, stat).subscribe((response) => { });
   }
 }
