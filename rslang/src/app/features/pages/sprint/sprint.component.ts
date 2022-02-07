@@ -97,6 +97,7 @@ export class SprintComponent implements OnInit {
         this.wordsForGame = shuffleArr(<[]>needWords);
       }
 
+      this.results = [];
       this.currentQuestion = 0;
       this.createTimer();
       this.getQuestion();
@@ -110,7 +111,6 @@ export class SprintComponent implements OnInit {
       this.wordsForGame = res;
       this.results = [];
       this.currentQuestion = 0;
-      this.currentTranslateVariant = 0;
       this.createTimer();
       this.getQuestion();
     });
