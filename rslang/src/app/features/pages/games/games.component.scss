@@ -20,20 +20,20 @@
 .button__icon-wrapper {
   text-align: center;
   padding:5%;
-  &:first-child{
-    animation: animate_grow 2s infinite;
-  }
-  &:hover{
-    animation: none;
-  }
+  // &:first-child{
+  //   animation: animate_grow 2s infinite;
+  // }
+  // &:hover{
+  //   animation: none;
+  // }
 }
 .games-buttons{
-width: 80%;
+width: 95%;
 gap: 10%;
 margin: auto;
 display: flex;
 justify-content: center;
-padding: 15vh 10vh;
+padding: 7vh 10vh;
 }
 @keyframes animate_grow {
 	0% {
@@ -49,7 +49,7 @@ padding: 15vh 10vh;
 .button__icon{
 font-size: 10rem;
 text-align: center;
-width:auto;
+width:100%;
 
 
 }

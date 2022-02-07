@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material/material.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -26,6 +26,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     ReactiveFormsModule
   ],
+  schemas:[ CUSTOM_ELEMENTS_SCHEMA ]
 
 })
 export class PagesModule { }
