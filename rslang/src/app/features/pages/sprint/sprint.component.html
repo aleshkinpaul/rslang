@@ -1,9 +1,16 @@
 <div class="game">
   <mat-card *ngIf="!gameMode" class="transparent-background">
-    <mat-card-title>Спринт</mat-card-title>
-    <mat-card-content>Управление клавишами:<br>
-      Чтобы выбрать вариант ответа используйте мышь или клавиши влево, вправо<br>
-      '0' - прослушать слово</mat-card-content>
+    <mat-card-title class="sprint__title background-primary"
+      >Спринт</mat-card-title
+    >
+    <mat-card-content
+      >Управление клавишами:<br />
+      <span class="text-primary">'Enter'</span> - следующий вопрос<br />
+      <span class="text-primary">'&rarr;, &larr;'</span> - выбор варианта<br />
+      <span class="text-primary">'0'</span> - прослушать слово еще
+      раз</mat-card-content
+    >
+    <div class="game__selectors">
     <mat-form-field appearance="fill">
       <mat-label>Выберите уровень</mat-label>
       <mat-select [(ngModel)]="selectedLevel">
@@ -16,6 +23,7 @@
         <mat-option *ngFor="let time of timesInGame" [value]="time">{{ time }} секунд</mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
     <mat-card-actions>
       <app-button-accent [title]="'Начать игру'" (click)="startGame()"></app-button-accent>
     </mat-card-actions>
