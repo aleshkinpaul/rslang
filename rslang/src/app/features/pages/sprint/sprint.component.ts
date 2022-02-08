@@ -227,11 +227,7 @@ export class SprintComponent implements OnInit {
     if (this.auth.isAuthenticated) {
       this.stat.addWordToUser(word as IAggregatedResponseWord, this.isUserRight);
     }
-    this.showResultQuestion = true;
-    setTimeout(() => {
-      this.showResultQuestion = false;
-      this.nextQuestion();
-    }, TIME_TO_SHOW_SPRINT_QUESTION_RESULT);
+    this.nextQuestion();
   }
 
   nextQuestion() {
@@ -267,5 +263,10 @@ export class SprintComponent implements OnInit {
       this.audio.nativeElement.src = `${BACKEND_PATH}/${this.wordsForGame[this.currentQuestion].audio}`;
       await this.audio.nativeElement.play();
     }
+  }
+  getAnswerResult(i:number){
+    if (this.results) {
+    return (this.results[i].isCorrect===true) ? true : false;
+    } else return false;
   }
 }

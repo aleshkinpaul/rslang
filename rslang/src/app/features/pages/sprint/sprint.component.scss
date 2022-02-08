@@ -2,12 +2,37 @@
   min-height: 100%;
   text-align: center;
   padding: 5%;
-  display: block
+  display: block;
+  .sprint{
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .indicators {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap:1%;
+      width: 100%;
+      margin-bottom: 2%;
+      .indicators__indicator {
+        content: '';
+        min-height: 1rem;
+        min-width:1rem;
+      }
+    }
+    .sprint__hear {
+      display: block;
+      margin: auto;
+      margin-bottom: 2%;
+    }
+    .sprint__title {
+      padding: 2% 5%;
+      color: white;
+    }
+  }
 }
-.sprint__title {
-  padding: 2% 5%;
-  color: white;
-}
+
 .game__selectors {
   display: flex;
   column-gap: 5%;
