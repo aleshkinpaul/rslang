@@ -1,4 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material/material.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -20,6 +21,7 @@ import { LoginComponent } from './login/login.component';
   declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent, SprintComponent, LoginComponent],
   imports: [
     CommonModule,
+
     MaterialModule,
     PagesRoutingModule,
     SharedModule,
