@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 import { GameType, IAggregatedResponseWord, IResults, IStatistic, IStatisticParam, IUserWord } from 'src/app/shared/interfaces';
+import { DATE_PATTERN } from '../constants/constant';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 
@@ -11,13 +12,11 @@ import { AuthService } from './auth.service';
 })
 export class StatisticService {
 
-  constructor(private datePipe: DatePipe, private api: ApiService, private auth: AuthService,) { }
+  constructor(private datePipe: DatePipe, private api: ApiService, private auth: AuthService) { }
 
   setStatistic(words: IAggregatedResponseWord[], results: IResults[], gameType: GameType) {
-    const date = this.datePipe.transform(new Date(), 'dd.MM.yyy')!;
-    const newWords = (words as IAggregatedResponseWord[]).filter((word) => !word.userWord).length;
-    console.log('nnn', words);
-
+    const date = this.datePipe.transform(new Date(), DATE_PATTERN)!;
+    const newWords = words.filter((word) => !word.userWord).length;
     const correctAnswers = results.filter((word) => word.isCorrect).length;
     const wrongAnswers = results.filter((word) => !word.isCorrect).length;
     const correctSeries = this.getCorrectSeries(results);
@@ -47,15 +46,13 @@ export class StatisticService {
         stat.optional.games[gameType] = newStat;
         stat.optional.words = newStat;
 
-        this.api.upsertStatistics(this.auth.userId, stat).subscribe((response) => {
-          console.log('stat', response);
-        });
+        this.api.upsertStatistics(this.auth.userId, stat).subscribe((response) => { });
         return throwError(() => error);
       })
     ).subscribe((response) => {
       const statistic: IStatistic = response;
 
-      if (statistic.optional && statistic.optional.games[gameType][date]) {
+      if (statistic.optional.games.hasOwnProperty(gameType) && statistic.optional.games[gameType][date]) {
         const newCorrectSeries = statistic.optional.games[gameType][date].correctSeries > correctSeries
           ? statistic.optional.games[gameType][date].correctSeries
           : correctSeries;
@@ -66,11 +63,13 @@ export class StatisticService {
           wrongAnswers: statistic.optional.games[gameType][date].wrongAnswers + wrongAnswers,
           correctSeries: newCorrectSeries,
         }
+      } else if (statistic.optional.games.hasOwnProperty(gameType)) {
+        statistic.optional.games[gameType] = Object.assign(statistic.optional.games[gameType], newStat);
       } else {
         statistic.optional.games[gameType] = newStat;
       }
 
-      if (statistic.optional.words) {
+      if (statistic.optional.words[date]) {
         const newCorrectSeries = statistic.optional.words[date].correctSeries > correctSeries
           ? statistic.optional.words[date].correctSeries
           : correctSeries;
@@ -82,16 +81,17 @@ export class StatisticService {
           correctSeries: newCorrectSeries,
         }
       } else {
-        statistic.optional.words = newStat;
+        statistic.optional.words = Object.assign(statistic.optional.words, newStat);
       }
+
       delete statistic.id;
-      this.api.upsertStatistics(this.auth.userId, statistic).subscribe((res) => { });
+      this.api.upsertStatistics(this.auth.userId, statistic).subscribe(() => { });
     });
   }
 
   addWordToUser(word: IAggregatedResponseWord, isUserRight: boolean) {
-    if ((word as IAggregatedResponseWord).userWord) {
-      const wordSettings = (word as IAggregatedResponseWord).userWord!;
+    if (word.userWord) {
+      const wordSettings = word.userWord;
 
       if (isUserRight) {
         wordSettings.optional.correctAnswers += 1;
@@ -109,8 +109,7 @@ export class StatisticService {
         wordSettings.optional.isStudied = wordSettings.optional.correctSeries >= 3 ? true : false;
       }
 
-      this.api.updateUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings).subscribe((res) => {
-      });
+      this.api.updateUserWord(this.auth.userId, word._id, wordSettings).subscribe((res) => { });
     } else {
       const wordSettings: IUserWord = {
         difficulty: 'easy',
@@ -121,10 +120,8 @@ export class StatisticService {
           correctSeries: isUserRight ? 1 : 0,
         }
       }
-      console.log('bef', word);
 
-      this.api.createUserWord(this.auth.userId, (word as IAggregatedResponseWord)._id, wordSettings).subscribe((res) => {
-      });
+      this.api.createUserWord(this.auth.userId, word._id, wordSettings).subscribe((res) => { });
     }
   }
 
@@ -145,20 +142,5 @@ export class StatisticService {
     });
 
     return maxSeries;
-  }
-
-  addDefaultStatisticToNewUser() {
-    const stat = {
-      learnedWords: 0,
-      optional: {
-        games: {
-          audio: {},
-          sprint: {},
-        },
-        words: {},
-      }
-    }
-
-    this.api.upsertStatistics(this.auth.userId, stat).subscribe((response) => { });
   }
 }
