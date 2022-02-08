@@ -53,7 +53,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .background-accent{
   background-color: mat-color($rslang-accent);
 }
-.audio-game__highlight{
+.text-primary{
   color: mat-color($rslang-primary);
 }
 .transparent-background{
@@ -71,7 +71,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: mat-color($rslang-accent-dark);
   }
 
-  .audio-game__highlight{
+  .text-primary{
     color: mat-color($rslang-accent-dark);
   }
   .transparent-background{
