@@ -111,6 +111,7 @@ export class AudioChallengeComponent implements OnInit {
 
 
   }
+
   startGame() {
     this.gameMode = !this.gameMode;
     this.getRandomWordsForGame(this.selectedWordsAmount).subscribe((res) => {
@@ -213,7 +214,11 @@ export class AudioChallengeComponent implements OnInit {
     }
     return forkJoin<IWord[]>(observables);
   }
-
+  getAnswerResult(i:number){
+    if (this.results) {
+    return (this.results[i].isCorrect===true) ? true : false;
+    } else return false;
+  }
   getRandomNumber(n: number) {
     return Math.floor(Math.random() * n);
   }
