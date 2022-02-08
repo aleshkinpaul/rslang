@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
       return 'Вам нужно ввести пароль';
     }
 
-    return this.password.hasError('minlength') ? 'Минимальная длинна пароля 8 символов' : '';
+    return this.password.hasError('minlength') ? 'Минимальная длина пароля 8 символов' : '';
   }
 
   getNameErrorMessage() {
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
       return 'Вам нужно ввести имя';
     }
 
-    return this.name.hasError('minlength') ? 'Минимальная длинна имени 3 символа' : '';
+    return this.name.hasError('minlength') ? 'Минимальная длина имени 3 символа' : '';
   }
 
   onSubmit() {
