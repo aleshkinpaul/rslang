@@ -53,24 +53,45 @@ export interface IWord {
 }
 
 export interface IAggregatedRequestParams {
-  group: string;
-  page: string;
-  wordsPerPage: string;
+  group: number;
+  page: number;
+  wordsPerPage: number;
   filter: string;
 }
 
 export interface IUserWord {
   difficulty: WordDifficultyType;
   optional: {
-    tempParam: string;
+    isStudied: boolean;
+    correctAnswers: number;
+    wrongAnswers: number;
+    correctSeries: number;
   };
 }
 
+export interface IStatisticParam {
+  newWords: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+  correctSeries: number;
+}
+
 export interface IStatistic {
+  id?: string;
   learnedWords: number;
   optional: {
-    tempParam: string;
-  };
+    games: {
+      audio: {
+        [key: string]: IStatisticParam;
+      };
+      sprint: {
+        [key: string]: IStatisticParam;
+      };
+    };
+    words: {
+      [key: string]: IStatisticParam;
+    };
+  }
 }
 
 export interface ISettings {
@@ -79,7 +100,35 @@ export interface ISettings {
     tempParam: string;
   };
 }
+
 export interface IResults {
   word: IWord;
   isCorrect: boolean;
 }
+
+export interface IAggregatedResponseWord {
+  _id: string;
+  group: number;
+  page: number;
+  word: string;
+  image: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  textMeaning: string;
+  textExample: string;
+  transcription: string;
+  wordTranslate: string;
+  textMeaningTranslate: string;
+  textExampleTranslate: string;
+  userWord?: IUserWord;
+}
+
+export interface IAggregatedResponseWords {
+  paginatedResults: IAggregatedResponseWord[];
+  totalCount: {
+    count: number;
+  }[]
+}
+
+export type GameType = 'sprint' | 'audio';
