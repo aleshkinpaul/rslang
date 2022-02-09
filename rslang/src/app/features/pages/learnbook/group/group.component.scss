@@ -1,0 +1,24 @@
+.words-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5vmin;
+
+  .words-list-item {
+    list-style: none;
+  }
+}
+
+.group-pages-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  .group-pages-list-item {
+    list-style: none;
+
+    .group-pages-list-item-element {
+      margin: 0 5px;
+    }
+  }
+}

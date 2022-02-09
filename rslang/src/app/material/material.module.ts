@@ -32,7 +32,8 @@ const modules: any[] = [
   MatSelectModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRippleModule
+  MatRippleModule,
+  MatCardModule
 ];
 
 @NgModule({

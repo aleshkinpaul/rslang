@@ -1,10 +1,12 @@
 <ul class="learnbook-group-list">
-  <li class="learnbook-group-list-item" *ngFor="let group of groupNums">
+  <li class="learnbook-group-list-item" *ngFor="let groupNum of groupNums">
     <button class="learnbook-group-list-item-button"
             mat-raised-button
             color="accent"
-            [routerLink]="[group]">
-      Раздел {{ groupNums.length === group ? '\"Сложные слова\"' : group }}
+            (groupNum)="groupNum"
+            [routerLink]="[groupNum]"
+            [queryParams] = "{page: 1}">
+      Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
     </button>
   </li>
 </ul>

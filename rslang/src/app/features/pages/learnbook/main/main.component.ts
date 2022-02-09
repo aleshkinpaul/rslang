@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { LEARNBOOK_GROUP_COUNT } from './../../../../core/constants/constant'
+import { LEARNBOOK_GROUP_COUNT } from './../../../../core/constants/constant';
 
 @Component({
   selector: 'app-main',
@@ -12,9 +12,6 @@ export class MainComponent implements OnInit {
   centered = false;
   disabled = false;
   unbounded = false;
-
-  radius?: number;
-  color: string = 'accent';
 
   constructor() { }
 
