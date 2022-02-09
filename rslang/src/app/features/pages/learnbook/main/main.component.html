@@ -1,0 +1,10 @@
+<ul class="learnbook-group-list">
+  <li class="learnbook-group-list-item" *ngFor="let group of groupNums">
+    <button class="learnbook-group-list-item-button"
+            mat-raised-button
+            color="accent"
+            [routerLink]="[group]">
+      Раздел {{ groupNums.length === group ? '\"Сложные слова\"' : group }}
+    </button>
+  </li>
+</ul>

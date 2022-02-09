@@ -6,7 +6,6 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { AboutTeamComponent } from './about-team/about-team.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { GamesComponent } from './games/games.component';
-import { LearnbookComponent } from './learnbook/learnbook.component';
 import { AudioChallengeComponent } from './audio-challenge/audio-challenge.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +17,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 
 
 @NgModule({
-  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent, SprintComponent, LoginComponent],
+  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, AudioChallengeComponent, SprintComponent, LoginComponent],
   imports: [
     CommonModule,
     MaterialModule,

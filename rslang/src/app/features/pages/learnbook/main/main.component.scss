@@ -1,0 +1,30 @@
+.learnbook-group-list {
+  margin: 5vh auto 0;
+  width: 75vw;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1vw;
+
+  .learnbook-group-list-item {
+    list-style: none;
+
+    .learnbook-group-list-item-button {
+      text-align: center;
+    
+      flex-basis: 100%;
+      min-width: 20vw;
+      height: 10vw;
+
+      font-size: 2vw;
+    
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+    
+      -webkit-user-drag: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
+}
