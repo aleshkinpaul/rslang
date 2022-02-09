@@ -57,13 +57,7 @@
       <div class="indicators">
         <div
           class="indicators__indicator mat-elevation-z3"
-<<<<<<< HEAD
           *ngFor="let indicator of [].constructor(wordsForGame.length) ; let i = index"
-=======
-          *ngFor="let indicator of wordsForGame; let i = index"
-
-
->>>>>>> 2ba4550a0e59987defcd8e1490a7ec31b581cbfc
           [class.background-primary] = "(i < currentQuestion) && getAnswerResult(i)"
           [class.background-accent] = "(i < currentQuestion) && !getAnswerResult(i)"
         ></div>

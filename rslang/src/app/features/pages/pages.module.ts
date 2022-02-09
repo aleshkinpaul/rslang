@@ -1,8 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-<<<<<<< HEAD
-
-=======
->>>>>>> 2ba4550a0e59987defcd8e1490a7ec31b581cbfc
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from 'src/app/material/material.module';
 import { PagesRoutingModule } from './pages-routing.module';
