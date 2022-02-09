@@ -39,6 +39,15 @@ button {
       object-fit: contain;
     }
   }
+  .member__list{
+    list-style-type: none;
+    .member__list-item{
+      display: flex;
+      align-items: center;
+      gap:1%;
+    }
+  }
+
   .member__link {
     text-decoration: none;
     display: flex;
