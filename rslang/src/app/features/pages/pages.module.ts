@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SprintComponent } from './sprint/sprint.component';
 import { LoginComponent } from './login/login.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 
 
@@ -24,7 +25,8 @@ import { LoginComponent } from './login/login.component';
     PagesRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleChartsModule
   ],
 
 })
