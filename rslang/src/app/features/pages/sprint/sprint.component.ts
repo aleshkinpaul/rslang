@@ -220,7 +220,7 @@ export class SprintComponent implements OnInit {
 
     const result: IResults = {
       isCorrect: this.isUserRight,
-      word: <IWord>this.wordsForGame[this.currentQuestion],
+      word: <IAggregatedResponseWord>this.wordsForGame[this.currentQuestion],
     };
     this.results.push(result);
     const word = this.wordsForGame[this.currentQuestion];

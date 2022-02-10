@@ -84,9 +84,26 @@ export class StatisticService {
         statistic.optional.words = Object.assign(statistic.optional.words, newStat);
       }
 
+      statistic.optional.words[date].studiedWords = this.getStudiedWordsCount(results);
+
       delete statistic.id;
       this.api.upsertStatistics(this.auth.userId, statistic).subscribe(() => { });
     });
+  }
+
+  getStudiedWordsCount(results: IResults[]): number {
+    const newWordsCount = results.reduce((count, wordResult) => {
+      if (!wordResult.isCorrect && wordResult.word.userWord) {
+        if (wordResult.word.userWord.difficulty === 'hard') {
+          count += wordResult.word.userWord.optional.correctSeries === 5 ? 1 : 0;
+        } else {
+          count += wordResult.word.userWord.optional.correctSeries === 3 ? 1 : 0;
+        }
+      }
+      return count;
+    }, 0);
+
+    return newWordsCount;
   }
 
   addWordToUser(word: IAggregatedResponseWord, isUserRight: boolean) {

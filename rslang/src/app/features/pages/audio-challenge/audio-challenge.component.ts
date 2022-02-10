@@ -250,7 +250,7 @@ export class AudioChallengeComponent implements OnInit {
     } else this.isUserRight = 'false';
     const result: IResults = {
       isCorrect: this.isUserRight === 'true' ? true : false,
-      word: this.wordsForGame[this.currentQuestion] as IWord,
+      word: this.wordsForGame[this.currentQuestion] as IAggregatedResponseWord,
     };
     this.results.push(result);
     const word = this.wordsForGame[this.currentQuestion];

@@ -1,3 +1,5 @@
+import { ChartType, Row } from "angular-google-charts";
+
 type WordDifficultyType = 'easy' | 'hard';
 
 export interface IUser {
@@ -76,6 +78,14 @@ export interface IStatisticParam {
   correctSeries: number;
 }
 
+export interface IStatisticWordsParam {
+  newWords: number;
+  correctAnswers: number;
+  wrongAnswers: number;
+  correctSeries: number;
+  studiedWords: number;
+}
+
 export interface IStatistic {
   id?: string;
   learnedWords: number;
@@ -89,7 +99,7 @@ export interface IStatistic {
       };
     };
     words: {
-      [key: string]: IStatisticParam;
+      [key: string]: IStatisticWordsParam;
     };
   }
 }
@@ -102,7 +112,7 @@ export interface ISettings {
 }
 
 export interface IResults {
-  word: IWord;
+  word: IAggregatedResponseWord;
   isCorrect: boolean;
 }
 
@@ -132,3 +142,15 @@ export interface IAggregatedResponseWords {
 }
 
 export type GameType = 'sprint' | 'audio';
+
+export interface IStatCardData {
+  newWords: number;
+  rightPercent: number;
+  correctSeries: number;
+}
+
+export interface IChartData {
+  title: string;
+  type: ChartType;
+  data?: Row[];
+}
