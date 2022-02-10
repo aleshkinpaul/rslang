@@ -1,3 +1,4 @@
+@import './../../../styles/mixins.scss';
 .game{
   min-height: 100%;
   text-align: center;
@@ -36,6 +37,9 @@
   display: flex;
   column-gap: 5%;
   justify-content: center;
+  @include media-menu-switcher{
+    flex-direction: column;
+    }
 }
 mat-spinner {
   margin:auto;

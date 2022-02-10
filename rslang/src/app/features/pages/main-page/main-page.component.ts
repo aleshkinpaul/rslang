@@ -15,37 +15,24 @@ interface ICardTemplate {
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainPageComponent implements OnInit, AfterViewInit {
-  iconDimension:number|undefined;
+export class MainPageComponent {
+
   cards:ICardTemplate[]=[]
   @HostListener('window:resize', ['$event'])
   onResize() {
-    this.defineIconDimensions()
+    defineLordIconElement(lottie.loadAnimation);
   }
   constructor(private ref: ChangeDetectorRef) {
     this.cards =MAIN_PAGE_CONTENT;
     defineLordIconElement(lottie.loadAnimation);
   }
 
-  ngOnInit() {
-    defineLordIconElement(lottie.loadAnimation);
-console.log(6)
-
-  }
 
 
-  ngAfterViewInit(){
-    this.cards =MAIN_PAGE_CONTENT;
-    this.defineIconDimensions()
-    this.ref.detectChanges()
 
-  }
-  defineIconDimensions(){
-    const width = document.getElementById('defineBackgroundMainPage')?.getBoundingClientRect().width
-    this.iconDimension = width!*0.8;
-  }
+
+
   getIconPath(i:number){
     return this.cards[i].iconPath
   }

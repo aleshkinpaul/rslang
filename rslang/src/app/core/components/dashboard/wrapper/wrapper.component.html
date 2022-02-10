@@ -72,6 +72,13 @@
         >
           <mat-icon>bubble_chart</mat-icon>
         </mat-slide-toggle>
+        <mat-slide-toggle
+          class="settings__toggle"
+          [(ngModel)]="isSound"
+          *ngIf="!mobileQuery.matches"
+        >
+          <mat-icon>notifications</mat-icon>
+        </mat-slide-toggle>
         <div class="settings__icons" *ngIf="mobileQuery.matches">
           <button mat-icon-button class="settings__icon" (click)="isDarkTheme = !isDarkTheme">
             <mat-icon color="accent" *ngIf="isDarkTheme">bedtime</mat-icon
@@ -81,9 +88,9 @@
             <mat-icon color="accent" *ngIf="isBubble">bubble_chart</mat-icon
             ><mat-icon *ngIf="!isBubble">bubble_chart</mat-icon>
           </button>
-          <button mat-icon-button class="settings__icon" (click)="isBubble = !isBubble">
-            <mat-icon color="accent" *ngIf="isBubble">bubble_chart</mat-icon
-            ><mat-icon *ngIf="!isBubble">bubble_chart</mat-icon>
+          <button mat-icon-button class="settings__icon" (click)="isSound = !isSound">
+            <mat-icon color="accent" *ngIf="isSound">notifications</mat-icon
+            ><mat-icon *ngIf="!isSound">notifications</mat-icon>
           </button>
         </div>
         <span style="flex: auto"></span>

@@ -1,3 +1,4 @@
+@import './../../../styles/mixins.scss';
 .modal {
   position: relative;
   overflow-y: auto;
@@ -14,7 +15,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-
+  @include media-menu-switcher{
+    width: 90%;
+    }
 
 }
 .results-row{
@@ -38,21 +41,33 @@ width:100%;
   width:30%;
   display: flex;
   flex-direction: column;
+  @include media-menu-switcher{
+    width:50%;
+    }
 }
 .results-row__sound-button{
   width:15%;
   button{
     transform: scale(0.8);
+    @include media-menu-switcher{
+      transform: scale(0.6);
+      }
   }
+
+
 }
 .results-row__number{
   display: flex;
   flex-direction: column;
   justify-content: center;
 width:5%;
+@include media-menu-switcher{
+  width:10%;
+  }
 }
 .results__list{
-width:100%
+width:100%;
+font-size:1.4rem;
 }
 .overlay {
   position: absolute;

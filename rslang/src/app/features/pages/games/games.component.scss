@@ -6,6 +6,7 @@
   transition: 0.3s ease-in-out;
   @include media-mobile {
     margin: auto;
+    width: 45%;
 
   }
   &:hover{
@@ -65,6 +66,8 @@ font-size: 16rem;
 text-align: center;
 width:100%;
 
-
 }
-
+lord-icon{
+  width:80%;
+  height:80%;
+}

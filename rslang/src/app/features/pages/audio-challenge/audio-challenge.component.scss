@@ -1,3 +1,4 @@
+@import './../../../styles/mixins.scss';
 .game {
   min-height: 100%;
   text-align: center;
@@ -27,7 +28,7 @@
 
     .audio-game__image-wrapper {
       text-align: center;
-      min-height: 8rem;
+      min-height: 8.8rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -62,10 +63,15 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      font-size:2rem;
     }
     .audio-game__image {
       object-fit: cover;
       border-radius: 50%;
+    }
+    .mat-card-sm-image{
+      width:8rem;
+      height:8rem;
     }
     .audio-game__hear {
       display: block;
@@ -78,6 +84,7 @@
       width: auto;
       justify-content: center;
       margin: auto;
+      padding: 2%;
       margin-bottom: 2%;
       border-radius: 4px;
       border: 0.4rem solid transparent;
@@ -99,6 +106,9 @@
   display: flex;
   column-gap: 5%;
   justify-content: center;
+  @include media-menu-switcher{
+    flex-direction: column;
+    }
 }
 mat-spinner {
   margin: auto;
