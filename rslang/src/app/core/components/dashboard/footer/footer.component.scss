@@ -1,8 +1,8 @@
 .footer-bar{
-  max-height: 2.5rem;
+  max-height: 4rem;
 }
 .mat-toolbar-multiple-rows {
-  min-height: 2.5rem;
+  min-height: 4rem;
 }
 .footer-bar__names{
 display: flex;
@@ -16,7 +16,7 @@ gap:5%;
   }
 }
 .school-icon{
-  width: 5rem;
+  width: 8rem;
   opacity: 70%;
   vertical-align: bottom;
   &:hover {
@@ -24,6 +24,6 @@ gap:5%;
     cursor: pointer;
   }
   img {
-    width: 3rem;
+    width: 5rem;
   }
 }

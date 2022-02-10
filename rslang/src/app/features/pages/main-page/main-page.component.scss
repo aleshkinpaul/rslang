@@ -4,8 +4,8 @@
 .title {
   text-align: center;
   margin-top: 1%;
-  font-size: 36px;
-  text-shadow: 2px;
+  font-size: 3.6rem;
+  text-shadow: 0.2rem;
   font-style: italic;
   font-weight: bold;
 }
@@ -18,8 +18,8 @@
   padding: 2% 5%;
 }
 .card__video, .card__wrapper{
-width: 500px;
-height:282px;
+width: 50rem;
+height:28.2rem;
 margin:auto;
 }
 .card__wrapper{
@@ -45,7 +45,7 @@ margin:auto;
   }
   .card__text {
     color: white;
-    font-size: 1.2rem;
+    font-size: 2rem;
     text-align: center;
   }
   .card__button {
