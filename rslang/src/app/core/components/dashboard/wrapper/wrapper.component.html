@@ -1,11 +1,25 @@
-<mat-sidenav-container autosize class="app-content mat-app-background" [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
-  <mat-sidenav #sidenav mode="side" opened="true">
+<mat-sidenav-container
+  autosize
+  class="app-content mat-app-background"
+  [ngClass]="{ 'dark-theme-mode': isDarkTheme }"
+>
+  <mat-sidenav
+    #sidenav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [opened]="!mobileQuery.matches"
+    [fixedInViewport]="mobileQuery.matches"
+  >
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <mat-icon matListIcon>menu_book</mat-icon>
         <span style="flex: auto"></span>
-        <mat-icon matListIcon class="chevron-button sidenav-button" (click)="isExpanded = !isExpanded"
-          [ngClass]="{ rotated: isExpanded }">chevron_right</mat-icon>
+        <mat-icon
+          matListIcon
+          class="chevron-button sidenav-button"
+          (click)="isExpanded = !isExpanded"
+          [ngClass]="{ rotated: isExpanded }"
+          >chevron_right</mat-icon
+        >
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-nav-list>
@@ -37,6 +51,12 @@
   <mat-sidenav-content class="wrapper__content">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
+        <button
+          mat-icon-button
+          *ngIf="mobileQuery.matches"
+          (click)="sidenav.open()"
+        > <mat-icon>menu</mat-icon>
+      </button>
         <mat-slide-toggle class="settings__toggle" [(ngModel)]="isDarkTheme">
           <mat-icon>bedtime</mat-icon>
         </mat-slide-toggle>
@@ -46,9 +66,19 @@
         <span style="flex: auto"></span>
         <h1>Rslang</h1>
         <span style="flex: auto"></span>
-        <span class="user-name" *ngIf="auth.isAuthenticated">{{ auth.name }}</span>
-        <img class="avatar-image" *ngIf="auth.avatarPath" alt="" [src]="auth.avatarPath">
-        <app-button-accent [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'" (click)="onLoginButtonClick()">
+        <span class="user-name" *ngIf="auth.isAuthenticated">{{
+          auth.name
+        }}</span>
+        <img
+          class="avatar-image"
+          *ngIf="auth.avatarPath"
+          alt=""
+          [src]="auth.avatarPath"
+        />
+        <app-button-accent
+          [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'"
+          (click)="onLoginButtonClick()"
+        >
         </app-button-accent>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -56,5 +86,4 @@
     <router-outlet></router-outlet>
     <app-footer class="footer-bar"></app-footer>
   </mat-sidenav-content>
-
 </mat-sidenav-container>
