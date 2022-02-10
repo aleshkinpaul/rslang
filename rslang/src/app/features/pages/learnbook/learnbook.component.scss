@@ -1,12 +1,12 @@
 .learnbook-container {
-  margin: 0 auto;
+  margin: 5vh auto;
   width: 95vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
   .learnbook-group-list {
-    margin: 5vh auto;
+    margin: 0 auto 2vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -19,8 +19,7 @@
       .learnbook-group-list-item-button {
         text-align: center;
       
-        flex-basis: 100%;
-  
+        flex-basis: 100%;  
         font-size: 1.2rem;
       
         user-select: none;

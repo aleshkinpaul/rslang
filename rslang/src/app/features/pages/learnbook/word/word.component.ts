@@ -9,6 +9,9 @@ import { BACKEND_PATH } from 'src/app/core/constants/constant';
 })
 export class WordComponent implements OnInit {
   @Input() wordData!: IWord;
+  wordCardContentText: string = '';
+  isMeaningShow: boolean = false;
+  isExampleShow: boolean = false;
 
   constructor() { }
 
@@ -17,5 +20,21 @@ export class WordComponent implements OnInit {
 
   getImage() {
     return `${BACKEND_PATH}/${this.wordData.image}`;
+  }
+
+  showMeaning() {
+    this.wordCardContentText = `${this.wordData.textMeaning}<br>${this.wordData.textMeaningTranslate}`;
+    this.isMeaningShow = true;
+  }
+
+  showExample() {
+    this.wordCardContentText = `${this.wordData.textExample}<br>${this.wordData.textExampleTranslate}`;
+    this.isExampleShow = true;
+  }
+
+  hideText(): void {
+    this.wordCardContentText = '';
+    this.isExampleShow = false;
+    this.isMeaningShow = false;
   }
 }

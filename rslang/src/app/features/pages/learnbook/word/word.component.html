@@ -6,7 +6,14 @@
       <img class="word-card-image" [src]="getImage()">
     </div>
   </mat-card-title-group>
-  <mat-card-content>
-    <!-- {{wordData.texcdtExample}} (<i>{{wordData.textExampleTranslate}}</i>) -->
+  <mat-card-content class="word-card-content">
+    <ul class="word-card-content-list">
+      <li class="word-card-content-list-item" (mouseenter)="showMeaning()" (mouseleave)="hideText()">Определение</li>
+      <li class="word-card-content-list-item" (mouseenter)="showExample()" (mouseleave)="hideText()">Пример</li>
+    </ul>
+    <p class="word-card-content-text" *ngIf="isMeaningShow || isExampleShow" [innerHTML]="wordCardContentText"></p>
+    <button class="word-card-content-audio" mat-icon-button color="accent">
+      <mat-icon>volume_up</mat-icon>
+    </button>
   </mat-card-content>
 </mat-card>

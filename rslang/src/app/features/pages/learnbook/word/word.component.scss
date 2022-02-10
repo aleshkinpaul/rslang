@@ -19,4 +19,37 @@
       overflow: hidden;
     }
   }
+
+  .word-card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .word-card-content-list {
+      display: flex;
+      flex-direction: row;
+      column-gap: 1vh;
+      font-size: 0.6rem;
+
+      cursor: pointer;      
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+  
+      .word-card-content-list-item {      
+        align-self: center;
+        list-style: none;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+    
+    .word-card-content-audio {
+      position: absolute;
+      right: 0;
+      transform: translate(-20%, -20%);
+    }
+  }
 }
