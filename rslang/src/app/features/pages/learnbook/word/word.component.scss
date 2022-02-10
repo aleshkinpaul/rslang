@@ -1,12 +1,22 @@
 .word-card {
+  width: 19vw;
+
+  .word-card-title-group {
+    margin-bottom: 10px;
+
+    .mat-card-subtitle {
+      margin-bottom: 0;
+    }
   
-  .word-card-image-container {
-    margin-left: 1vw;
-    width: 5vw;
-    height: 5vw;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    overflow: hidden;
+    .word-card-image-container {
+      margin-left: 1vw;
+      width: 5vw;
+      height: 5vw;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
   }
 }

@@ -1,0 +1,68 @@
+.learnbook-container {
+  margin: 0 auto;
+  width: 95vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .learnbook-group-list {
+    margin: 5vh auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1vmin;
+  
+    .learnbook-group-list-item {
+      list-style: none;
+  
+      .learnbook-group-list-item-button {
+        text-align: center;
+      
+        flex-basis: 100%;
+  
+        font-size: 1.2rem;
+      
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+      
+        -webkit-user-drag: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+    }
+  }
+  
+  .words-container {
+
+    .words-list {
+      margin-bottom: 2vh;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5vmin;
+    
+      .words-list-item {
+        list-style: none;
+      }
+    }
+  }
+  
+  .group-pages-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  
+    .group-pages-list-item {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+  
+      .group-pages-list-item-element {
+        margin: 0 5px;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
