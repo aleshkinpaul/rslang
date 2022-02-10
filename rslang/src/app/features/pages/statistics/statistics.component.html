@@ -1,1 +1,30 @@
-<p>statistics works!</p>
+<div *ngIf="!auth.isAuthenticated">Чтобы сохранять и просматривать статистику, авторизуйтесь</div>
+<div *ngIf="auth.isAuthenticated">
+  <div *ngIf="!isStatisticGet || !isUserWordsGet">
+    <span>Статистика загружается</span>
+  </div>
+  <div *ngIf="isStatisticGet && isUserWordsGet">
+    <div *ngIf="sprintCardData">
+      <h2>Sprint</h2>
+      <span>Количество новых слов за день: </span><span>{{sprintCardData.newWords}}</span>
+      <span>Самая длинная серия правильных ответов: </span><span>{{sprintCardData.correctSeries}}</span>
+      <span>Процент правильных ответов: </span><span>{{sprintCardData.rightPercent}}%</span>
+    </div>
+    <div *ngIf="audioCardData">
+      <h2>Audio</h2>
+      <span>Количество новых слов за день: </span><span>{{audioCardData.newWords}}</span>
+      <span>Самая длинная серия правильных ответов: </span><span>{{audioCardData.correctSeries}}</span>
+      <span>Процент правильных ответов: </span><span>{{audioCardData.rightPercent}}%</span>
+    </div>
+    <div *ngIf="wordsCardData">
+      <h2>Слова</h2>
+      <span>Количество выученных слов за день: </span><span>{{wordsCardData.newWords}}</span>
+      <span>Самая длинная серия правильных ответов: </span><span>{{wordsCardData.correctSeries}}</span>
+      <span>Процент правильных ответов: </span><span>{{wordsCardData.rightPercent}}%</span>
+    </div>
+    <google-chart [title]="newWordsChartData.title" [type]="newWordsChartData.type" [data]="newWordsChartData.data!">
+    </google-chart>
+    <google-chart [title]="studiedChartData.title" [type]="studiedChartData.type" [data]="studiedChartData.data!">
+    </google-chart>
+  </div>
+</div>
