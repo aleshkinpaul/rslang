@@ -8,16 +8,19 @@
 
 .mat-card-title {
   margin-bottom: 3rem;
+  text-align: center;
+  font-size: 2.4rem;
 }
 
 .mat-card-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 90%;
 }
 
 .mat-form-field {
-  min-width: 24rem;
+  width: 90%;
   margin-bottom: 2rem;
 }
 
@@ -35,7 +38,13 @@
   margin-bottom: 2rem;
   overflow: hidden;
 }
-
+.mode-button{
+  text-align: center;
+  padding: 2% 2%;
+  white-space: normal;
+  font-size: 1.6rem;
+  line-height: 2rem;
+}
 .file-input {
   display: none;
 }

@@ -55,16 +55,39 @@
           mat-icon-button
           *ngIf="mobileQuery.matches"
           (click)="sidenav.open()"
-        > <mat-icon>menu</mat-icon>
-      </button>
-        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isDarkTheme">
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-slide-toggle
+          class="settings__toggle"
+          [(ngModel)]="isDarkTheme"
+          *ngIf="!mobileQuery.matches"
+        >
           <mat-icon>bedtime</mat-icon>
         </mat-slide-toggle>
-        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isBubble">
+        <mat-slide-toggle
+          class="settings__toggle"
+          [(ngModel)]="isBubble"
+          *ngIf="!mobileQuery.matches"
+        >
           <mat-icon>bubble_chart</mat-icon>
         </mat-slide-toggle>
+        <div class="settings__icons" *ngIf="mobileQuery.matches">
+          <button mat-icon-button class="settings__icon" (click)="isDarkTheme = !isDarkTheme">
+            <mat-icon color="accent" *ngIf="isDarkTheme">bedtime</mat-icon
+            ><mat-icon *ngIf="!isDarkTheme">bedtime</mat-icon>
+          </button>
+          <button mat-icon-button class="settings__icon" (click)="isBubble = !isBubble">
+            <mat-icon color="accent" *ngIf="isBubble">bubble_chart</mat-icon
+            ><mat-icon *ngIf="!isBubble">bubble_chart</mat-icon>
+          </button>
+          <button mat-icon-button class="settings__icon" (click)="isBubble = !isBubble">
+            <mat-icon color="accent" *ngIf="isBubble">bubble_chart</mat-icon
+            ><mat-icon *ngIf="!isBubble">bubble_chart</mat-icon>
+          </button>
+        </div>
         <span style="flex: auto"></span>
-        <h1>Rslang</h1>
+        <h1 *ngIf="!mobileQuery.matches">Rslang</h1>
         <span style="flex: auto"></span>
         <span class="user-name" *ngIf="auth.isAuthenticated">{{
           auth.name
@@ -75,11 +98,17 @@
           alt=""
           [src]="auth.avatarPath"
         />
-        <app-button-accent
+        <app-button-accent *ngIf="!mobileQuery.matches"
           [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'"
           (click)="onLoginButtonClick()"
         >
-        </app-button-accent>
+      </app-button-accent>
+      <button mat-icon-button (click)="onLoginButtonClick()" *ngIf="mobileQuery.matches">
+          <mat-icon *ngIf="!auth.isAuthenticated">login</mat-icon
+          ><mat-icon *ngIf="auth.isAuthenticated">logout</mat-icon>
+        </button>
+
+
       </mat-toolbar-row>
     </mat-toolbar>
     <app-milkyway-animation *ngIf="isBubble"></app-milkyway-animation>

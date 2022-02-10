@@ -1,3 +1,4 @@
+@import './../../../styles/mixins.scss';
 .example-stretched-tabs {
   width: 100%;
 }
@@ -17,6 +18,9 @@
   justify-content: center;
   padding: 2% 5%;
 }
+.card__subtitle{
+font-size: 2rem;
+}
 .card__video, .card__wrapper{
 width: 50rem;
 height:28.2rem;
@@ -35,6 +39,7 @@ margin:auto;
   transition: 0.3s ease-in-out;
   display: flex;
   justify-content: space-between;
+
   .card__description {
     display: flex;
     flex-direction: column;
@@ -42,6 +47,9 @@ margin:auto;
     gap: 5%;
     width: 70%;
     padding: 2%;
+    @include media-menu-switcher{
+      width: 100%;
+      }
   }
   .card__text {
     color: white;
@@ -50,12 +58,12 @@ margin:auto;
   }
   .card__button {
     width: 30%;
+    padding:0 0;
     margin: 0 auto;
+    font-size: 1.3rem;
+    text-align: center;
   }
-  //   &:hover{
-  //     cursor: pointer;
-  //     box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
-  // opacity: 80%;
+
   h2 {
     color: white;
   }
@@ -66,9 +74,13 @@ margin:auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    @include media-menu-switcher{
+      display: none;
+      }
   }
   .card__icon-wrapper {
     text-align: center;
     padding: 5%;
+
   }
 }

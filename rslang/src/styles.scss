@@ -2,6 +2,7 @@
 
 @use '@angular/material' as mat;
 @import '~@angular/material/theming';
+@import './app/styles/mixins.scss';
 @include mat.core();
 @import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
 
@@ -38,8 +39,17 @@ $rslang-theme-dark: mat.define-dark-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
+
 html, body { height: 100%;
 font-size: 10px;}
+html {
+  @include media-small-desktop {
+    font-size:7px;
+  }
+  @include media-mobile {
+    font-size:5px;
+  }
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * {
   scroll-behavior: smooth;
@@ -80,3 +90,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
 }
+

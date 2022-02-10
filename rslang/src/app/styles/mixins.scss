@@ -1,0 +1,19 @@
+$width-small-desktop: 1024px;
+$width-menu-switcher: 600px;
+$width-mobile: 420px;
+$width-tablet: 768px;
+@mixin media-small-desktop {
+  @media (max-width: $width-small-desktop) {
+    @content;
+  }
+}
+@mixin media-menu-switcher {
+  @media (max-width: $width-menu-switcher) {
+    @content;
+  }
+}
+@mixin media-mobile {
+  @media (max-width: $width-mobile) {
+    @content;
+  }
+}
