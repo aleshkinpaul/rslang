@@ -40,7 +40,7 @@
           [class.background-accent] = "(i < currentQuestion) && !getAnswerResult(i)"
         ></div>
       </div>
-      <div>{{timeToEndGame}}</div>
+      <div class="timer" [class.close-to-lose]="timeToEndGame < 10">{{timeToEndGame}}</div>
       <button mat-fab color="accent" class="sprint__hear" (click)="getAudio()">
         <mat-icon>hearing</mat-icon>
       </button>

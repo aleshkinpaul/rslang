@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Location } from '@angular/common';
 import {
   Component,
@@ -28,6 +29,14 @@ import { IWord, IResults, IAggregatedResponseWord } from 'src/app/shared/interfa
   selector: 'app-audio-challenge',
   templateUrl: './audio-challenge.component.html',
   styleUrls: ['./audio-challenge.component.scss'],
+  animations: [
+    trigger('enterLeave', [
+      transition('void => *', [
+        style({ opacity: 0.2, transform: 'scale(0)' }),
+        animate('500ms ease-in'),
+      ]),
+    ]),
+  ],
 })
 export class AudioChallengeComponent implements OnInit {
   @ViewChild('audioPlayer', { static: false })

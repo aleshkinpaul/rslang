@@ -50,17 +50,7 @@ h2{
   color:white;
   font-size: 2rem;
 }
-@keyframes animate_grow {
-	0% {
-		transform: scale3d(1, 1, 1);
-	}
-	50% {
-		transform: scale3d(1.05, 1.05, 1.05);
-	}
-	100% {
-		transform: scale3d(1, 1, 1);
-	}
-}
+
 .button__icon{
 font-size: 16rem;
 text-align: center;

@@ -53,7 +53,7 @@
 
   <mat-card *ngIf="gameMode" class="audio-game transparent-background">
     <mat-spinner *ngIf="!loadingProgress"></mat-spinner>
-    <div *ngIf="loadingProgress">
+    <div *ngIf="loadingProgress" >
       <div class="indicators">
         <div
           class="indicators__indicator mat-elevation-z3"
@@ -105,7 +105,7 @@
       >
         <mat-icon>hearing</mat-icon>
       </button>
-      <mat-card-content class="audio-game__options">
+      <mat-card-content class="audio-game__options" @enterLeave>
         <button
           class="audio-game__button"
           mat-stroked-button

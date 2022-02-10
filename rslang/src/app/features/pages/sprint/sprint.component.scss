@@ -5,6 +5,7 @@
   padding: 5%;
   display: block;
   .sprint{
+    overflow-x: hidden;
     min-height: 50vh;
     display: flex;
     flex-direction: column;
@@ -44,7 +45,24 @@
 mat-spinner {
   margin:auto;
 }
-
+.timer{
+  margin: 1%;
+}
+.close-to-lose{
+  animation: animate_grow infinite 800ms ease-in-out;
+  color:red
+}
+@keyframes animate_grow {
+	0% {
+		transform: scale3d(1, 1, 1);
+	}
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+	}
+}
 .answer-button {
   min-width: 12rem;
   display: inline-flex;
