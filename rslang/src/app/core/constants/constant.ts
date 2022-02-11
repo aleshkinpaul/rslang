@@ -9,6 +9,7 @@ export const ERROR_MESSAGE = {
 
 export const AGGREGATED_REQUESTS = {
   allUnstudiedWords: '{"$or":[{"userWord.optional.isStudied":false},{"userWord":null}]}',
+  allWords:'{"$or":[{"userWord.optional.isStudied":false}, {"userWord.optional.isStudied":true},{"userWord":null}]}'
 }
 
 export const LEVELS_IN_GAME = 6;

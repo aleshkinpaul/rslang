@@ -99,10 +99,11 @@ export class SprintComponent implements OnInit {
 
   startGameFromLearnbook(data: Params) {
     this.wordsForGame=[];
+    this.gameMode = true;
     this.loadingProgress = true;
     this.selectedLevel = Number(data['level'] - 1);
     this.selectedPage = Number(data['page'] - 1);
-    this.gameMode = true;
+
 
     if (this.auth.isAuthenticated) {
       const params = {
@@ -151,8 +152,9 @@ export class SprintComponent implements OnInit {
 
   startGame() {
     this.wordsForGame=[];
-    this.loadingProgress = true;
     this.gameMode = true;
+    this.loadingProgress = true;
+
     const needWords: IAggregatedResponseWord[] = [];
     const wordsReqParams: { word: number; page: number }[] = [];
 
@@ -170,13 +172,12 @@ export class SprintComponent implements OnInit {
         wordsReqParams.push(newReqParam);
       }
     }
-
     if (this.auth.isAuthenticated) {
       const params = {
         group: this.selectedLevel,
         page: 0,
         wordsPerPage: 600,
-        filter: AGGREGATED_REQUESTS.allUnstudiedWords,
+        filter: AGGREGATED_REQUESTS.allWords,
       };
       this.api
         .getAllUserAggregatedWords(this.auth.userId, params)
@@ -192,6 +193,7 @@ export class SprintComponent implements OnInit {
           });
 
           this.wordsForGame = needWords;
+
           this.results = [];
           this.currentQuestion = 0;
           this.createTimer();
@@ -250,16 +252,16 @@ export class SprintComponent implements OnInit {
     }, 1000);
   }
 
-  async checkAnswer(isRight: boolean) {
-    if (!this.results[this.currentQuestion]){
+   checkAnswer(isRight: boolean) {
+if (!this.results[this.currentQuestion]){
     const isRightTranslate =
       this.currentQuestion === this.currentTranslateVariant;
     if (isRightTranslate === isRight) {
       this.isUserRight = true;
-      await this.sound.play(Sounds.right);
+      this.sound.play(Sounds.right);
     } else {
       this.isUserRight = false;
-      await this.sound.play(Sounds.wrong);
+      this.sound.play(Sounds.wrong);
     }
 
     const result: IResults = {
@@ -294,7 +296,7 @@ export class SprintComponent implements OnInit {
       this.gameMode = false;
     } else {
       this.currentQuestion += 1;
-      this.loadingProgress = true;
+      // this.loadingProgress = true;
       this.getQuestion();
     }
   }

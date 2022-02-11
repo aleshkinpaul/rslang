@@ -162,12 +162,11 @@ export class AudioChallengeComponent implements OnInit {
           wordsReqParams.push(newReqParam);
         }
       }
-
       const params = {
         group: this.selectedLevel,
         page: 0,
         wordsPerPage: 600,
-        filter: AGGREGATED_REQUESTS.allUnstudiedWords,
+        filter: AGGREGATED_REQUESTS.allWords,
       };
       this.server
         .getAllUserAggregatedWords(this.auth.userId, params)
