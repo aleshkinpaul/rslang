@@ -1,10 +1,12 @@
 @import './../../../../styles/mixins.scss';
 mat-sidenav{
   height: 100%;
+  overflow-x: hidden;
 }
 mat-sidenav-container{
   min-width: 100%;
   min-height: 100vh;
+
 }
 h1{
   margin: auto;

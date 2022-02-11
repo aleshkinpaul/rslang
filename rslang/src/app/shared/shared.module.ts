@@ -14,7 +14,8 @@ import { MilkywayAnimationComponent } from './components/milkyway-animation/milk
     ButtonAccentComponent,
     ButtonPrimaryComponent,
     ResultingPageComponent,
-    MilkywayAnimationComponent
+    MilkywayAnimationComponent,
+
   ],
   imports: [
     CommonModule,
@@ -26,7 +27,8 @@ import { MilkywayAnimationComponent } from './components/milkyway-animation/milk
     ButtonAccentComponent,
     ButtonPrimaryComponent,
     ResultingPageComponent,
-    MilkywayAnimationComponent
+    MilkywayAnimationComponent,
+
   ],
 })
 export class SharedModule { }
