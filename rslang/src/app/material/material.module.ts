@@ -14,8 +14,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatTabsModule} from '@angular/material/tabs';
 
 const modules: any[] = [
+  MatTabsModule,
   MatProgressSpinnerModule,
   MatListModule,
   MatNativeDateModule,

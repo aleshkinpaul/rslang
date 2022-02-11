@@ -1,11 +1,16 @@
 <div class="game">
-  <mat-card *ngIf="!gameMode" class="audio-game transparent-background">
-    <mat-card-title>Аудиовызов</mat-card-title>
+  <mat-card
+    *ngIf="!gameMode"
+    class="audio-game transparent-background mat-elevation-z8"
+  >
+    <mat-card-title class="audio-game__title background-primary"
+      >Аудиовызов</mat-card-title
+    >
     <mat-card-content
       >Управление клавишами:<br />
-      <span class="audio-game__highlight">'Enter'</span> - следующий вопрос<br />
-      <span class="audio-game__highlight">'1...5'</span> - выбор варианта<br />
-      <span class="audio-game__highlight">'0'</span> - прослушать слово еще
+      <span class="text-primary">'Enter'</span> - следующий вопрос<br />
+      <span class="text-primary">'1...5'</span> - выбор варианта<br />
+      <span class="text-primary">'0'</span> - прослушать слово еще
       раз</mat-card-content
     >
     <div class="game__selectors">
@@ -35,30 +40,32 @@
         *ngIf="!learnBookMode"
         [title]="'Начать игру'"
         (click)="startGame()"
+        class="audio-game__start mat-elevation-z3"
       ></app-button-accent>
       <app-button-accent
         *ngIf="learnBookMode"
         [title]="'Начать игру'"
         (click)="startFromLearnbook(learnBookData)"
+        class="audio-game__start mat-elevation-z3"
       ></app-button-accent>
     </mat-card-actions>
   </mat-card>
 
   <mat-card *ngIf="gameMode" class="audio-game transparent-background">
     <mat-spinner *ngIf="!loadingProgress"></mat-spinner>
-    <div *ngIf="loadingProgress">
-      <button
-        mat-fab
-        color="accent"
-        (click)="getAudio()"
-        *ngIf="isUserRight === null"
-      >
-        <mat-icon>hearing</mat-icon>
-      </button>
+    <div *ngIf="loadingProgress" >
+      <div class="indicators">
+        <div
+          class="indicators__indicator mat-elevation-z3"
+          *ngFor="let indicator of [].constructor(wordsForGame.length) ; let i = index"
+          [class.background-primary] = "(i < currentQuestion) && getAnswerResult(i)"
+          [class.background-accent] = "(i < currentQuestion) && !getAnswerResult(i)"
+        ></div>
+      </div>
       <div
         class="audio-game__result"
-        *ngIf="isUserRight !== null"
         [class.audio-game__result_wrong]="isUserRight === 'false'"
+        [class.audio-game__result_right]="isUserRight === 'true'"
       >
         <div class="audio-game__icons-result">
           <span>
@@ -72,20 +79,33 @@
             >
           </span>
         </div>
-        <img
-          mat-card-sm-image
-          class="audio-game__image"
-          [src]="getImage()"
-          alt="answer-image"
-          #imageAnswer
-        />
-
-        <div class="audio-game__translation">
+        <div class="audio-game__image-wrapper">
+          <mat-icon color="primary" *ngIf="isUserRight === null"
+            >question_mark</mat-icon
+          >
+          <img
+            mat-card-sm-image
+            *ngIf="isUserRight !== null"
+            class="audio-game__image"
+            [src]="getImage()"
+            alt="answer-image"
+            #imageAnswer
+          />
+        </div>
+        <div class="audio-game__translation" *ngIf="isUserRight !== null">
           <span>{{ wordsForGame[this.currentQuestion].word }}</span>
           <span>{{ wordsForGame[this.currentQuestion].wordTranslate }}</span>
         </div>
       </div>
-      <mat-card-content class="audio-game__options">
+      <button
+        mat-fab
+        color="accent"
+        class="audio-game__hear"
+        (click)="getAudio()"
+      >
+        <mat-icon>hearing</mat-icon>
+      </button>
+      <mat-card-content class="audio-game__options" @enterLeave>
         <button
           class="audio-game__button"
           mat-stroked-button
@@ -99,12 +119,14 @@
           {{ option.wordTranslate }}
         </button>
       </mat-card-content>
-      <mat-card-actions *ngIf="isUserRight !== null">
-        <app-button-accent
-          [title]="'Следующий'"
-          (click)="nextQuestion()"
-        ></app-button-accent>
-      </mat-card-actions>
+      <button
+        mat-raised-button
+        color="accent"
+        [disabled]="isUserRight === null"
+        (click)="nextQuestion()"
+      >
+        Следующий
+      </button>
     </div>
   </mat-card>
 

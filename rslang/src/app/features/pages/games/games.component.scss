@@ -1,7 +1,19 @@
+@import './../../../styles/mixins.scss';
 .button__outer-wrapper {
   padding: 3% 5%;
   width: 40%;
   border-radius: 4px;
+  transition: 0.3s ease-in-out;
+  @include media-mobile {
+    margin: auto;
+    width: 45%;
+
+  }
+  &:hover{
+    cursor: pointer;
+    box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+opacity: 80%;
+  }
   .button__inner-wrapper {
     padding: 5%;
     text-align: center;
@@ -20,37 +32,32 @@
 .button__icon-wrapper {
   text-align: center;
   padding:5%;
-  &:first-child{
-    animation: animate_grow 2s infinite;
-  }
-  &:hover{
-    animation: none;
-  }
 }
 .games-buttons{
-width: 80%;
+width: 95%;
 gap: 10%;
 margin: auto;
 display: flex;
 justify-content: center;
-padding: 15vh 10vh;
+padding: 6vh 10vh;
+@include media-mobile {
+  flex-direction: column;
+  gap:2%;
+
 }
-@keyframes animate_grow {
-	0% {
-		transform: scale3d(1, 1, 1);
-	}
-	50% {
-		transform: scale3d(1.05, 1.05, 1.05);
-	}
-	100% {
-		transform: scale3d(1, 1, 1);
-	}
 }
+h2{
+  color:white;
+  font-size: 2rem;
+}
+
 .button__icon{
-font-size: 10rem;
+font-size: 16rem;
 text-align: center;
-width:auto;
-
+width:100%;
 
 }
-
+lord-icon{
+  width:80%;
+  height:80%;
+}

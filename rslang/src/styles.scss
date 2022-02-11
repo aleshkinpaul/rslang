@@ -2,7 +2,9 @@
 
 @use '@angular/material' as mat;
 @import '~@angular/material/theming';
+@import './app/styles/mixins.scss';
 @include mat.core();
+@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
 
 $rslang-primary:  mat.define-palette(mat.$light-blue-palette, 800, A200, 700);
 $rslang-accent: mat.define-palette(mat.$pink-palette, 100, A200, 900);
@@ -37,7 +39,17 @@ $rslang-theme-dark: mat.define-dark-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+
+html, body { height: 100%;
+font-size: 10px;}
+html {
+  @include media-small-desktop {
+    font-size:7px;
+  }
+  @include media-mobile {
+    font-size:5px;
+  }
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * {
   scroll-behavior: smooth;
@@ -49,19 +61,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .background-primary{
   background-color: mat-color($rslang-primary);
 }
-.audio-game__highlight{
+.background-accent{
+  background-color: mat-color($rslang-accent);
+}
+.text-primary{
   color: mat-color($rslang-primary);
 }
 .transparent-background{
   background:#ffffff8f;
 
 }
-
+.background-warn{
+  background-color: mat-color($rslang-warn);
+}
 .dark-theme-mode{
   .background-primary{
     background-color: mat-color($rslang-primary-dark);
   }
-  .audio-game__highlight{
+  .background-accent{
+    background-color: mat-color($rslang-accent-dark);
+  }
+  .text-primary{
     color: mat-color($rslang-accent-dark);
   }
   .transparent-background{
@@ -70,3 +90,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
 }
+

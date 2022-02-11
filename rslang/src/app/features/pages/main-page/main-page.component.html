@@ -1,1 +1,92 @@
-<p>TODO: Main Page</p>
+<h3 class="title text-primary">Английский, который всегда с тобой</h3>
+<mat-tab-group
+  mat-stretch-tabs
+  class="example-stretched-tabs mat-elevation-z4"
+  color="accent"
+  backgroundColor="primary"
+>
+<mat-tab label="Знакомься!">
+<ng-template matTabContent>
+  <div class="card mat-elevation-z3">
+    <mat-card
+      class="card__inner-wrapper background-primary mat-elevation-z8"
+      id="defineBackgroundMainPage"
+    >
+      <div class="card__icon-wrapper">
+        <lord-icon
+        src="https://cdn.lordicon.com/smeqxwcv.json"
+          trigger="loop"
+          colors="primary:#fff,secondary:#f8bbd0;"
+
+        >
+        </lord-icon>
+        <h2 class="card__subtitle">Знакомься!</h2>
+      </div>
+    </mat-card>
+    <mat-card class="card__description background-primary mat-elevation-z8" >
+      <iframe
+      class="card__video"
+      src="https://www.youtube.com/embed/B-lipaiZII8"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>
+    </mat-card>
+  </div>
+</ng-template>
+</mat-tab>
+  <mat-tab *ngFor="let card of cards; let i = index" label="{{ card.title }}">
+    <ng-template matTabContent>
+    <div class="card mat-elevation-z3">
+      <mat-card
+        class="card__inner-wrapper background-primary mat-elevation-z8"
+        id="defineBackgroundMainPage"
+      >
+        <div class="card__icon-wrapper">
+          <lord-icon
+            [src]="getIconPath(i)"
+            trigger="loop"
+            colors="primary:#fff,secondary:#f8bbd0;"
+
+          >
+          </lord-icon>
+          <h2 class="card__subtitle">{{ card.title }}</h2>
+        </div>
+      </mat-card>
+      <mat-card class="card__description background-primary mat-elevation-z8" >
+        <div class="card__wrapper">
+        <div [innerHTML] = "getContent(i)" class="card__text" ></div>
+
+        <button  class="card__button" mat-raised-button color="accent" [routerLink]="cards[i].routerLink">{{card.buttonTitle}}</button>
+      </div>
+
+      </mat-card>
+    </div>
+  </ng-template>
+  </mat-tab>
+
+</mat-tab-group>
+<!-- <div class="cards">
+  <div
+    class="card mat-elevation-z3" *ngFor="let card of cards; let i=index"
+  >
+    <mat-card class="card__inner-wrapper background-primary mat-elevation-z8" id="defineBackgroundMainPage-{{i}}">
+      <div class="card__icon-wrapper">
+        <lord-icon
+        src={{card.iconPath}}
+          trigger="loop"
+          colors="primary:#fff,secondary:#f8bbd0;"
+          style="width:{{ iconDimension }}px;height:{{ iconDimension }}px"
+        >
+        </lord-icon>
+        <h2>{{card.title}}</h2>
+        <button
+        mat-mini-fab
+        color="accent"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      </div>
+    </mat-card>
+  </div> -->
+
+<!-- </div> -->

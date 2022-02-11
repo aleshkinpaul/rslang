@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { IUserWord } from 'src/app/shared/interfaces';
-import { AudioChallengeComponent } from '../audio-challenge/audio-challenge.component';
+
 
 @Component({
   selector: 'app-about-team',

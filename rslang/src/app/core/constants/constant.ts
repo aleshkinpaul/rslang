@@ -9,6 +9,7 @@ export const ERROR_MESSAGE = {
 
 export const AGGREGATED_REQUESTS = {
   allUnstudiedWords: '{"$or":[{"userWord.optional.isStudied":false},{"userWord":null}]}',
+  allWords:'{"$or":[{"userWord.optional.isStudied":false}, {"userWord.optional.isStudied":true},{"userWord":null}]}'
 }
 
 export const LEVELS_IN_GAME = 6;
@@ -27,3 +28,48 @@ export const UPLOAD_IMAGES_PATH = 'https://api.cloudinary.com/v1_1/rslang-media/
 export const UPLOAD_IMAGES_PRESET = 'hbkvusoj';
 export const DEFAULT_SPRINT_PAGE = 0;
 export const DATE_PATTERN = 'dd.MM.yyyy';
+
+export const MAIN_PAGE_CONTENT=[
+  {
+    id:0,
+    title:'Учи!',
+    iconPath:'https://cdn.lordicon.com/wxnxiano.json',
+    description:`
+    "Давай открывай свой англо-русский словарь!"<br>
+    А. Васильев "Сплин"</span>`,
+    buttonTitle: 'Учебник',
+    routerLink: 'learnbook'
+
+  },
+  {
+    id:1,
+    title:'Слушай!',
+    iconPath:'https://cdn.lordicon.com/mmspidej.json',
+    description:`
+    "Послушай - это недолго"<br>
+    В. Меладзе и ВИА Гра</span>`,
+    buttonTitle: 'Игра "Аудиовызов"',
+    routerLink: 'audiochallenge'
+  },
+  {
+    id:2,
+    title:'Ускоряйся!',
+    iconPath:'https://cdn.lordicon.com/ktxpktdd.json',
+    description:`
+    "Что наша жизнь? Игра..."<br>
+    заставка "Что? Где? Когда?"</span>`,
+    buttonTitle: 'Игра "Спринт"',
+    routerLink: 'sprint'
+  },
+  {
+    id:3,
+    title:'Развивайся!',
+    iconPath:'https://cdn.lordicon.com/gqdnbnwt.json',
+    description:`
+    "Прошлый раз вы помните. Всё приходит с опытом"<br>
+    Влади "Каста"</span>`,
+    buttonTitle: 'Статистика',
+    routerLink: 'statistics'
+  },
+
+]

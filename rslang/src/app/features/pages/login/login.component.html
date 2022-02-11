@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="transparent-background">
   <mat-card-title>{{ isLoginPage ? 'Вход в аккаунт' : 'Регистрация'}}</mat-card-title>
   <mat-card-content>
     <mat-spinner class="spinner" *ngIf="submitted"></mat-spinner>
@@ -32,10 +32,10 @@
     </mat-form-field>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button color="primary" (click)="changeMode()">
+    <button mat-button class="mode-button" color="primary" (click)="changeMode()">
       {{ isLoginPage ? 'Страница регистрации' : 'Страница логина'}}
     </button>
-    <button (click)="onSubmit()" mat-raised-button color="primary" [disabled]="form.invalid || submitted">{{
+    <button  class="mode-button" (click)="onSubmit()" mat-raised-button color="primary" [disabled]="form.invalid || submitted">{{
       isLoginPage
       ? 'Войти' :
       'Зарегистрироваться'}}</button>

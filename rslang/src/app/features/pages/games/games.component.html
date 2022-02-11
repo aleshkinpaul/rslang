@@ -1,27 +1,35 @@
-
-
 <div class="games-buttons">
-  <div class="button__outer-wrapper background-primary mat-elevation-z8">
-    <mat-card class="button__inner-wrapper">
+  <div class="button__outer-wrapper mat-elevation-z3" routerLink="/audiochallenge">
+    <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
       <div class="button__icon-wrapper">
-      <mat-icon class="button__icon " color="primary">headset_mic</mat-icon>
-      <app-button-accent
-      class="button-start mat-elevation-z8"
-      [title]="'Аудиовызов'"
-      routerLink="/audiochallenge"
-    ></app-button-accent>
-    </div>
+        <lord-icon
+          src="https://cdn.lordicon.com/fpipqhrr.json"
+          trigger="loop"
+          colors="primary:#fff,secondary:#f8bbd0;"
+          class="button__icon"
 
+        >
+        </lord-icon>
+        <h2>Аудиовызов</h2>
+      </div>
     </mat-card>
   </div>
-  <div class="button__outer-wrapper background-primary mat-elevation-z8">
-    <mat-card class="button__inner-wrapper">
+  <div class="button__outer-wrapper mat-elevation-z3" routerLink="/sprint">
+    <mat-card
+      class="button__inner-wrapper background-primary mat-elevation-z8"
+      id="defineBackground"
+    >
       <div class="button__icon-wrapper">
-      <mat-icon class="button__icon " color="primary">av_timer</mat-icon>
-      <app-button-accent  class="button-start mat-elevation-z8" [title]="'Спринт'" routerLink="/sprint"></app-button-accent>
+        <lord-icon
+          src="https://cdn.lordicon.com/lywgqtim.json"
+          trigger="loop"
+          colors="primary:#fff,secondary:#f8bbd0;"
+          class="button__icon"
 
-    </div>
-
+        >
+        </lord-icon>
+        <h2>Спринт</h2>
+      </div>
     </mat-card>
   </div>
 </div>

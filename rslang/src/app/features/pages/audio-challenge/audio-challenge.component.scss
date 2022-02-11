@@ -1,3 +1,4 @@
+@import './../../../styles/mixins.scss';
 .game {
   min-height: 100%;
   text-align: center;
@@ -10,12 +11,47 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    .indicators {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap:1%;
+      width: 100%;
+      margin-bottom: 2%;
+      .indicators__indicator {
+        content: '';
+        min-height: 1.6rem;
+        min-width:1.6rem;
+
+      }
+    }
+
+    .audio-game__image-wrapper {
+      text-align: center;
+      min-height: 8.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .audio-game__title {
+      padding: 2% 5%;
+      color: white;
+    }
+    .audio-game__start {
+      &:hover {
+        box-shadow: 0px 5 5px -3px rgb(0 0 0 / 20%),
+          0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+        opacity: 80%;
+      }
+    }
+
     .audio-game__options {
       display: flex;
-      gap: 0.5rem 4%;
+      gap: 0.8rem 4%;
       justify-content: center;
       flex-wrap: wrap;
-      margin-top: 5%;
+      margin-top: 2%;
     }
     .audio-game__translation {
       display: flex;
@@ -27,22 +63,36 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
+      font-size:2rem;
     }
     .audio-game__image {
       object-fit: cover;
       border-radius: 50%;
     }
+    .mat-card-sm-image{
+      width:8rem;
+      height:8rem;
+    }
+    .audio-game__hear {
+      display: block;
+      margin: auto;
+    }
     .audio-game__result {
       display: inline-flex;
       column-gap: 2%;
       min-width: 25%;
-      width:auto;
+      width: auto;
       justify-content: center;
       margin: auto;
-      border: 4px solid #87eba094;
+      padding: 2%;
+      margin-bottom: 2%;
       border-radius: 4px;
+      border: 0.4rem solid transparent;
       &.audio-game__result_wrong {
-        border: 4px solid #e74e5694;
+        border: 0.4rem solid #e74e5694;
+      }
+      &.audio-game__result_right {
+        border: 0.4rem solid #87eba094;
       }
     }
     .audio-game__button {
@@ -56,6 +106,9 @@
   display: flex;
   column-gap: 5%;
   justify-content: center;
+  @include media-menu-switcher{
+    flex-direction: column;
+    }
 }
 mat-spinner {
   margin: auto;

@@ -1,11 +1,25 @@
-<mat-sidenav-container autosize class="app-content mat-app-background" [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
-  <mat-sidenav #sidenav mode="side" opened="true">
+<mat-sidenav-container
+  autosize
+  class="app-content mat-app-background"
+  [ngClass]="{ 'dark-theme-mode': isDarkTheme }"
+>
+  <mat-sidenav
+    #sidenav
+    [mode]="mobileQuery.matches ? 'over' : 'side'"
+    [opened]="!mobileQuery.matches"
+    [fixedInViewport]="mobileQuery.matches"
+  >
     <mat-toolbar color="primary">
       <mat-toolbar-row>
         <mat-icon matListIcon>menu_book</mat-icon>
         <span style="flex: auto"></span>
-        <mat-icon matListIcon class="chevron-button sidenav-button" (click)="isExpanded = !isExpanded"
-          [ngClass]="{ rotated: isExpanded }">chevron_right</mat-icon>
+        <mat-icon
+          matListIcon
+          class="chevron-button sidenav-button"
+          (click)="isExpanded = !isExpanded"
+          [ngClass]="{ rotated: isExpanded }"
+          >chevron_right</mat-icon
+        >
       </mat-toolbar-row>
     </mat-toolbar>
     <mat-nav-list>
@@ -37,24 +51,76 @@
   <mat-sidenav-content class="wrapper__content">
     <mat-toolbar color="primary">
       <mat-toolbar-row>
-        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isDarkTheme">
+        <button
+          mat-icon-button
+          *ngIf="mobileQuery.matches"
+          (click)="sidenav.open()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-slide-toggle
+          class="settings__toggle"
+          [(ngModel)]="isDarkTheme"
+          *ngIf="!mobileQuery.matches"
+        >
           <mat-icon>bedtime</mat-icon>
         </mat-slide-toggle>
-        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isBubble">
+        <mat-slide-toggle
+          class="settings__toggle"
+          [(ngModel)]="isBubble"
+          *ngIf="!mobileQuery.matches"
+        >
           <mat-icon>bubble_chart</mat-icon>
         </mat-slide-toggle>
+        <mat-slide-toggle
+          class="settings__toggle"
+          [(ngModel)]="isSound"
+          *ngIf="!mobileQuery.matches"
+        >
+          <mat-icon>notifications</mat-icon>
+        </mat-slide-toggle>
+        <div class="settings__icons" *ngIf="mobileQuery.matches">
+          <button mat-icon-button class="settings__icon" (click)="isDarkTheme = !isDarkTheme">
+            <mat-icon color="accent" *ngIf="isDarkTheme">bedtime</mat-icon
+            ><mat-icon *ngIf="!isDarkTheme">bedtime</mat-icon>
+          </button>
+          <button mat-icon-button class="settings__icon" (click)="isBubble = !isBubble">
+            <mat-icon color="accent" *ngIf="isBubble">bubble_chart</mat-icon
+            ><mat-icon *ngIf="!isBubble">bubble_chart</mat-icon>
+          </button>
+          <button mat-icon-button class="settings__icon" (click)="isSound = !isSound">
+            <mat-icon color="accent" *ngIf="isSound">notifications</mat-icon
+            ><mat-icon *ngIf="!isSound">notifications</mat-icon>
+          </button>
+        </div>
         <span style="flex: auto"></span>
-        <h1>RSLang</h1>
+        <h1 *ngIf="!mobileQuery.matches">Rslang</h1>
         <span style="flex: auto"></span>
-        <span class="user-name" *ngIf="auth.isAuthenticated">{{ auth.name }}</span>
-        <img class="avatar-image" *ngIf="auth.avatarPath" alt="" [src]="auth.avatarPath">
-        <app-button-accent [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'" (click)="onLoginButtonClick()">
-        </app-button-accent>
+        <span class="user-name" *ngIf="auth.isAuthenticated">{{
+          auth.name
+        }}</span>
+        <img
+          class="avatar-image"
+          *ngIf="auth.avatarPath"
+          alt=""
+          [src]="auth.avatarPath"
+        />
+        <app-button-accent *ngIf="!mobileQuery.matches"
+          [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'"
+          (click)="onLoginButtonClick()"
+        >
+      </app-button-accent>
+      <button mat-icon-button (click)="onLoginButtonClick()" *ngIf="mobileQuery.matches">
+          <mat-icon *ngIf="!auth.isAuthenticated">login</mat-icon
+          ><mat-icon *ngIf="auth.isAuthenticated">logout</mat-icon>
+        </button>
+
+
       </mat-toolbar-row>
     </mat-toolbar>
     <app-milkyway-animation *ngIf="isBubble"></app-milkyway-animation>
     <router-outlet></router-outlet>
     <app-footer class="footer-bar"></app-footer>
   </mat-sidenav-content>
-
 </mat-sidenav-container>
+<audio src="" id="soundPlayer" *ngIf="isSound"></audio>

@@ -1,17 +1,70 @@
+@import './../../../styles/mixins.scss';
 .game{
   min-height: 100%;
   text-align: center;
   padding: 5%;
-  display: block
+  display: block;
+  .sprint{
+    overflow-x: hidden;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .indicators {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap:1%;
+      width: 100%;
+      margin-bottom: 2%;
+      .indicators__indicator {
+        content: '';
+        min-height: 1.6rem;
+        min-width:1.6rem;
+      }
+    }
+    .sprint__hear {
+      display: block;
+      margin: auto;
+      margin-bottom: 2%;
+    }
+    .sprint__title {
+      padding: 2% 5%;
+      color: white;
+    }
+  }
 }
-
-.mat-spinner {
-  margin-left: auto;
-  margin-right: auto;
+.game__selectors {
+  display: flex;
+  column-gap: 5%;
+  justify-content: center;
+  @include media-menu-switcher{
+    flex-direction: column;
+    }
 }
-
+mat-spinner {
+  margin:auto;
+}
+.timer{
+  margin: 1%;
+}
+.close-to-lose{
+  animation: animate_grow infinite 800ms ease-in-out;
+  color:red
+}
+@keyframes animate_grow {
+	0% {
+		transform: scale3d(1, 1, 1);
+	}
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+	}
+}
 .answer-button {
-  min-width: 120px;
+  min-width: 12rem;
   display: inline-flex;
   justify-content: space-between;
 
