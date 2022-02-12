@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SprintComponent } from './sprint/sprint.component';
 import { LoginComponent } from './login/login.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 
@@ -20,14 +21,16 @@ import { LoginComponent } from './login/login.component';
   declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent, SprintComponent, LoginComponent],
   imports: [
     CommonModule,
-
     MaterialModule,
     PagesRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
-  schemas:[ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class PagesModule { }
