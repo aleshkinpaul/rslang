@@ -124,6 +124,10 @@ export class StatisticsComponent implements OnInit {
     const data = Object.keys(this.statistic.optional.words).map((key) => [key, this.statistic.optional.words[key].newWords]);
 
     this.newWordsChartOption = {
+      textStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
       tooltip: {
         axisPointer: {
           type: 'shadow',
@@ -167,6 +171,10 @@ export class StatisticsComponent implements OnInit {
     });
 
     this.studiedChartOption = {
+      textStyle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+      },
       tooltip: {
         axisPointer: {
           type: 'shadow',

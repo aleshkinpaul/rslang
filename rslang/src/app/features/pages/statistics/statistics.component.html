@@ -30,7 +30,10 @@
     <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper wrapper-outer">
       <div class="wrapper">
         <mat-card class="button__inner-wrapper background-primary mat-elevation-z8 mat-card-base">
-          <mat-card-title>Аудиовызов</mat-card-title>
+          <mat-card-title>
+            <mat-icon>mic_none</mat-icon>
+            <span>Аудиовызов</span>
+          </mat-card-title>
           <mat-card-content *ngIf="audioCardData">
             <mat-list>
               <mat-list-item>Количество новых слов за день: {{audioCardData.newWords}}</mat-list-item>
@@ -41,7 +44,10 @@
           <mat-card-content *ngIf="!audioCardData">Сегодня вы ещё не играли</mat-card-content>
         </mat-card>
         <mat-card class="button__inner-wrapper background-primary mat-elevation-z8 mat-card-base">
-          <mat-card-title>Спринт</mat-card-title>
+          <mat-card-title>
+            <mat-icon>directions_run</mat-icon>
+            <span>Спринт</span>
+          </mat-card-title>
           <mat-card-content *ngIf="sprintCardData">
             <mat-list>
               <mat-list-item>Количество новых слов за день: {{sprintCardData.newWords}}</mat-list-item>
@@ -52,7 +58,10 @@
           <mat-card-content *ngIf="!sprintCardData">Сегодня вы ещё не играли</mat-card-content>
         </mat-card>
         <mat-card class="button__inner-wrapper background-primary mat-elevation-z8 mat-card-base">
-          <mat-card-title>Слова</mat-card-title>
+          <mat-card-title>
+            <mat-icon>text_fields</mat-icon>
+            <span>Слова</span>
+          </mat-card-title>
           <mat-card-content *ngIf="wordsCardData">
             <mat-list>
               <mat-list-item>Количество выученных слов за день: {{wordsCardData.newWords}}</mat-list-item>
@@ -67,14 +76,20 @@
 
     <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper wrapper-charts">
       <mat-card class="background-primary mat-elevation-z8 chart-card">
-        <mat-card-title>Количество новых слов</mat-card-title>
+        <mat-card-title>
+          <mat-icon>bar_chart</mat-icon>
+          <span>Количество новых слов</span>
+        </mat-card-title>
         <mat-card-content *ngIf="newWordsChartOption" class="chart-content">
           <div echarts [options]="newWordsChartOption" class="chart mat-app-background"></div>
         </mat-card-content>
         <mat-card-content *ngIf="!newWordsChartOption">Недостаточно данных</mat-card-content>
       </mat-card>
       <mat-card class="background-primary mat-elevation-z8 chart-card">
-        <mat-card-title>Количество изученных слов</mat-card-title>
+        <mat-card-title>
+          <mat-icon>show_chart</mat-icon>
+          <span>Количество изученных слов</span>
+        </mat-card-title>
         <mat-card-content *ngIf="studiedChartOption" class="chart-content">
           <div echarts [options]="studiedChartOption" class="chart mat-app-background"></div>
         </mat-card-content>
