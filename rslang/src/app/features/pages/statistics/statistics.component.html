@@ -69,14 +69,14 @@
       <mat-card class="background-primary mat-elevation-z8 chart-card">
         <mat-card-title>Количество новых слов</mat-card-title>
         <mat-card-content *ngIf="newWordsChartOption" class="chart-content">
-          <div echarts [options]="newWordsChartOption" class="chart"></div>
+          <div echarts [options]="newWordsChartOption" class="chart mat-app-background"></div>
         </mat-card-content>
         <mat-card-content *ngIf="!newWordsChartOption">Недостаточно данных</mat-card-content>
       </mat-card>
       <mat-card class="background-primary mat-elevation-z8 chart-card">
         <mat-card-title>Количество изученных слов</mat-card-title>
         <mat-card-content *ngIf="studiedChartOption" class="chart-content">
-          <div echarts [options]="studiedChartOption" class="chart"></div>
+          <div echarts [options]="studiedChartOption" class="chart mat-app-background"></div>
         </mat-card-content>
         <mat-card-content *ngIf="!studiedChartOption">Недостаточно данных</mat-card-content>
       </mat-card>
