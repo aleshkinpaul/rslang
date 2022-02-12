@@ -1,6 +1,11 @@
 <mat-card class="word-card">
   <mat-card-title-group class="word-card-title-group">
-    <mat-card-title>{{wordData.word}}</mat-card-title>
+    <mat-card-title class="mat-card-title">
+      {{wordData.word}}
+      <button class="word-card-content-audio" mat-icon-button color="accent">
+        <mat-icon>volume_up</mat-icon>
+      </button>
+    </mat-card-title>
     <mat-card-subtitle><strong>{{wordData.transcription}}</strong> - {{wordData.wordTranslate}}</mat-card-subtitle>
     <div class="word-card-image-container">
       <img class="word-card-image" [src]="getImage()">
@@ -12,8 +17,5 @@
       <li class="word-card-content-list-item" (mouseenter)="showExample()" (mouseleave)="hideText()">Пример</li>
     </ul>
     <p class="word-card-content-text" *ngIf="isMeaningShow || isExampleShow" [innerHTML]="wordCardContentText"></p>
-    <button class="word-card-content-audio" mat-icon-button color="accent">
-      <mat-icon>volume_up</mat-icon>
-    </button>
   </mat-card-content>
 </mat-card>

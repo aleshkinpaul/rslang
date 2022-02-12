@@ -4,6 +4,16 @@
   .word-card-title-group {
     margin-bottom: 10px;
 
+    .mat-card-title {
+      display: flex;
+      flex-direction: row;
+    
+      .word-card-content-audio {
+        margin-top: -10px;
+        // transform: translateY(-25%);
+      }
+    }
+
     .mat-card-subtitle {
       margin-bottom: 0;
     }
@@ -45,11 +55,19 @@
         }
       }
     }
-    
-    .word-card-content-audio {
+
+    .word-card-content-text {
+      margin: 0 5%;
+      padding: 16px;
+      width: 90%;
       position: absolute;
-      right: 0;
-      transform: translate(-20%, -20%);
+      left: 0;
+      bottom: 0;
+      background-color: rgb(150, 150, 150);
+      border: 2px dashed rgba(122, 122, 122);
+      border-radius: 4px;
+      transform: translateY(calc(100% - 10px));
+      z-index: 1;
     }
   }
 }
