@@ -1,10 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ChartType } from 'angular-google-charts';
+import { catchError, throwError } from 'rxjs';
 import { DATE_PATTERN } from 'src/app/core/constants/constant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { IChartData, IStatCardData, IStatistic, IUserWord } from 'src/app/shared/interfaces';
+import { defineLordIconElement } from 'lord-icon-element';
+import lottie from "lottie-web";
 
 @Component({
   selector: 'app-statistics',
@@ -31,7 +35,13 @@ export class StatisticsComponent implements OnInit {
     type: ChartType.AreaChart,
   }
 
-  constructor(private api: ApiService, public auth: AuthService, private datePipe: DatePipe) { }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    defineLordIconElement(lottie.loadAnimation);
+  }
+  constructor(private api: ApiService, public auth: AuthService, private datePipe: DatePipe) {
+    defineLordIconElement(lottie.loadAnimation);
+  }
 
   ngOnInit(): void {
     if (this.auth.isAuthenticated) {
@@ -42,7 +52,12 @@ export class StatisticsComponent implements OnInit {
   }
 
   getStatistic() {
-    this.api.getStatistics(this.auth.userId).subscribe((response) => {
+    this.api.getStatistics(this.auth.userId).pipe(
+      catchError((error: HttpErrorResponse) => {
+        this.isStatisticGet = true;
+        return throwError(() => error);
+      })
+    ).subscribe((response) => {
       this.statistic = response;
       this.getSprintCardData();
       this.getAudioCardData();
@@ -63,10 +78,10 @@ export class StatisticsComponent implements OnInit {
   getSprintCardData() {
     if (this.statistic.optional.games && this.statistic.optional.games.sprint) {
       if (this.statistic.optional.games.sprint[this.date]) {
-        const newWords = this.statistic.optional.games.sprint[this.date].newWords;
-        const correctSeries = this.statistic.optional.games.sprint[this.date].correctSeries;
-        const correctAnswers = this.statistic.optional.games.sprint[this.date].correctAnswers;
-        const wrongAnswers = this.statistic.optional.games.sprint[this.date].wrongAnswers;
+        const newWords = this.statistic.optional.games.sprint[this.date].newWords || 0;
+        const correctSeries = this.statistic.optional.games.sprint[this.date].correctSeries || 0;
+        const correctAnswers = this.statistic.optional.games.sprint[this.date].correctAnswers || 0;
+        const wrongAnswers = this.statistic.optional.games.sprint[this.date].wrongAnswers || 0;
         const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100;
 
         this.sprintCardData = {
@@ -81,10 +96,10 @@ export class StatisticsComponent implements OnInit {
   getAudioCardData() {
     if (this.statistic.optional.games && this.statistic.optional.games.audio) {
       if (this.statistic.optional.games.audio[this.date]) {
-        const newWords = this.statistic.optional.games.audio[this.date].newWords;
-        const correctSeries = this.statistic.optional.games.audio[this.date].correctSeries;
-        const correctAnswers = this.statistic.optional.games.audio[this.date].correctAnswers;
-        const wrongAnswers = this.statistic.optional.games.audio[this.date].wrongAnswers;
+        const newWords = this.statistic.optional.games.audio[this.date].newWords || 0;
+        const correctSeries = this.statistic.optional.games.audio[this.date].correctSeries || 0;
+        const correctAnswers = this.statistic.optional.games.audio[this.date].correctAnswers || 0;
+        const wrongAnswers = this.statistic.optional.games.audio[this.date].wrongAnswers || 0;
         const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100;
 
         this.audioCardData = {
@@ -98,10 +113,10 @@ export class StatisticsComponent implements OnInit {
 
   getWordsCardData() {
     if (this.statistic.optional.words && this.statistic.optional.words[this.date]) {
-      const newWords = this.statistic.optional.words[this.date].studiedWords;
-      const correctSeries = this.statistic.optional.words[this.date].correctSeries;
-      const correctAnswers = this.statistic.optional.words[this.date].correctAnswers;
-      const wrongAnswers = this.statistic.optional.words[this.date].wrongAnswers;
+      const newWords = this.statistic.optional.words[this.date].studiedWords || 0;
+      const correctSeries = this.statistic.optional.words[this.date].correctSeries || 0;
+      const correctAnswers = this.statistic.optional.words[this.date].correctAnswers || 0;
+      const wrongAnswers = this.statistic.optional.words[this.date].wrongAnswers || 0;
       const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100;
 
       this.wordsCardData = {
@@ -119,11 +134,15 @@ export class StatisticsComponent implements OnInit {
 
   getStudiedChart() {
     const data = Object.keys(this.statistic.optional.words).map((key) => [key, this.statistic.optional.words[key].studiedWords]);
+
     data.forEach((item, i) => {
       if (i > 0) {
-        data[i][1] = Number(data[i][1]) + Number(data[i - 1][1]);
+        data[i][1] = Number(data[i][1] || 0) + Number(data[i - 1][1] || 0);
+      } else {
+        data[i][1] = Number(data[i][1] || 0);
       }
     });
     this.studiedChartData.data = data;
+
   }
 }

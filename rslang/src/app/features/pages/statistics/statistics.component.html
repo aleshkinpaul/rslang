@@ -1,30 +1,91 @@
-<div *ngIf="!auth.isAuthenticated">Чтобы сохранять и просматривать статистику, авторизуйтесь</div>
-<div *ngIf="auth.isAuthenticated">
-  <div *ngIf="!isStatisticGet || !isUserWordsGet">
-    <span>Статистика загружается</span>
+<div *ngIf="!auth.isAuthenticated">
+  <div class="wrapper">
+    <div class="button__outer-wrapper mat-elevation-z3">
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8" routerLink="/login">
+        <div class="button__icon-wrapper">
+          <h2>Чтобы сохранять и просматривать статистику, авторизуйтесь</h2>
+          <lord-icon src="https://cdn.lordicon.com/eszyyflr.json" trigger="hover"
+            colors="primary:#fff,secondary:#f8bbd0;" class="button__icon">
+          </lord-icon>
+        </div>
+      </mat-card>
+    </div>
+
   </div>
-  <div *ngIf="isStatisticGet && isUserWordsGet">
-    <div *ngIf="sprintCardData">
-      <h2>Sprint</h2>
-      <span>Количество новых слов за день: </span><span>{{sprintCardData.newWords}}</span>
-      <span>Самая длинная серия правильных ответов: </span><span>{{sprintCardData.correctSeries}}</span>
-      <span>Процент правильных ответов: </span><span>{{sprintCardData.rightPercent}}%</span>
+</div>
+
+<div *ngIf="!isStatisticGet || !isUserWordsGet">
+  <div class="wrapper">
+    <div class="button__outer-wrapper mat-elevation-z3">
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+        <lord-icon src="https://cdn.lordicon.com/gqdnbnwt.json" trigger="loop" colors="primary:#fff,secondary:#f8bbd0;"
+          class="button__icon">
+        </lord-icon>
+        <h2>Статистика загружается...</h2>
+      </mat-card>
     </div>
-    <div *ngIf="audioCardData">
-      <h2>Audio</h2>
-      <span>Количество новых слов за день: </span><span>{{audioCardData.newWords}}</span>
-      <span>Самая длинная серия правильных ответов: </span><span>{{audioCardData.correctSeries}}</span>
-      <span>Процент правильных ответов: </span><span>{{audioCardData.rightPercent}}%</span>
+  </div>
+</div>
+
+<div *ngIf="auth.isAuthenticated">
+  <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper">
+    <div class="wrapper">
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+        <mat-card-title>Аудиовызов</mat-card-title>
+        <mat-card-content *ngIf="audioCardData">
+          <mat-list>
+            <mat-list-item>Количество новых слов за день: {{audioCardData.newWords}}</mat-list-item>
+            <mat-list-item>Самая длинная серия правильных ответов: {{audioCardData.correctSeries}}</mat-list-item>
+            <mat-list-item>Процент правильных ответов: {{audioCardData.rightPercent}}%</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-content *ngIf="!audioCardData">Сегодня вы ещё не играли</mat-card-content>
+      </mat-card>
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+        <mat-card-title>Спринт</mat-card-title>
+        <mat-card-content *ngIf="sprintCardData">
+          <mat-list>
+            <mat-list-item>Количество новых слов за день: {{sprintCardData.newWords}}</mat-list-item>
+            <mat-list-item>Самая длинная серия правильных ответов: {{sprintCardData.correctSeries}}</mat-list-item>
+            <mat-list-item>Процент правильных ответов: {{sprintCardData.rightPercent}}%</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-content *ngIf="!sprintCardData">Сегодня вы ещё не играли</mat-card-content>
+      </mat-card>
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+        <mat-card-title>Слова</mat-card-title>
+        <mat-card-content *ngIf="wordsCardData">
+          <mat-list>
+            <mat-list-item>Количество выученных слов за день: {{wordsCardData.newWords}}</mat-list-item>
+            <mat-list-item>Самая длинная серия правильных ответов: {{wordsCardData.correctSeries}}</mat-list-item>
+            <mat-list-item>Процент правильных ответов: {{wordsCardData.rightPercent}}%</mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        <mat-card-content *ngIf="!wordsCardData">Сегодня вы ещё не играли</mat-card-content>
+      </mat-card>
     </div>
-    <div *ngIf="wordsCardData">
-      <h2>Слова</h2>
-      <span>Количество выученных слов за день: </span><span>{{wordsCardData.newWords}}</span>
-      <span>Самая длинная серия правильных ответов: </span><span>{{wordsCardData.correctSeries}}</span>
-      <span>Процент правильных ответов: </span><span>{{wordsCardData.rightPercent}}%</span>
+  </div>
+
+  <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper">
+    <div class="wrapper">
+      <mat-card class="background-primary mat-elevation-z8 chart-card">
+        <mat-card-title>Количество новых слов</mat-card-title>
+        <mat-card-content *ngIf="newWordsChartData.data">
+          <google-chart class="chart" *ngIf="newWordsChartData.data" [type]="newWordsChartData.type"
+            [data]="newWordsChartData.data!">
+          </google-chart>
+        </mat-card-content>
+        <mat-card-content *ngIf="!newWordsChartData.data">Недостаточно данных</mat-card-content>
+      </mat-card>
+      <mat-card class="background-primary mat-elevation-z8 chart-card">
+        <mat-card-title>Количество изученных слов</mat-card-title>
+        <mat-card-content *ngIf="studiedChartData.data">
+          <google-chart class="chart" *ngIf="studiedChartData.data" [type]="studiedChartData.type"
+            [data]="studiedChartData.data!">
+          </google-chart>
+        </mat-card-content>
+        <mat-card-content *ngIf="!studiedChartData.data">Недостаточно данных</mat-card-content>
+      </mat-card>
     </div>
-    <google-chart [title]="newWordsChartData.title" [type]="newWordsChartData.type" [data]="newWordsChartData.data!">
-    </google-chart>
-    <google-chart [title]="studiedChartData.title" [type]="studiedChartData.type" [data]="studiedChartData.data!">
-    </google-chart>
   </div>
 </div>

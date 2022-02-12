@@ -1,0 +1,58 @@
+.wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  padding: 4rem;
+  gap: 2rem;
+}
+
+.mat-card {
+  width: 410px;
+  height: 230px;
+  flex-shrink: 1;
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-card {
+  width: auto;
+  height: auto;
+}
+
+.mat-card-title {
+  color: white;
+  margin: 2rem;
+  text-align: center;
+}
+
+.button__icon{
+  font-size: 16rem;
+  text-align: center;
+  width:100%;
+}
+
+.mat-card .mat-card-content {
+  color: white;
+  align-items: center;
+  margin: auto;
+}
+
+lord-icon{
+  width:80%;
+  height:80%;
+}
+
+.button__inner-wrapper {
+  cursor: pointer;
+}
+
+.mat-list-item {
+  color: white;
+}
+
+.chart {
+  max-width: 70%;
+}
