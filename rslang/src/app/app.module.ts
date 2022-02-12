@@ -9,7 +9,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptor/token.interceptor';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { DatePipe } from '@angular/common';
-import { GoogleChartsModule } from 'angular-google-charts';
 
 
 
@@ -21,8 +20,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule,
-    GoogleChartsModule
+    SharedModule
   ],
   providers: [
     {
@@ -34,6 +32,6 @@ import { GoogleChartsModule } from 'angular-google-charts';
     [DatePipe]
   ],
   bootstrap: [AppComponent],
-  schemas:[ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

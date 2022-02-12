@@ -21,16 +21,16 @@
         <lord-icon src="https://cdn.lordicon.com/gqdnbnwt.json" trigger="loop" colors="primary:#fff,secondary:#f8bbd0;"
           class="button__icon">
         </lord-icon>
-        <h2>Статистика загружается...</h2>
+        <mat-card-title>Статистика загружается...</mat-card-title>
       </mat-card>
     </div>
   </div>
 </div>
 
 <div *ngIf="auth.isAuthenticated">
-  <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper">
+  <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper wrapper-outer">
     <div class="wrapper">
-      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8 mat-card-base">
         <mat-card-title>Аудиовызов</mat-card-title>
         <mat-card-content *ngIf="audioCardData">
           <mat-list>
@@ -41,7 +41,7 @@
         </mat-card-content>
         <mat-card-content *ngIf="!audioCardData">Сегодня вы ещё не играли</mat-card-content>
       </mat-card>
-      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8 mat-card-base">
         <mat-card-title>Спринт</mat-card-title>
         <mat-card-content *ngIf="sprintCardData">
           <mat-list>
@@ -52,7 +52,7 @@
         </mat-card-content>
         <mat-card-content *ngIf="!sprintCardData">Сегодня вы ещё не играли</mat-card-content>
       </mat-card>
-      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8">
+      <mat-card class="button__inner-wrapper background-primary mat-elevation-z8 mat-card-base">
         <mat-card-title>Слова</mat-card-title>
         <mat-card-content *ngIf="wordsCardData">
           <mat-list>
@@ -66,26 +66,20 @@
     </div>
   </div>
 
-  <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper">
-    <div class="wrapper">
-      <mat-card class="background-primary mat-elevation-z8 chart-card">
-        <mat-card-title>Количество новых слов</mat-card-title>
-        <mat-card-content *ngIf="newWordsChartData.data">
-          <google-chart class="chart" *ngIf="newWordsChartData.data" [type]="newWordsChartData.type"
-            [data]="newWordsChartData.data!">
-          </google-chart>
-        </mat-card-content>
-        <mat-card-content *ngIf="!newWordsChartData.data">Недостаточно данных</mat-card-content>
-      </mat-card>
-      <mat-card class="background-primary mat-elevation-z8 chart-card">
-        <mat-card-title>Количество изученных слов</mat-card-title>
-        <mat-card-content *ngIf="studiedChartData.data">
-          <google-chart class="chart" *ngIf="studiedChartData.data" [type]="studiedChartData.type"
-            [data]="studiedChartData.data!">
-          </google-chart>
-        </mat-card-content>
-        <mat-card-content *ngIf="!studiedChartData.data">Недостаточно данных</mat-card-content>
-      </mat-card>
-    </div>
+  <div *ngIf="isStatisticGet && isUserWordsGet" class="wrapper wrapper-charts">
+    <mat-card class="background-primary mat-elevation-z8 chart-card">
+      <mat-card-title>Количество новых слов</mat-card-title>
+      <mat-card-content *ngIf="newWordsChartOption" class="chart-content">
+        <div echarts [options]="newWordsChartOption" class="chart"></div>
+      </mat-card-content>
+      <mat-card-content *ngIf="!newWordsChartOption">Недостаточно данных</mat-card-content>
+    </mat-card>
+    <mat-card class="background-primary mat-elevation-z8 chart-card">
+      <mat-card-title>Количество изученных слов</mat-card-title>
+      <mat-card-content *ngIf="studiedChartOption" class="chart-content">
+        <div echarts [options]="studiedChartOption" class="chart"></div>
+      </mat-card-content>
+      <mat-card-content *ngIf="!studiedChartOption">Недостаточно данных</mat-card-content>
+    </mat-card>
   </div>
 </div>

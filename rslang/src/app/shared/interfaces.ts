@@ -1,5 +1,3 @@
-import { ChartType, Row } from "angular-google-charts";
-
 type WordDifficultyType = 'easy' | 'hard';
 
 export interface IUser {
@@ -147,10 +145,4 @@ export interface IStatCardData {
   newWords: number;
   rightPercent: number;
   correctSeries: number;
-}
-
-export interface IChartData {
-  title: string;
-  type: ChartType;
-  data?: Row[];
 }

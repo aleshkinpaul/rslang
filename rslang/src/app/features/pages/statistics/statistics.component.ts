@@ -1,14 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { ChartType } from 'angular-google-charts';
 import { catchError, throwError } from 'rxjs';
 import { DATE_PATTERN } from 'src/app/core/constants/constant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { IChartData, IStatCardData, IStatistic, IUserWord } from 'src/app/shared/interfaces';
+import { IStatCardData, IStatistic, IUserWord } from 'src/app/shared/interfaces';
 import { defineLordIconElement } from 'lord-icon-element';
 import lottie from "lottie-web";
+import { EChartsOption } from 'echarts';
 
 @Component({
   selector: 'app-statistics',
@@ -25,15 +25,8 @@ export class StatisticsComponent implements OnInit {
   audioCardData: IStatCardData | null = null;
   wordsCardData: IStatCardData | null = null;
 
-  newWordsChartData: IChartData = {
-    title: 'Количество новых слов',
-    type: ChartType.ColumnChart,
-  }
-
-  studiedChartData: IChartData = {
-    title: 'Количество изученных слов',
-    type: ChartType.AreaChart,
-  }
+  newWordsChartOption: EChartsOption | null = null;
+  studiedChartOption: EChartsOption | null = null;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -129,7 +122,37 @@ export class StatisticsComponent implements OnInit {
 
   getNewWordsChart() {
     const data = Object.keys(this.statistic.optional.words).map((key) => [key, this.statistic.optional.words[key].newWords]);
-    this.newWordsChartData.data = data;
+
+    this.newWordsChartOption = {
+      tooltip: {
+        axisPointer: {
+          type: 'shadow',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      xAxis: {
+        type: 'category',
+        data: data.map((item) => item[0]),
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: data.map((item) => item[1]),
+          type: 'bar',
+          label: {
+            show: true,
+            position: 'inside'
+          },
+          emphasis: {
+            focus: 'series'
+          },
+        },
+      ],
+    };
   }
 
   getStudiedChart() {
@@ -142,7 +165,38 @@ export class StatisticsComponent implements OnInit {
         data[i][1] = Number(data[i][1] || 0);
       }
     });
-    this.studiedChartData.data = data;
 
+    this.studiedChartOption = {
+      tooltip: {
+        axisPointer: {
+          type: 'shadow',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: data.map((item) => item[0]),
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data: data.map((item) => item[1]),
+          type: 'line',
+          areaStyle: {},
+          label: {
+            show: true,
+            position: 'top'
+          },
+          emphasis: {
+            focus: 'series'
+          },
+        },
+      ],
+    };
   }
 }

@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SprintComponent } from './sprint/sprint.component';
 import { LoginComponent } from './login/login.component';
-import { GoogleChartsModule } from 'angular-google-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 
@@ -21,15 +21,16 @@ import { GoogleChartsModule } from 'angular-google-charts';
   declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, LearnbookComponent, AudioChallengeComponent, SprintComponent, LoginComponent],
   imports: [
     CommonModule,
-
     MaterialModule,
     PagesRoutingModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleChartsModule
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
-  schemas:[ CUSTOM_ELEMENTS_SCHEMA ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 
 })
 export class PagesModule { }
