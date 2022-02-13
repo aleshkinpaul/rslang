@@ -7,7 +7,7 @@
               color="accent"
               (groupNum)="groupNum"
               [routerLink]="['/learnbook']"
-              [queryParams] = "{group: groupNum, page: 1}">
+              [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
         Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
       </button>
       <ng-template #activeGroup>
@@ -16,7 +16,7 @@
                 color="primary"
                 (groupNum)="groupNum"
                 [routerLink]="['/learnbook']"
-                [queryParams] = "{group: groupNum, page: 1}">
+                [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
           Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
         </button>
       </ng-template>
@@ -26,7 +26,7 @@
     <ul class="words-list" *ngIf="currentPageNum">
       <li class="words-list-item"
           *ngFor="let wordData of wordsData">
-        <app-word [wordData]="wordData" (onClickAudio)="playWordAudio($event)"></app-word>
+        <app-word [wordData]="wordData" (clickAudio)="playWordAudio($event)"></app-word>
       </li>
     </ul>
     <ul class="group-pages-list" *ngIf="currentGroupNum <= learnbookGroupCount">
