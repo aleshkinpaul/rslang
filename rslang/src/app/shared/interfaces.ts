@@ -146,3 +146,8 @@ export interface IStatCardData {
   rightPercent: number;
   correctSeries: number;
 }
+
+export interface ILearnbookParams {
+  group?: number;
+  page?: number;
+}

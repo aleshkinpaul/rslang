@@ -12,12 +12,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SprintComponent } from './sprint/sprint.component';
 import { LoginComponent } from './login/login.component';
 import { NgxEchartsModule } from 'ngx-echarts';
-
-
-
+import { LearnbookComponent } from './learnbook/learnbook.component';
+import { WordComponent } from './learnbook/word/word.component';
 
 @NgModule({
-  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, AudioChallengeComponent, SprintComponent, LoginComponent],
+  declarations: [MainPageComponent, AboutTeamComponent, StatisticsComponent, GamesComponent, AudioChallengeComponent, SprintComponent, LoginComponent, LearnbookComponent, WordComponent],
   imports: [
     CommonModule,
     MaterialModule,
