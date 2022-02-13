@@ -66,7 +66,10 @@ export class WordComponent implements OnInit {
             this.apiService.createUserWord(this.authService.userId, this.wordData.id, {
               difficulty: this.isHard ? 'hard' : 'easy',
               optional: {
-                tempParam: '',
+                isStudied: false,
+                correctAnswers: 0,
+                wrongAnswers: 0,
+                correctSeries: 0,
               }
             })
             .subscribe();
@@ -78,7 +81,10 @@ export class WordComponent implements OnInit {
         (res) => this.apiService.updateUserWord(this.authService.userId, this.wordData.id, {
           difficulty: this.isHard ? 'hard' : 'easy',
           optional: {
-            tempParam: '',
+            isStudied: false,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            correctSeries: 0,
           }
         })
       )
