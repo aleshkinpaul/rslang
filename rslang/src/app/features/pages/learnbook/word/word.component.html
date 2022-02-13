@@ -2,7 +2,9 @@
   <mat-card-title-group class="word-card-title-group">
     <mat-card-title class="mat-card-title">
       {{wordData.word}}
-      <button class="word-card-content-audio" mat-icon-button color="accent">
+      <button class="word-card-content-audio"
+              mat-icon-button color="accent"
+              (click)="playAudio()">
         <mat-icon>volume_up</mat-icon>
       </button>
     </mat-card-title>

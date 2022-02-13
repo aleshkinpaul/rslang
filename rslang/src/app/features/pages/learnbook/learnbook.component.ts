@@ -20,6 +20,7 @@ export class LearnbookComponent implements OnInit, AfterViewInit {
   currentGroupNum!: number;
   currentPageNum!: number;
   wordsData?: IWord[];
+  audio: HTMLAudioElement = new Audio();
 
   constructor(private route: ActivatedRoute, private apiService: ApiService) { }
 
@@ -43,6 +44,21 @@ export class LearnbookComponent implements OnInit, AfterViewInit {
     if (this.currentGroupNum >= 0 || this.currentPageNum >= 0) {
       this.apiService.getWords(this.currentPageNum - 1, this.currentGroupNum - 1)
         .subscribe((res) => { this.wordsData = res; console.log(this.wordsData[0]) });
+    }
+  }
+
+  playWordAudio(wordAudioSrcArr: string[]) {
+    let audioInd = 0;
+    this.audio.src = wordAudioSrcArr[0];
+    this.audio.load();
+    this.audio.play();
+
+    this.audio.onended = () => {
+      audioInd++;
+      if (audioInd < wordAudioSrcArr.length) {
+        this.audio.src = wordAudioSrcArr[audioInd];
+        this.audio.play();
+      }
     }
   }
 }
