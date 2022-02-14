@@ -1,32 +1,36 @@
 <div class="learnbook-container">
   <ul class="learnbook-group-list">
     <li class="learnbook-group-list-item" *ngFor="let groupNum of groupNums">
-      <button class="learnbook-group-list-item-button"
-              *ngIf="groupNum !== currentGroupNum; else activeGroup"
-              mat-raised-button
-              color="accent"
-              (groupNum)="groupNum"
-              [routerLink]="['/learnbook']"
-              [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
-        Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
-      </button>
-      <ng-template #activeGroup>
+      <div class="learnbook-group-list-item-button-container" *ngIf="!isLoggedIn && groupNum < groupNums.length || isLoggedIn">
         <button class="learnbook-group-list-item-button"
+                *ngIf="groupNum !== currentGroupNum; else activeGroup"
                 mat-raised-button
-                color="primary"
+                color="accent"
                 (groupNum)="groupNum"
                 [routerLink]="['/learnbook']"
                 [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
           Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
         </button>
-      </ng-template>
+        <ng-template #activeGroup>
+          <button class="learnbook-group-list-item-button"
+                  mat-raised-button
+                  color="primary"
+                  (groupNum)="groupNum"
+                  [routerLink]="['/learnbook']"
+                  [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
+            Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
+          </button>
+        </ng-template>
+      </div>
     </li>
   </ul>
   <div class="words-container" *ngIf="currentGroupNum">
-    <ul class="words-list" *ngIf="currentPageNum">
+    <ul class="words-list">
       <li class="words-list-item"
           *ngFor="let wordData of wordsData">
-        <app-word [wordData]="wordData" (clickAudio)="playWordAudio($event)"></app-word>
+        <app-word [wordData]="wordData"
+                  (clickAudio)="playWordAudio($event)"
+                  (checkWord)="getWords()"></app-word>
       </li>
     </ul>
     <ul class="group-pages-list" *ngIf="currentGroupNum <= learnbookGroupCount">

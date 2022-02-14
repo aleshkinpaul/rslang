@@ -1,9 +1,11 @@
-<mat-card class="word-card">
+<mat-card class="word-card"
+          [ngClass]="{'mat-app-background': isStudied}">
   <mat-card-title-group class="word-card-title-group">
     <mat-card-title class="mat-card-title">
       {{wordData.word}}
       <button class="word-card-content-audio"
-              mat-icon-button color="accent"
+              mat-icon-button
+              color="accent"
               (click)="playAudio()">
         <mat-icon>volume_up</mat-icon>
       </button>
@@ -18,18 +20,18 @@
       <li class="word-card-content-list-item" (mouseenter)="showMeaning()" (mouseleave)="hideText()">Определение</li>
       <li class="word-card-content-list-item" (mouseenter)="showExample()" (mouseleave)="hideText()">Пример</li>
     </ul>
-    <p class="word-card-content-text" *ngIf="isMeaningShow || isExampleShow" [innerHTML]="wordCardContentText"></p>
-    <div class="word-card-buttons-container">
-      <button class="word-card-button" mat-icon-button color="primary" (click)="addUserWord()">
-        <mat-icon class="word-card-button-icon" *ngIf="isKnown; else uncheckedBox">check_box</mat-icon>
+    <p class="word-card-content-text mat-app-background" *ngIf="isMeaningShow || isExampleShow" [innerHTML]="wordCardContentText"></p>
+    <div class="word-card-buttons-container" *ngIf="isLoggedIn">
+      <button class="word-card-button" mat-icon-button color="primary" (click)="checkAsStudied()">
+        <mat-icon class="word-card-button-icon" *ngIf="isStudied; else uncheckedBox" color="accent">check_box</mat-icon>
         <ng-template #uncheckedBox>
-          <mat-icon class="word-card-button-icon">check_box_outline_blank</mat-icon>
+          <mat-icon class="word-card-button-icon" color="accent">check_box_outline_blank</mat-icon>
         </ng-template>
       </button>
-      <button class="word-card-button" mat-icon-button color="primary">
-        <mat-icon class="word-card-button-icon" *ngIf="isHard; else easyWord">star</mat-icon>
+      <button class="word-card-button" mat-icon-button color="primary" (click)="checkAsHard()">
+        <mat-icon class="word-card-button-icon" color="accent" *ngIf="isHard; else easyWord">star</mat-icon>
         <ng-template #easyWord>
-          <mat-icon class="word-card-button-icon">star_border</mat-icon>
+          <mat-icon class="word-card-button-icon" color="accent">star_border</mat-icon>
         </ng-template>
       </button>
     </div>
