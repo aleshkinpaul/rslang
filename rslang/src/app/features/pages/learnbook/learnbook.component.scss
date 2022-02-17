@@ -1,6 +1,6 @@
 .learnbook-container {
-  margin: 5vh auto;
-  width: 95vw;
+  margin: 5vmin auto;
+  width: calc(100% - 10vmin);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,9 +49,15 @@
   }
   
   .group-pages-list {
+    margin-bottom: 2vh;
     display: flex;
     flex-direction: row;
     justify-content: center;
+
+    .group-pages-list-item-correct {
+      background-color: #36D96F;
+      color: #FFFFFF;
+    }
   
     .group-pages-list-item {
       list-style: none;
@@ -61,6 +67,41 @@
       .group-pages-list-item-element {
         margin: 0 5px;
         font-size: 1.5rem;
+      }
+    }
+  }
+
+  .games-container {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1.5vmin;
+    right: 5vmin;
+    top: 10vh;
+
+    &:hover .games-buttons {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition: 1s ease-in-out;
+    }
+
+    .game-button {
+      z-index: 1;
+    }
+
+    .games-buttons {
+      display: flex;
+      flex-direction: column;
+      align-content: flex-end;
+      row-gap: 1vmin;
+      opacity: 0;
+      transform: translateY(-50%);
+      pointer-events: none;
+      transition: 1s ease-in-out;
+
+      .game-button {
+        align-self: flex-end;
       }
     }
   }

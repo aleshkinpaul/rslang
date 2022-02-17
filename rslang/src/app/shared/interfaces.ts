@@ -53,10 +53,10 @@ export interface IWord {
 }
 
 export interface IAggregatedRequestParams {
-  group: number;
-  page: number;
-  wordsPerPage: number;
-  filter: string;
+  group?: number;
+  page?: number;
+  wordsPerPage?: number;
+  filter?: string;
 }
 
 export interface IUserWord {
@@ -150,4 +150,9 @@ export interface IStatCardData {
 export interface ILearnbookParams {
   group?: number;
   page?: number;
+}
+
+export interface IPageDetails {
+  num: number;
+  isStudied: boolean;
 }

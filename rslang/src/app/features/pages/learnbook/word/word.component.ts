@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IAggregatedResponseWord, IWord } from 'src/app/shared/interfaces';
+import { IAggregatedResponseWord, IStatisticWordsParam, IWord } from 'src/app/shared/interfaces';
 import { BACKEND_PATH } from 'src/app/core/constants/constant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -18,11 +18,14 @@ export class WordComponent implements OnInit {
   wordCardContentText: string = '';
   wordAudioSrcArr!: Array<string>;
   currentAudioInd: number = 0;
+  isStatsShow: boolean = false;
   isMeaningShow: boolean = false;
   isExampleShow: boolean = false;
   isHard: boolean = false;
   isStudied: boolean = false;
   isLoggedIn: boolean = false;
+  correctAnswers: number = 0;
+  wrongAnswers: number = 0;
 
   constructor(private apiService: ApiService, private authService: AuthService) { }
 
@@ -34,6 +37,8 @@ export class WordComponent implements OnInit {
     if ('userWord' in this.wordData) {
       this.isHard = this.wordData.userWord ? this.wordData.userWord.difficulty === 'hard' : false;
       this.isStudied = this.wordData.userWord ? this.wordData.userWord.optional.isStudied : false;
+      this.correctAnswers = this.wordData.userWord ? this.wordData.userWord.optional.correctAnswers : 0;
+      this.wrongAnswers = this.wordData.userWord ? this.wordData.userWord.optional.wrongAnswers : 0;
     }
   }
 
@@ -103,5 +108,13 @@ export class WordComponent implements OnInit {
     this.isStudied = !this.isStudied;
     this.isHard = false;
     this.updateUserWord();
+  }
+
+  showStats() {
+    this.isStatsShow = true;
+  }
+
+  hideStats() {
+    this.isStatsShow = false;
   }
 }

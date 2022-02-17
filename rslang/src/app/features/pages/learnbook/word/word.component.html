@@ -1,4 +1,4 @@
-<mat-card class="word-card"
+<mat-card class="word-card transparent-background"
           [ngClass]="{'mat-app-background': isStudied}">
   <mat-card-title-group class="word-card-title-group">
     <mat-card-title class="mat-card-title">
@@ -12,28 +12,52 @@
     </mat-card-title>
     <mat-card-subtitle><strong>{{wordData.transcription}}</strong> - {{wordData.wordTranslate}}</mat-card-subtitle>
     <div class="word-card-image-container">
+      <mat-icon class="word-card-chart-icon"
+                color="accent"
+                (pointerenter)="showStats()"
+                (pointerleave)="hideStats()">
+        insert_chart_outlined
+      </mat-icon>
       <img class="word-card-image" [src]="getImage()">
     </div>
   </mat-card-title-group>
   <mat-card-content class="word-card-content">
     <ul class="word-card-content-list">
-      <li class="word-card-content-list-item" (mouseenter)="showMeaning()" (mouseleave)="hideText()">Определение</li>
-      <li class="word-card-content-list-item" (mouseenter)="showExample()" (mouseleave)="hideText()">Пример</li>
+      <li class="word-card-content-list-item" (pointerenter)="showMeaning()" (pointerleave)="hideText()">Определение</li>
+      <li class="word-card-content-list-item" (pointerenter)="showExample()" (pointerleave)="hideText()">Пример</li>
     </ul>
-    <p class="word-card-content-text mat-app-background" *ngIf="isMeaningShow || isExampleShow" [innerHTML]="wordCardContentText"></p>
+    <p class="word-card-content-text background-accent" *ngIf="isMeaningShow || isExampleShow" [innerHTML]="wordCardContentText"></p>
     <div class="word-card-buttons-container" *ngIf="isLoggedIn">
-      <button class="word-card-button" mat-icon-button color="primary" (click)="checkAsStudied()">
+      <button class="word-card-button"
+              mat-icon-button
+              color="primary"
+              title="Добавить в Изученные"
+              (click)="checkAsStudied()">
         <mat-icon class="word-card-button-icon" *ngIf="isStudied; else uncheckedBox" color="accent">check_box</mat-icon>
         <ng-template #uncheckedBox>
           <mat-icon class="word-card-button-icon" color="accent">check_box_outline_blank</mat-icon>
         </ng-template>
       </button>
-      <button class="word-card-button" mat-icon-button color="primary" (click)="checkAsHard()">
-        <mat-icon class="word-card-button-icon" color="accent" *ngIf="isHard; else easyWord">star</mat-icon>
+      <button class="word-card-button"
+              mat-icon-button
+              color="primary"
+              title="Добавить в Сложные"
+              (click)="checkAsHard()">
+        <mat-icon class="word-card-button-icon" color="accent" *ngIf="isHard; else easyWord">turned_in</mat-icon>
         <ng-template #easyWord>
-          <mat-icon class="word-card-button-icon" color="accent">star_border</mat-icon>
+          <mat-icon class="word-card-button-icon" color="accent">turned_in_not</mat-icon>
         </ng-template>
       </button>
+    </div>
+    <div class="stats-container background-primary text-accent" [ngClass]="{'stats-active': isStatsShow}">
+      <div class="stats-row">
+        <div class="stats-cell correct-answer-icon"><mat-icon>check</mat-icon></div>
+        <div class="stats-cell"><mat-icon color="warn">close</mat-icon></div>
+      </div>
+      <div class="stats-row">
+        <div class="stats-cell">{{correctAnswers}}</div>
+        <div class="stats-cell">{{wrongAnswers}}</div>
+      </div>
     </div>
   </mat-card-content>
 </mat-card>

@@ -25,6 +25,40 @@
     </li>
   </ul>
   <div class="words-container" *ngIf="currentGroupNum">
+    <ul class="group-pages-list" *ngIf="currentGroupNum <= learnbookGroupCount">
+      <li class="group-pages-list-item" *ngFor="let pageDetails of pagesDetails">
+        <span class="group-pages-list-item-element"
+              *ngIf="pageDetails.num === pagesDetails.length && pageDetails.num - currentPageNum > 3">…</span>
+        <div [ngSwitch]="pageDetails.num !== currentPageNum">
+          <div *ngSwitchCase="true">
+            <button class="group-pages-list-item-element"
+                    *ngIf="pageDetails.num === 1 || pageDetails.num === pagesDetails.length
+                          || (pageDetails.num - currentPageNum) >= 0 && (pageDetails.num - currentPageNum) <= 2
+                          || (currentPageNum - pageDetails.num) >= 0 && (currentPageNum - pageDetails.num) <= 2"
+                    mat-mini-fab
+                    [ngClass]="{'group-pages-list-item-correct': pageDetails.isStudied}"
+                    color="accent"
+                    [routerLink] = "['/learnbook']"
+                    [queryParams] = "{group: currentGroupNum, page: pageDetails.num}">
+              {{ pageDetails.num }}
+            </button>
+          </div>
+          <div *ngSwitchDefault>
+            <button class="group-pages-list-item-element"
+                    *ngIf="pageDetails.num === 1 || pageDetails.num === pagesDetails.length
+                          || (pageDetails.num - currentPageNum) >= 0 && (pageDetails.num - currentPageNum) <= 2
+                          || (currentPageNum - pageDetails.num) >= 0 && (currentPageNum - pageDetails.num) <= 2"
+                    mat-mini-fab
+                    color="primary"
+                    [routerLink] = "['/learnbook']"
+                    [queryParams] = "{group: currentGroupNum, page: pageDetails.num}">
+              {{ pageDetails.num }}
+            </button>
+          </div>
+        </div>
+        <span class="group-pages-list-item-element" *ngIf="pageDetails.num === 1 && currentPageNum - pageDetails.num > 3">…</span>
+      </li>
+    </ul>
     <ul class="words-list">
       <li class="words-list-item"
           *ngFor="let wordData of wordsData">
@@ -33,37 +67,42 @@
                   (checkWord)="getWords()"></app-word>
       </li>
     </ul>
-    <ul class="group-pages-list" *ngIf="currentGroupNum <= learnbookGroupCount">
-      <li class="group-pages-list-item" *ngFor="let pageNum of pageNums">
-        <span class="group-pages-list-item-element" *ngIf="pageNum === pageNums.length && pageNum - currentPageNum > 2">…</span>
-        <div [ngSwitch]="pageNum !== currentPageNum">
-          <div *ngSwitchCase="true">
-            <button class="group-pages-list-item-element"
-                    *ngIf="pageNum === 1 || pageNum === pageNums.length
-                          || (pageNum - currentPageNum) >= 0 && (pageNum - currentPageNum) <= 2
-                          || (currentPageNum - pageNum) >= 0 && (currentPageNum - pageNum) <= 2"
-                    mat-raised-button
-                    color="accent"
-                    [routerLink] = "['/learnbook']"
-                    [queryParams] = "{group: currentGroupNum, page: pageNum}">
-              {{ pageNum }}
-            </button>
-          </div>
-          <div *ngSwitchDefault>
-            <button class="group-pages-list-item-element"
-                    *ngIf="pageNum === 1 || pageNum === pageNums.length
-                          || (pageNum - currentPageNum) >= 0 && (pageNum - currentPageNum) <= 2
-                          || (currentPageNum - pageNum) >= 0 && (currentPageNum - pageNum) <= 2"
-                    mat-raised-button
-                    color="primary"
-                    [routerLink] = "['/learnbook']"
-                    [queryParams] = "{group: currentGroupNum, page: pageNum}">
-              {{ pageNum }}
-            </button>
-          </div>
-        </div>
-        <span class="group-pages-list-item-element" *ngIf="pageNum === 1 && currentPageNum - pageNum > 2">…</span>
-      </li>
-    </ul>
+  </div>
+  <div class="games-container" *ngIf="groupNums.length !== currentGroupNum && currentGroupNum">
+    <button class="game-button" mat-fab color="primary">
+      <mat-icon class="game-button-icon" color="accent">videogame_asset</mat-icon>
+    </button>
+    <div class="games-buttons">
+      <button class="game-button"
+              *ngIf="!pagesDetails[currentPageNum - 1].isStudied; else disabledAudioGameButton"
+              mat-mini-fab
+              color="accent"
+              title="Запустить игру Аудиовызов"
+              (click)="startAudioChallenge()">
+        <mat-icon class="game-button-icon" color="primary">mic</mat-icon>
+      </button>
+      <button class="game-button"
+              *ngIf="!pagesDetails[currentPageNum - 1].isStudied; else disabledSprintGameButton"
+              mat-mini-fab
+              color="accent"
+              title="Запустить игру Спринт"
+              (click)="startSprint()">
+        <mat-icon class="game-button-icon" color="primary">directions_run</mat-icon>
+      </button>
+      <ng-template #disabledAudioGameButton>
+        <button class="game-button"
+                mat-mini-fab
+                disabled>
+          <mat-icon class="game-button-icon" color="primary">mic</mat-icon>
+        </button>
+      </ng-template>
+      <ng-template #disabledSprintGameButton>
+        <button class="game-button"
+                mat-mini-fab
+                disabled>
+          <mat-icon class="game-button-icon" color="primary">directions_run</mat-icon>
+        </button>
+      </ng-template>
+    </div>
   </div>
 </div>

@@ -29,7 +29,9 @@ export const UPLOAD_IMAGES_PRESET = 'hbkvusoj';
 export const DEFAULT_SPRINT_PAGE = 0;
 export const DATE_PATTERN = 'dd.MM.yyyy';
 export const LEARNBOOK_GROUP_COUNT = 6;
-export const LEARNBOOK_WORDS_PER_GROUP_COUNT = 30;
+export const LEARNBOOK_PAGES_PER_GROUP_COUNT = 30;
+export const LEARNBOOK_WORDS_PER_PAGE_COUNT = 20;
+export const LEARNBOOK_WORDS_COUNT = 4000;
 
 export const MAIN_PAGE_CONTENT=[
   {
