@@ -1,18 +1,19 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { IAggregatedResponseWord, ILearnbookParams, IPageDetails, IWord } from 'src/app/shared/interfaces';
 
-import { LEARNBOOK_PAGES_PER_GROUP_COUNT, LEARNBOOK_GROUP_COUNT, LEARNBOOK_WORDS_PER_PAGE_COUNT, LEARNBOOK_WORDS_COUNT } from './../../../core/constants/constant';
+import { LEARNBOOK_PAGES_PER_GROUP_COUNT, LEARNBOOK_GROUP_COUNT, LEARNBOOK_WORDS_PER_PAGE_COUNT, LEARNBOOK_WORDS_COUNT, LEARNBOOK_GROUPS_COLORS } from './../../../core/constants/constant';
 
 @Component({
   selector: 'app-learnbook',
   templateUrl: './learnbook.component.html',
   styleUrls: ['./learnbook.component.scss']
 })
-export class LearnbookComponent implements OnInit, AfterViewInit {
-  groupNums: Array<number|string> = [];
+export class LearnbookComponent implements OnInit {
+  groupColors: Array<string> = LEARNBOOK_GROUPS_COLORS;
+  groupNums: Array<number> = [];
   pagesDetails: IPageDetails[] = [];
   centered = false;
   disabled = false;
@@ -28,15 +29,12 @@ export class LearnbookComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.authService.userId;
+    for (let i = 0; i < LEARNBOOK_GROUP_COUNT + 1; i++) this.groupNums.push(i + 1);
     this.route_activated.queryParams.subscribe((params: ILearnbookParams) => {
       this.currentGroupNum = Number(params['group']) || 0;
       this.currentPageNum = Number(params['page']) || 0;
       this.getWords();
     })
-  }
-
-  ngAfterViewInit(): void {
-    for (let i = 0; i < LEARNBOOK_GROUP_COUNT + 1; i++) this.groupNums.push(i + 1);
   }
 
   getWords() {
@@ -68,24 +66,23 @@ export class LearnbookComponent implements OnInit, AfterViewInit {
         });
     }
     else this.apiService.getWords(this.currentPageNum - 1, this.currentGroupNum - 1)
-      .subscribe((res) => this.wordsData = res);
+      .subscribe((res) => {
+        this.wordsData = res;
+
+        for (let i = 0; i < LEARNBOOK_PAGES_PER_GROUP_COUNT; i++) {
+          const newPageDetail: string = JSON.stringify({
+            num: i + 1,
+            isStudied: false,
+          });
+
+          if (i < this.pagesDetails.length) this.pagesDetails[i] = JSON.parse(newPageDetail)
+          else this.pagesDetails.push(JSON.parse(newPageDetail));
+        };
+      });
   }
 
-  getStudiedPages() {
-    this.apiService.getAllUserAggregatedWords(this.authService.userId, {
-      group: this.currentGroupNum - 1,
-      wordsPerPage: LEARNBOOK_WORDS_PER_PAGE_COUNT * LEARNBOOK_PAGES_PER_GROUP_COUNT,
-    }).subscribe((res) => {
-      for (let i = 0; i < LEARNBOOK_PAGES_PER_GROUP_COUNT; i++) {
-        const newPageDetail: string = JSON.stringify({
-          num: i + 1,
-          isStudied: res[0].paginatedResults.filter(word => word.page === i && ( word.userWord?.optional.isStudied || word.userWord?.difficulty === 'hard')).length === LEARNBOOK_WORDS_PER_PAGE_COUNT,
-        });
-
-        if (i < this.pagesDetails.length) this.pagesDetails[i] = JSON.parse(newPageDetail)
-        else this.pagesDetails.push(JSON.parse(newPageDetail));
-      };
-    })
+  getIsStudied() {
+    return (this.pagesDetails[this.currentPageNum - 1]) ? Boolean(this.pagesDetails[this.currentPageNum - 1].isStudied) : false;
   }
 
   playWordAudio(wordAudioSrcArr: string[]) {

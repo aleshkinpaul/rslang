@@ -1,5 +1,8 @@
 <mat-card class="word-card transparent-background"
           [ngClass]="{'mat-app-background': isStudied}">
+  <div class="word-card-spinner-container" *ngIf="!loadingProgress">
+    <mat-spinner class="word-card-spinner" color="accent"></mat-spinner>
+  </div>
   <mat-card-title-group class="word-card-title-group">
     <mat-card-title class="mat-card-title">
       {{wordData.word}}
@@ -40,6 +43,7 @@
       </button>
       <button class="word-card-button"
               mat-icon-button
+              *ngIf="!isStudied; else disabledIsHardButton"
               color="primary"
               title="Добавить в Сложные"
               (click)="checkAsHard()">
@@ -48,6 +52,11 @@
           <mat-icon class="word-card-button-icon" color="accent">turned_in_not</mat-icon>
         </ng-template>
       </button>
+      <ng-template #disabledIsHardButton>
+        <button class="word-card-button" mat-icon-button disabled>
+          <mat-icon class="word-card-button-icon">turned_in_not</mat-icon>
+        </button>
+      </ng-template>
     </div>
     <div class="stats-container background-primary text-accent" [ngClass]="{'stats-active': isStatsShow}">
       <div class="stats-row">

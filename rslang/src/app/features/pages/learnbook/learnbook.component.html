@@ -3,24 +3,14 @@
     <li class="learnbook-group-list-item" *ngFor="let groupNum of groupNums">
       <div class="learnbook-group-list-item-button-container" *ngIf="!isLoggedIn && groupNum < groupNums.length || isLoggedIn">
         <button class="learnbook-group-list-item-button"
-                *ngIf="groupNum !== currentGroupNum; else activeGroup"
                 mat-raised-button
-                color="accent"
+                [ngStyle]="{'background-color': groupColors[groupNum - 1]}"
+                [ngClass]="{'learnbook-group-list-item-active': groupNum === currentGroupNum}"
                 (groupNum)="groupNum"
                 [routerLink]="['/learnbook']"
                 [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
           Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
         </button>
-        <ng-template #activeGroup>
-          <button class="learnbook-group-list-item-button"
-                  mat-raised-button
-                  color="primary"
-                  (groupNum)="groupNum"
-                  [routerLink]="['/learnbook']"
-                  [queryParams] = "groupNums.length === groupNum ? {group: groupNum} : {group: groupNum, page: 1}">
-            Раздел {{ groupNums.length === groupNum ? '\"Сложные слова\"' : groupNum }}
-          </button>
-        </ng-template>
       </div>
     </li>
   </ul>
@@ -74,33 +64,33 @@
     </button>
     <div class="games-buttons">
       <button class="game-button"
-              *ngIf="!pagesDetails[currentPageNum - 1].isStudied; else disabledAudioGameButton"
+              *ngIf="!getIsStudied(); else disabledAudioGameButton"
               mat-mini-fab
               color="accent"
               title="Запустить игру Аудиовызов"
               (click)="startAudioChallenge()">
-        <mat-icon class="game-button-icon" color="primary">mic</mat-icon>
+        <mat-icon class="game-button-icon" color="warn">mic</mat-icon>
       </button>
       <button class="game-button"
-              *ngIf="!pagesDetails[currentPageNum - 1].isStudied; else disabledSprintGameButton"
+              *ngIf="!getIsStudied(); else disabledSprintGameButton"
               mat-mini-fab
               color="accent"
               title="Запустить игру Спринт"
               (click)="startSprint()">
-        <mat-icon class="game-button-icon" color="primary">directions_run</mat-icon>
+        <mat-icon class="game-button-icon" color="warn">directions_run</mat-icon>
       </button>
       <ng-template #disabledAudioGameButton>
         <button class="game-button"
                 mat-mini-fab
                 disabled>
-          <mat-icon class="game-button-icon" color="primary">mic</mat-icon>
+          <mat-icon class="game-button-icon">mic</mat-icon>
         </button>
       </ng-template>
       <ng-template #disabledSprintGameButton>
         <button class="game-button"
                 mat-mini-fab
                 disabled>
-          <mat-icon class="game-button-icon" color="primary">directions_run</mat-icon>
+          <mat-icon class="game-button-icon">directions_run</mat-icon>
         </button>
       </ng-template>
     </div>

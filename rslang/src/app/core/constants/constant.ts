@@ -32,6 +32,7 @@ export const LEARNBOOK_GROUP_COUNT = 6;
 export const LEARNBOOK_PAGES_PER_GROUP_COUNT = 30;
 export const LEARNBOOK_WORDS_PER_PAGE_COUNT = 20;
 export const LEARNBOOK_WORDS_COUNT = 4000;
+export const LEARNBOOK_GROUPS_COLORS = ['#c73131a3', '#ffa50085', '#ffff0080', '#00800075', '#0000ff82', '#ee82ee87', '#80008073'];
 
 export const MAIN_PAGE_CONTENT=[
   {

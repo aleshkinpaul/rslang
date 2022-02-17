@@ -15,6 +15,10 @@
   
     .learnbook-group-list-item {
       list-style: none;
+
+      .learnbook-group-list-item-active {
+        border-bottom: 3px solid #36D96F;
+      }
   
       .learnbook-group-list-item-button {
         text-align: center;
@@ -29,6 +33,16 @@
         -webkit-user-drag: none;
         -webkit-tap-highlight-color: transparent;
       }
+    }
+  }
+
+  .learnbook-spinner-container {
+    display: flex;
+    justify-content: center;
+    height: 50vh;
+
+    .learnbook-spinner {
+      align-self: center;
     }
   }
   

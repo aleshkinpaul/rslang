@@ -1,5 +1,23 @@
 .word-card {
+  position: relative;
   width: 19vw;
+
+  .word-card-spinner-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    z-index: 10;
+
+    .word-card-spinner {
+      align-self: center;
+    }
+  }
 
   .word-card-title-group {
     margin-bottom: 10px;
@@ -7,7 +25,7 @@
     .mat-card-title {
       display: flex;
       flex-direction: row;
-      font-size: 2rem;
+      font-size: 1.5rem;
     
       .word-card-content-audio {
         margin-top: -10px;
@@ -16,7 +34,7 @@
 
     .mat-card-subtitle {
       margin-bottom: 0;
-      font-size: 1.4rem;
+      font-size: 1.2rem;
     }
   
     .word-card-image-container {
@@ -140,7 +158,7 @@
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 1080px) {
   .word-card {
     width: 35vw;
   }

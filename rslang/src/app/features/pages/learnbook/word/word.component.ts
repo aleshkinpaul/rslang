@@ -26,6 +26,7 @@ export class WordComponent implements OnInit {
   isLoggedIn: boolean = false;
   correctAnswers: number = 0;
   wrongAnswers: number = 0;
+  loadingProgress: boolean = false;
 
   constructor(private apiService: ApiService, private authService: AuthService) { }
 
@@ -40,6 +41,7 @@ export class WordComponent implements OnInit {
       this.correctAnswers = this.wordData.userWord ? this.wordData.userWord.optional.correctAnswers : 0;
       this.wrongAnswers = this.wordData.userWord ? this.wordData.userWord.optional.wrongAnswers : 0;
     }
+    this.loadingProgress = true;
   }
 
   getImage() {
@@ -71,6 +73,7 @@ export class WordComponent implements OnInit {
   }
 
   updateUserWord() {
+    this.loadingProgress = false;
     if ('userWord' in this.wordData) {
       this.apiService.updateUserWord(this.authService.userId, this.wordId, {
         difficulty: this.isHard ? 'hard' : 'easy',
