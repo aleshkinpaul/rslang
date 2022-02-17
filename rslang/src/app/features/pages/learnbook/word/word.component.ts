@@ -38,10 +38,11 @@ export class WordComponent implements OnInit {
     if ('userWord' in this.wordData) {
       this.isHard = this.wordData.userWord ? this.wordData.userWord.difficulty === 'hard' : false;
       this.isStudied = this.wordData.userWord ? this.wordData.userWord.optional.isStudied : false;
-      this.correctAnswers = this.wordData.userWord ? this.wordData.userWord.optional.correctAnswers : 0;
-      this.wrongAnswers = this.wordData.userWord ? this.wordData.userWord.optional.wrongAnswers : 0;
+      this.correctAnswers = this.wordData.userWord ? this.wordData.userWord.optional.correctAnswers || 0 : 0;
+      this.wrongAnswers = this.wordData.userWord ? this.wordData.userWord.optional.wrongAnswers || 0 : 0;
     }
     this.loadingProgress = true;
+    console.log(this.wordData);
   }
 
   getImage() {
