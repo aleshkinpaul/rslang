@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -16,7 +17,6 @@ import {
   LEVELS_IN_GAME,
   PAGES_IN_LEVEL,
   TIMES_TO_SPRINT,
-  TIME_TO_SHOW_SPRINT_QUESTION_RESULT,
   WORDS_IN_SPRINT_GAME,
   WORDS_ON_PAGE,
 } from 'src/app/core/constants/constant';
@@ -37,7 +37,7 @@ import {
   templateUrl: './sprint.component.html',
   styleUrls: ['./sprint.component.scss'],
 })
-export class SprintComponent implements OnInit {
+export class SprintComponent implements OnInit, OnDestroy {
   @ViewChild('audioPlayer', { static: false })
   audio: ElementRef | undefined;
 
@@ -89,6 +89,10 @@ export class SprintComponent implements OnInit {
     private stat: StatisticService,
     public sound: SoundService
   ) { }
+
+  ngOnDestroy() {
+    if (this.interval !== null) clearInterval(this.interval);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -296,7 +300,6 @@ export class SprintComponent implements OnInit {
       this.gameMode = false;
     } else {
       this.currentQuestion += 1;
-      // this.loadingProgress = true;
       this.getQuestion();
     }
   }
