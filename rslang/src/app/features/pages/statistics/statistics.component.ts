@@ -75,7 +75,7 @@ export class StatisticsComponent implements OnInit {
         const correctSeries = this.statistic.optional.games.sprint[this.date].correctSeries || 0;
         const correctAnswers = this.statistic.optional.games.sprint[this.date].correctAnswers || 0;
         const wrongAnswers = this.statistic.optional.games.sprint[this.date].wrongAnswers || 0;
-        const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100;
+        const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100 || 0;
 
         this.sprintCardData = {
           newWords: newWords,
@@ -93,7 +93,7 @@ export class StatisticsComponent implements OnInit {
         const correctSeries = this.statistic.optional.games.audio[this.date].correctSeries || 0;
         const correctAnswers = this.statistic.optional.games.audio[this.date].correctAnswers || 0;
         const wrongAnswers = this.statistic.optional.games.audio[this.date].wrongAnswers || 0;
-        const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100;
+        const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100 || 0;
 
         this.audioCardData = {
           newWords: newWords,
@@ -110,7 +110,7 @@ export class StatisticsComponent implements OnInit {
       const correctSeries = this.statistic.optional.words[this.date].correctSeries || 0;
       const correctAnswers = this.statistic.optional.words[this.date].correctAnswers || 0;
       const wrongAnswers = this.statistic.optional.words[this.date].wrongAnswers || 0;
-      const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100;
+      const rightPercent = correctAnswers / (correctAnswers + wrongAnswers) * 100 || 0;
 
       this.wordsCardData = {
         newWords: newWords,
