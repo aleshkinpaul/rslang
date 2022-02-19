@@ -88,7 +88,7 @@ export class SprintComponent implements OnInit {
     private auth: AuthService,
     private stat: StatisticService,
     public sound: SoundService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -98,7 +98,7 @@ export class SprintComponent implements OnInit {
   }
 
   startGameFromLearnbook(data: Params) {
-    this.wordsForGame=[];
+    this.wordsForGame = [];
     this.gameMode = true;
     this.loadingProgress = true;
     this.selectedLevel = Number(data['level'] - 1);
@@ -121,7 +121,7 @@ export class SprintComponent implements OnInit {
 
           if (needWords.length < 20) {
             const otherWords = response[0].paginatedResults.filter(
-              (word) => word.page !== this.selectedPage
+              (word) => word.page < this.selectedPage
             );
             const addWords = shuffleArr(<[]>otherWords).slice(
               0,
@@ -151,7 +151,7 @@ export class SprintComponent implements OnInit {
   }
 
   startGame() {
-    this.wordsForGame=[];
+    this.wordsForGame = [];
     this.gameMode = true;
     this.loadingProgress = true;
 
@@ -252,33 +252,33 @@ export class SprintComponent implements OnInit {
     }, 1000);
   }
 
-   checkAnswer(isRight: boolean) {
-if (!this.results[this.currentQuestion]){
-    const isRightTranslate =
-      this.currentQuestion === this.currentTranslateVariant;
-    if (isRightTranslate === isRight) {
-      this.isUserRight = true;
-      this.sound.play(Sounds.right);
-    } else {
-      this.isUserRight = false;
-      this.sound.play(Sounds.wrong);
-    }
+  checkAnswer(isRight: boolean) {
+    if (!this.results[this.currentQuestion]) {
+      const isRightTranslate =
+        this.currentQuestion === this.currentTranslateVariant;
+      if (isRightTranslate === isRight) {
+        this.isUserRight = true;
+        this.sound.play(Sounds.right);
+      } else {
+        this.isUserRight = false;
+        this.sound.play(Sounds.wrong);
+      }
 
-    const result: IResults = {
-      isCorrect: this.isUserRight,
-      word: <IAggregatedResponseWord>this.wordsForGame[this.currentQuestion],
-    };
-    this.results.push(result);
-    const word = this.wordsForGame[this.currentQuestion];
-    if (this.auth.isAuthenticated) {
-      this.stat.addWordToUser(
-        word as IAggregatedResponseWord,
-        this.isUserRight
-      );
-    }
+      const result: IResults = {
+        isCorrect: this.isUserRight,
+        word: <IAggregatedResponseWord>this.wordsForGame[this.currentQuestion],
+      };
+      this.results.push(result);
+      const word = this.wordsForGame[this.currentQuestion];
+      if (this.auth.isAuthenticated) {
+        this.stat.addWordToUser(
+          word as IAggregatedResponseWord,
+          this.isUserRight
+        );
+      }
 
-    this.nextQuestion();
-  }
+      this.nextQuestion();
+    }
   }
 
   nextQuestion() {
@@ -316,9 +316,8 @@ if (!this.results[this.currentQuestion]){
 
   async getAudio() {
     if (this.audio) {
-      this.audio.nativeElement.src = `${BACKEND_PATH}/${
-        this.wordsForGame[this.currentQuestion].audio
-      }`;
+      this.audio.nativeElement.src = `${BACKEND_PATH}/${this.wordsForGame[this.currentQuestion].audio
+        }`;
       await this.audio.nativeElement.play();
     }
   }
