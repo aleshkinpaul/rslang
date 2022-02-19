@@ -60,14 +60,15 @@ export class ApiService {
     return this.http.post<IUserWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word);
   }
 
-  public getUserWordById(id: string, wordId: string): Observable<IWord> {
-    return this.http.get<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`);
+  public getUserWordById(id: string, wordId: string): Observable<IUserWord> {
+    return this.http.get<IUserWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`);
   }
 
-  public updateUserWord(id: string, wordId: string, word: IUserWord): Observable<IWord> {
-    return this.http.put<IWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word);
-  }
 
+  public updateUserWord(id: string, wordId: string, word: IUserWord): Observable<IUserWord> {
+    return this.http.put<IUserWord>(`${BACKEND_PATH}/users/${id}/words/${wordId}`, word);
+  }
+  
   public deleteUserWord(id: string, wordId: string, word: IWord) {
     return this.http.delete(`${BACKEND_PATH}/users/${id}/words/${wordId}`);
   }

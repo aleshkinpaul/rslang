@@ -1,0 +1,171 @@
+.word-card {
+  position: relative;
+  width: 19vw;
+
+  .word-card-spinner-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    z-index: 10;
+
+    .word-card-spinner {
+      align-self: center;
+    }
+  }
+
+  .word-card-title-group {
+    margin-bottom: 10px;
+
+    .mat-card-title {
+      display: flex;
+      flex-direction: row;
+      font-size: 1.5rem;
+    
+      .word-card-content-audio {
+        margin-top: -10px;
+      }
+    }
+
+    .mat-card-subtitle {
+      margin-bottom: 0;
+      font-size: 1.2rem;
+    }
+  
+    .word-card-image-container {
+      position: relative;
+      margin-left: 1vw;
+      width: 10rem;
+      height: 10rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+
+      .word-card-chart-icon {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        opacity: 0.6;
+        cursor: pointer;
+      
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .word-card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .word-card-chart-icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .word-card-content-list {
+      display: flex;
+      flex-direction: row;
+      column-gap: 1vh;
+      font-size: 1rem;
+
+      cursor: pointer;      
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+  
+      .word-card-content-list-item {      
+        align-self: center;
+        list-style: none;
+
+        &:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+
+    .word-card-button-icon {
+      cursor: pointer;
+    }
+
+    .word-card-content-text {
+      margin: 0 5%;
+      padding: 16px;
+      width: 90%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      font-size: 1.4rem;
+      border-radius: 4px;
+      transform: translateY(calc(100% - 10px));
+      z-index: 1;
+    }
+
+    .stats-container {
+      width: 60%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 4px;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.5s ease;
+
+      &.stats-active {
+        opacity: 1;
+        pointer-events: auto;
+        transition: 0.5s ease;
+      }
+
+      .stats-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        height: 45%;
+
+        .stats-cell {
+          justify-self: center;
+          align-self: center;
+          text-align: center;
+          flex-basis: 45%;
+        }
+
+        .correct-answer-icon {
+          color: #36D96F;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1450px) {
+  .word-card {
+    width: 25vw;
+  }
+}
+
+@media (max-width: 1080px) {
+  .word-card {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .word-card {
+    width: 60vw;
+  }
+}

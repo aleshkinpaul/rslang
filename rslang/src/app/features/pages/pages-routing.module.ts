@@ -35,7 +35,6 @@ const routes: Routes = [
   {
     path: 'learnbook',
     component: LearnbookComponent
-
   },
   {
     path: 'games',
