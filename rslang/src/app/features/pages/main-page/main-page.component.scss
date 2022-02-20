@@ -27,6 +27,11 @@ lord-icon{
 .card__subtitle{
 font-size: 2rem;
 }
+
+.card__video {
+  border-radius: 4px;
+  overflow: hidden;
+}
 .card__video, .card__wrapper{
 width: 46rem;
 height:25.6rem;
