@@ -1,0 +1,43 @@
+<mat-card class="transparent-background">
+  <mat-card-title>{{ isLoginPage ? 'Вход в аккаунт' : 'Регистрация'}}</mat-card-title>
+  <mat-card-content>
+    <mat-spinner class="spinner" *ngIf="submitted"></mat-spinner>
+    <mat-error class="error-message" *ngIf="isLoginPage && (auth.loginError$ | async) as error">{{ error }}</mat-error>
+    <mat-error class="error-message" *ngIf="!isLoginPage && (createUserError$ | async) as error">{{ error }}</mat-error>
+    <button *ngIf="!isLoginPage" class="avatar-button" color="primary" mat-fab aria-label="Загрузите свой аватар"
+      (click)="fileInput.click()">
+      <img *ngIf="isAvatarAdd" class="upload-image" #uploadImage src="" alt="">
+      <mat-icon>add_a_photo</mat-icon>
+      <input class="file-input" #fileInput type="file" accept="image/png, image/gif, image/jpeg, image/jpg"
+        (change)="onFileInput($event)">
+    </button>
+    <mat-form-field appearance="fill" *ngIf="!isLoginPage">
+      <mat-label>Введите имя</mat-label>
+      <input matInput placeholder="name" [formControl]="name" required>
+      <mat-error *ngIf="email.invalid">{{getNameErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Введите email</mat-label>
+      <input matInput placeholder="name@example.com" [formControl]="email" required>
+      <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Введите пароль</mat-label>
+      <input matInput [type]="isHidePassword ? 'password' : 'text'" [formControl]="password" required>
+      <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+      <button mat-icon-button matSuffix (click)="isHidePassword = !isHidePassword" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="isHidePassword">
+        <mat-icon>{{isHidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button class="mode-button" color="primary" (click)="changeMode()">
+      {{ isLoginPage ? 'Страница регистрации' : 'Страница логина'}}
+    </button>
+    <button  class="mode-button" (click)="onSubmit()" mat-raised-button color="primary" [disabled]="form.invalid || submitted">{{
+      isLoginPage
+      ? 'Войти' :
+      'Зарегистрироваться'}}</button>
+  </mat-card-actions>
+</mat-card>

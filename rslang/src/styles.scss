@@ -1,0 +1,99 @@
+
+
+@use '@angular/material' as mat;
+@import '~@angular/material/theming';
+@import './app/styles/mixins.scss';
+@include mat.core();
+@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
+
+$rslang-primary:  mat.define-palette(mat.$light-blue-palette, 800, A200, 700);
+$rslang-accent: mat.define-palette(mat.$pink-palette, 100, A200, 900);
+$rslang-warn: mat.define-palette(mat.$red-palette);
+$rslang-theme: mat.define-light-theme((
+  color: (
+    primary: $rslang-primary,
+    accent: $rslang-accent,
+    warn: $rslang-warn,
+  )
+));
+
+
+$rslang-primary-dark: mat.define-palette(mat.$deep-purple-palette, 700, 700, 700, A100);
+$rslang-accent-dark: mat.define-palette(mat.$deep-purple-palette, 200, 100, 900, A100);
+$rslang-warn-dark: mat.define-palette(mat.$red-palette);
+$rslang-theme-dark: mat.define-dark-theme((
+  color: (
+    primary: $rslang-primary-dark,
+    accent: $rslang-accent-dark,
+    warn: $rslang-warn-dark,
+  )
+));
+
+//light theme
+@include angular-material-theme($rslang-theme);
+//dark theme
+.dark-theme-mode{
+  @include angular-material-theme($rslang-theme-dark)
+}
+
+
+/* You can add global styles to this file, and also import other style files */
+
+
+html, body { height: 100%;
+font-size: 10px;}
+html {
+  @include media-small-desktop {
+    font-size:7px;
+  }
+  @include media-mobile {
+    font-size:5px;
+  }
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.background-primary{
+  background-color: mat-color($rslang-primary);
+}
+.background-accent{
+  background-color: mat-color($rslang-accent);
+}
+.text-primary{
+  color: mat-color($rslang-primary);
+}
+.text-accent{
+  color: mat-color($rslang-accent);
+}
+.transparent-background{
+  background:#ffffffd0;
+
+}
+.background-warn{
+  background-color: mat-color($rslang-warn);
+}
+.dark-theme-mode{
+  .background-primary{
+    background-color: mat-color($rslang-primary-dark);
+  }
+  .background-accent{
+    background-color: mat-color($rslang-accent-dark);
+  }
+  .text-primary{
+    color: mat-color($rslang-primary-dark);
+  }
+  .text-accent{
+    color: mat-color($rslang-accent-dark);
+  }
+  .transparent-background{
+  background: #424242e3;
+
+  }
+
+}
+

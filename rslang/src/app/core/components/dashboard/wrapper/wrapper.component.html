@@ -1,0 +1,90 @@
+<mat-sidenav-container autosize class="app-content mat-app-background" [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
+  <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches"
+    [fixedInViewport]="mobileQuery.matches">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <mat-icon matListIcon>menu_book</mat-icon>
+        <span style="flex: auto"></span>
+        <mat-icon matListIcon class="chevron-button sidenav-button" (click)="isExpanded = !isExpanded"
+          [ngClass]="{ rotated: isExpanded }">chevron_right</mat-icon>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <mat-nav-list>
+      <mat-list-item [routerLink]="''">
+        <mat-icon matListIcon>home</mat-icon>
+        <a matLine *ngIf="isExpanded">Главная</a>
+      </mat-list-item>
+      <mat-divider color="accent"></mat-divider>
+      <mat-list-item [routerLink]="'learnbook'">
+        <mat-icon matListIcon>auto_stories</mat-icon>
+        <a matLine *ngIf="isExpanded">Учебник</a>
+      </mat-list-item>
+      <mat-list-item [routerLink]="'games'">
+        <mat-icon matListIcon>smart_toy</mat-icon>
+        <a matLine *ngIf="isExpanded">Игры</a>
+      </mat-list-item>
+      <mat-list-item [routerLink]="'statistics'">
+        <mat-icon matListIcon>signal_cellular_alt</mat-icon>
+        <a matLine *ngIf="isExpanded">Статистика</a>
+      </mat-list-item>
+      <mat-list-item [routerLink]="'aboutteam'">
+        <mat-icon matListIcon>emoji_people</mat-icon>
+        <a matLine *ngIf="isExpanded">Команда</a>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="wrapper__content">
+    <mat-toolbar color="primary">
+      <mat-toolbar-row>
+        <button mat-icon-button *ngIf="mobileQuery.matches" (click)="sidenav.open()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isDarkTheme" *ngIf="!mobileQuery.matches">
+          <mat-icon>bedtime</mat-icon>
+        </mat-slide-toggle>
+        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isBubble" *ngIf="!mobileQuery.matches">
+          <mat-icon>bubble_chart</mat-icon>
+        </mat-slide-toggle>
+        <mat-slide-toggle class="settings__toggle" [(ngModel)]="isSound" *ngIf="!mobileQuery.matches">
+          <mat-icon>notifications</mat-icon>
+        </mat-slide-toggle>
+        <div class="settings__icons" *ngIf="mobileQuery.matches">
+          <button mat-icon-button class="settings__icon" (click)="isDarkTheme = !isDarkTheme">
+            <mat-icon color="accent" *ngIf="isDarkTheme">bedtime</mat-icon>
+            <mat-icon *ngIf="!isDarkTheme">bedtime</mat-icon>
+          </button>
+          <button mat-icon-button class="settings__icon" (click)="isBubble = !isBubble">
+            <mat-icon color="accent" *ngIf="isBubble">bubble_chart</mat-icon>
+            <mat-icon *ngIf="!isBubble">bubble_chart</mat-icon>
+          </button>
+          <button mat-icon-button class="settings__icon" (click)="isSound = !isSound">
+            <mat-icon color="accent" *ngIf="isSound">notifications</mat-icon>
+            <mat-icon *ngIf="!isSound">notifications</mat-icon>
+          </button>
+        </div>
+        <span style="flex: auto"></span>
+        <h1 *ngIf="!mobileQuery.matches">Rslang</h1>
+        <span style="flex: auto"></span>
+        <span class="user-name" *ngIf="auth.isAuthenticated">{{
+          auth.name
+          }}</span>
+        <img class="avatar-image" *ngIf="auth.avatarPath" alt="" [src]="auth.avatarPath" />
+        <app-button-accent *ngIf="!mobileQuery.matches" [title]="auth.isAuthenticated ? 'Выйти' : 'Войти'"
+          (click)="onLoginButtonClick()">
+        </app-button-accent>
+        <button mat-icon-button (click)="onLoginButtonClick()" *ngIf="mobileQuery.matches">
+          <mat-icon *ngIf="!auth.isAuthenticated">login</mat-icon>
+          <mat-icon *ngIf="auth.isAuthenticated">logout</mat-icon>
+        </button>
+
+
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <app-milkyway-animation *ngIf="isBubble"></app-milkyway-animation>
+    <router-outlet></router-outlet>
+    <app-footer *ngIf="route.url !== '/sprint' && route.url !== '/audiochallenge'" class="footer-bar"></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<audio src="" id="soundPlayer" *ngIf="isSound"></audio>

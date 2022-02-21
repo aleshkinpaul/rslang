@@ -1,0 +1,109 @@
+@import './../../../styles/mixins.scss';
+.example-stretched-tabs {
+  width: 100%;
+  box-shadow: none;
+}
+lord-icon{
+  width:80%;
+  height:80%;
+}
+.title {
+  text-align: center;
+  margin-top: 1%;
+  font-size: 3.6rem;
+  text-shadow: 0.2rem;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.cards {
+  width: 95%;
+  gap: 10%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  padding: 2% 5%;
+}
+.card__subtitle{
+font-size: 2rem;
+}
+
+.card__video {
+  border-radius: 4px;
+  overflow: hidden;
+}
+.card__video, .card__wrapper{
+width: 46rem;
+height:25.6rem;
+margin:auto;
+}
+.card__wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+}
+
+
+.card {
+  padding: 2% 2%;
+  width: 86%;
+  max-width: 1000px;
+  margin: 5rem auto;
+  border-radius: 4px;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba($color: #fff, $alpha: 0.8);
+
+  .card__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 5%;
+    width: 70%;
+    padding: 2%;
+    @include media-menu-switcher{
+      width: 100%;
+      }
+  }
+  .card__text {
+    color: white;
+    font-size: 2rem;
+    text-align: center;
+  }
+  .card__button {
+    width: 40%;
+    padding:0 10px;
+    margin: 0 auto;
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  @media (max-width: 420px) {
+    .card__button {
+      font-size: 2rem;
+      width: 50%;
+    }
+  }
+
+  h2 {
+    color: white;
+  }
+  .card__inner-wrapper {
+    width: 20%;
+    padding: 1%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include media-menu-switcher{
+      display: none;
+      }
+  }
+  .card__icon-wrapper {
+    text-align: center;
+    padding: 5%;
+
+  }
+}

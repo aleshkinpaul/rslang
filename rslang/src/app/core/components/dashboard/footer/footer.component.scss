@@ -1,0 +1,47 @@
+@import './../../../../styles/mixins.scss';
+.footer-bar{
+  max-height: 4rem;
+  font-size: 2rem;
+  line-height: 2rem;
+  @include media-menu-switcher{
+    max-height: 6.5rem;
+    }
+}
+.mat-toolbar-multiple-rows {
+  min-height: 4rem;
+  @include media-menu-switcher{
+    min-height: 6.5rem;
+    }
+}
+.footer-bar__names{
+display: flex;
+gap:5%;
+@include media-menu-switcher{
+flex-direction: column;
+gap:0%;
+justify-content: center;
+}
+
+}
+.footer-bar__link{
+  text-decoration: none;
+  color:white;
+  &:hover{
+    text-decoration: underline;
+  }
+}
+.school-icon{
+  width: 8rem;
+  opacity: 70%;
+  vertical-align: middle;
+  @include media-small-desktop {
+    vertical-align: baseline;
+  }
+  &:hover {
+    opacity: 100%;
+    cursor: pointer;
+  }
+  img {
+    width: 5rem;
+  }
+}
