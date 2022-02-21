@@ -19,7 +19,7 @@
       justify-content: center;
       gap: 10px;
       width: 100%;
-      margin-bottom: 2%;
+      margin-bottom: 10px;
       padding: 0 10px;
       .indicators__indicator {
         content: '';
@@ -89,11 +89,11 @@
       width: auto;
       justify-content: center;
       margin: auto;
-      padding: 20px;
+      padding: 10px;
       margin-bottom: 20px;
       border-radius: 4px;
       border: 0.4rem solid transparent;
-      min-height: 180px;
+      min-height: 140px;
       &.audio-game__result_wrong {
         border: 0.4rem solid #e74e5694;
       }
