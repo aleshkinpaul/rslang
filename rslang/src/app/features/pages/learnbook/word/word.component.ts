@@ -3,6 +3,7 @@ import { IAggregatedResponseWord, IStatisticWordsParam, IWord } from 'src/app/sh
 import { BACKEND_PATH } from 'src/app/core/constants/constant';
 import { ApiService } from 'src/app/core/services/api.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { StatisticService } from 'src/app/core/services/statistic.service';
 
 @Component({
   selector: 'app-word',
@@ -13,7 +14,7 @@ export class WordComponent implements OnInit {
   @Input() wordData!: IAggregatedResponseWord | IWord;
   @Output() clickAudio: EventEmitter<string[]> = new EventEmitter<string[]>();
   @Output() checkWord: EventEmitter<void> = new EventEmitter<void>();
-  
+
   wordId!: string;
   wordCardContentText: string = '';
   wordAudioSrcArr!: Array<string>;
@@ -28,7 +29,7 @@ export class WordComponent implements OnInit {
   wrongAnswers: number = 0;
   loadingProgress: boolean = false;
 
-  constructor(private apiService: ApiService, private authService: AuthService) { }
+  constructor(private apiService: ApiService, private authService: AuthService, private statistic: StatisticService) { }
 
   ngOnInit(): void {
     this.wordAudioSrcArr = [this.wordData.audio, this.wordData.audioMeaning, this.wordData.audioExample];
@@ -42,7 +43,6 @@ export class WordComponent implements OnInit {
       this.wrongAnswers = this.wordData.userWord ? this.wordData.userWord.optional.wrongAnswers || 0 : 0;
     }
     this.loadingProgress = true;
-    console.log(this.wordData);
   }
 
   getImage() {
@@ -85,7 +85,7 @@ export class WordComponent implements OnInit {
           correctSeries: this.wordData.userWord!.optional.correctSeries,
         }
       })
-      .subscribe(() => this.checkWord.emit());
+        .subscribe(() => this.checkWord.emit());
     }
     else {
       this.apiService.createUserWord(this.authService.userId, this.wordId, {
@@ -97,8 +97,8 @@ export class WordComponent implements OnInit {
           correctSeries: 0,
         }
       })
-      .subscribe(() => this.checkWord.emit());
-    }              
+        .subscribe(() => this.checkWord.emit());
+    }
   }
 
   checkAsHard() {
@@ -112,6 +112,9 @@ export class WordComponent implements OnInit {
     this.isStudied = !this.isStudied;
     this.isHard = false;
     this.updateUserWord();
+
+    const changeCount = this.isStudied ? 1 : -1;
+    this.statistic.changeStudiedWordCount(changeCount);
   }
 
   showStats() {

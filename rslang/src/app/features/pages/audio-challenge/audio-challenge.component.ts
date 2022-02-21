@@ -118,7 +118,7 @@ export class AudioChallengeComponent implements OnInit {
     private auth: AuthService,
     private stat: StatisticService,
     public sound: SoundService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((data: Params) => {
@@ -215,7 +215,7 @@ export class AudioChallengeComponent implements OnInit {
 
           if (needWords.length < 20) {
             const otherWords = response[0].paginatedResults.filter(
-              (word) => word.page !== data['page']
+              (word) => word.page < data['page']
             );
             const addWords = shuffleArr(<[]>otherWords).slice(
               0,
@@ -278,9 +278,8 @@ export class AudioChallengeComponent implements OnInit {
 
   async getAudio() {
     if (this.audio) {
-      this.audio.nativeElement.src = `${BACKEND_PATH}/${
-        this.wordsForGame[this.currentQuestion].audio
-      }`;
+      this.audio.nativeElement.src = `${BACKEND_PATH}/${this.wordsForGame[this.currentQuestion].audio
+        }`;
       await this.audio.nativeElement.play();
     }
   }
@@ -348,7 +347,7 @@ export class AudioChallengeComponent implements OnInit {
     return forkJoin<IWord[]>(observables);
   }
   getAnswerResult(i: number) {
-    if (this.results.length>0) {
+    if (this.results.length > 0) {
       return this.results[i].isCorrect === true ? true : false;
     } else return false;
   }

@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, map, Observable, Subject, throwError } from 'rxjs';
 import { IAuth, IRefreshAuth, IUserData } from 'src/app/shared/interfaces';
 import { ERROR_MESSAGE, EXP_TIME, REFRESH_TIME } from '../constants/constant';
@@ -20,7 +21,7 @@ export class AuthService {
   public avatarPath = '';
 
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, public route: Router) {
     this.initAuth();
   }
 
@@ -64,6 +65,7 @@ export class AuthService {
     this.expDate = null;
     this.avatarPath = '';
     localStorage.clear();
+    this.route.navigate(['/mainpage']);
   }
 
   public updateLogin() {

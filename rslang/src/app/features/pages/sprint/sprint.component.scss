@@ -7,6 +7,8 @@
   .sprint{
     overflow-x: hidden;
     min-height: 50vh;
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -14,13 +16,15 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap:1%;
+      gap: 10px;
       width: 100%;
       margin-bottom: 2%;
+      padding: 0 20px;
       .indicators__indicator {
         content: '';
-        min-height: 1.6rem;
-        min-width:1.6rem;
+        min-height: 16px;
+        min-width: 16px;
+        border-radius: 4px;
       }
     }
     .sprint__hear {
@@ -31,6 +35,7 @@
     .sprint__title {
       padding: 2% 5%;
       color: white;
+      border-radius: 4px;
     }
   }
 }
@@ -46,7 +51,10 @@ mat-spinner {
   margin:auto;
 }
 .timer{
-  margin: 1%;
+  margin: 20px;
+  font-weight: 600;
+  font-size: 24px;
+  opacity: 0.7;
 }
 .close-to-lose{
   animation: animate_grow infinite 800ms ease-in-out;
@@ -64,17 +72,39 @@ mat-spinner {
 	}
 }
 .answer-button {
-  min-width: 12rem;
-  display: inline-flex;
-  justify-content: space-between;
+  min-width: 120px;
 
-  & .mat-button-wrapper {
-    display: flex;
-    justify-content: space-between;
+  &-false {
+    margin-right: 35px;
+    .mat-icon {
+      margin-right: 10px;
+    }
+  }
+
+  &-true {
+    .mat-icon {
+      margin-left: 10px;
+    }
   }
 }
 
-.answer-button .mat-button-wrapper {
-  display: flex;
-  justify-content: space-between;
+@media (max-width: 360px) {
+.answer-button {
+  min-width: 115px;
+    &-false {
+      margin-right: 20px;
+    }
+  }
+}
+
+.mat-card .word {
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.mat-card .translate {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

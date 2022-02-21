@@ -1,29 +1,26 @@
 <div class="game">
   <mat-card *ngIf="!gameMode" class="sprint transparent-background mat-elevation-z8">
-    <mat-card-title class="sprint__title background-primary"
-      >Спринт</mat-card-title
-    >
-    <mat-card-content
-      >Управление клавишами:<br />
+    <mat-card-title class="sprint__title background-primary">Спринт</mat-card-title>
+    <mat-card-content>Управление клавишами:<br />
       <span class="text-primary">'Enter'</span> - следующий вопрос<br />
       <span class="text-primary">'&rarr;, &larr;'</span> - выбор варианта<br />
       <span class="text-primary">'0'</span> - прослушать слово еще
-      раз</mat-card-content
-    >
+      раз
+    </mat-card-content>
     <div class="game__selectors">
-    <mat-form-field appearance="fill">
-      <mat-label>Выберите уровень</mat-label>
-      <mat-select [(ngModel)]="selectedLevel">
-        <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i">Уровень {{ i + 1 }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Выберите время</mat-label>
-      <mat-select [(ngModel)]="selectedTime">
-        <mat-option *ngFor="let time of timesInGame" [value]="time">{{ time }} секунд</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+      <mat-form-field appearance="fill">
+        <mat-label>Выберите уровень</mat-label>
+        <mat-select [(ngModel)]="selectedLevel">
+          <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i">Уровень {{ i + 1 }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Выберите время</mat-label>
+        <mat-select [(ngModel)]="selectedTime">
+          <mat-option *ngFor="let time of timesInGame" [value]="time">{{ time }} секунд</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <mat-card-actions>
       <app-button-accent [title]="'Начать игру'" (click)="startGame()"></app-button-accent>
     </mat-card-actions>
@@ -33,29 +30,27 @@
     <mat-spinner *ngIf="loadingProgress"></mat-spinner>
     <div *ngIf="!loadingProgress">
       <div class="indicators">
-        <div
-          class="indicators__indicator mat-elevation-z3"
+        <div class="indicators__indicator mat-elevation-z4"
           *ngFor="let indicator of [].constructor(wordsForGame.length) ; let i = index"
-          [class.background-primary] = "(i < currentQuestion) && getAnswerResult(i)"
-          [class.background-accent] = "(i < currentQuestion) && !getAnswerResult(i)"
-        ></div>
+          [class.background-primary]="(i < currentQuestion) && getAnswerResult(i)"
+          [class.background-warn]="(i < currentQuestion) && !getAnswerResult(i)"></div>
       </div>
       <div class="timer" [class.close-to-lose]="timeToEndGame < 10">{{timeToEndGame}}</div>
       <button mat-fab color="accent" class="sprint__hear" (click)="getAudio()">
         <mat-icon>hearing</mat-icon>
       </button>
-      <mat-card-subtitle>{{
+      <mat-card-subtitle class="word">{{
         wordsForGame[this.currentQuestion].word
         }}</mat-card-subtitle>
-      <mat-card-subtitle>{{
-        wordsForGame[this.currentTranslateVariant].wordTranslate
+      <mat-card-subtitle class="translate">{{
+        wordsForGame.length > 1 ? wordsForGame[this.currentTranslateVariant].wordTranslate : randomWord.wordTranslate
         }}</mat-card-subtitle>
       <mat-card-content>
-        <button [ngClass]="'answer-button'" mat-raised-button color="warn" (click)="checkAnswer(false)"
+        <button class="answer-button answer-button-false" mat-raised-button color="warn" (click)="checkAnswer(false)"
           [disabled]="showResultQuestion">
           <mat-icon>arrow_backward</mat-icon><span>Неверно</span>
         </button>
-        <button [ngClass]="'answer-button'" mat-raised-button color="success" (click)="checkAnswer(true)"
+        <button class="answer-button answer-button-true" mat-raised-button color="primary" (click)="checkAnswer(true)"
           [disabled]="showResultQuestion">
           <span>Верно</span>
           <mat-icon>arrow_forward</mat-icon>

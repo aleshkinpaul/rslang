@@ -6,9 +6,12 @@
   width: 70%;
   height:50%;
   min-height: 50%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 1000px;
 
   align-items: center;
-  border-radius: 5%;
+  border-radius: 30px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
   padding: 5%;
   z-index: 201;
@@ -19,6 +22,15 @@
     width: 90%;
     }
 
+}
+
+.title {
+  margin-bottom: 20px;
+}
+.subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  opacity: 0.85;
 }
 .results-row{
 display: flex;
@@ -68,6 +80,7 @@ width:5%;
 .results__list{
 width:100%;
 font-size:1.4rem;
+margin-bottom: 30px;
 }
 .overlay {
   position: absolute;
@@ -79,4 +92,14 @@ font-size:1.4rem;
   min-height: 100vh;
   background-color: rgba(255, 255, 255, 0.5);
   z-index: 200;
+}
+
+.word {
+  font-weight: 600;
+  margin-bottom: 4px;
+  opacity: 0.9;
+}
+
+.translate {
+  opacity: 0.9;
 }

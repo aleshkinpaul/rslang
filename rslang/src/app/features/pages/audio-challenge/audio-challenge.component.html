@@ -1,139 +1,83 @@
 <div class="game">
-  <mat-card
-    *ngIf="!gameMode"
-    class="audio-game transparent-background mat-elevation-z8"
-  >
-    <mat-card-title class="audio-game__title background-primary"
-      >Аудиовызов</mat-card-title
-    >
-    <mat-card-content
-      >Управление клавишами:<br />
+  <mat-card *ngIf="!gameMode" class="audio-game transparent-background mat-elevation-z8">
+    <mat-card-title class="audio-game__title background-primary">Аудиовызов</mat-card-title>
+    <mat-card-content>Управление клавишами:<br />
       <span class="text-primary">'Enter'</span> - следующий вопрос<br />
       <span class="text-primary">'1...5'</span> - выбор варианта<br />
       <span class="text-primary">'0'</span> - прослушать слово еще
-      раз</mat-card-content
-    >
+      раз
+    </mat-card-content>
     <div class="game__selectors">
       <mat-form-field appearance="fill" *ngIf="!learnBookMode">
         <mat-label>Выберите уровень</mat-label>
         <mat-select [(ngModel)]="selectedLevel">
-          <mat-option
-            *ngFor="let level of levelsInGame; let i = index"
-            [value]="i"
-            >Уровень {{ i + 1 }}</mat-option
-          >
+          <mat-option *ngFor="let level of levelsInGame; let i = index" [value]="i">Уровень {{ i + 1 }}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill" *ngIf="!learnBookMode">
         <mat-label>Выберите количество слов в игре</mat-label>
         <mat-select [(ngModel)]="selectedWordsAmount">
-          <mat-option
-            *ngFor="let amount of wordsAmountSlection; let i = index"
-            [value]="amount"
-            >{{ amount }}</mat-option
-          >
+          <mat-option *ngFor="let amount of wordsAmountSlection; let i = index" [value]="amount">{{ amount }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <mat-card-actions>
-      <app-button-accent
-        *ngIf="!learnBookMode"
-        [title]="'Начать игру'"
-        (click)="startGame()"
-        class="audio-game__start mat-elevation-z3"
-      ></app-button-accent>
-      <app-button-accent
-        *ngIf="learnBookMode"
-        [title]="'Начать игру'"
-        (click)="startFromLearnbook(learnBookData)"
-        class="audio-game__start mat-elevation-z3"
-      ></app-button-accent>
+      <app-button-accent *ngIf="!learnBookMode" [title]="'Начать игру'" (click)="startGame()"
+        class="audio-game__start mat-elevation-z3"></app-button-accent>
+      <app-button-accent *ngIf="learnBookMode" [title]="'Начать игру'" (click)="startFromLearnbook(learnBookData)"
+        class="audio-game__start mat-elevation-z3"></app-button-accent>
     </mat-card-actions>
   </mat-card>
 
   <mat-card *ngIf="gameMode" class="audio-game transparent-background">
     <mat-spinner *ngIf="!loadingProgress"></mat-spinner>
-    <div *ngIf="loadingProgress" >
+    <div *ngIf="loadingProgress">
       <div class="indicators">
-        <div
-          class="indicators__indicator mat-elevation-z3"
+        <div class="indicators__indicator mat-elevation-z3"
           *ngFor="let indicator of [].constructor(wordsForGame.length) ; let i = index"
-          [class.background-primary] = "(i < currentQuestion) && getAnswerResult(i)"
-          [class.background-accent] = "(i < currentQuestion) && !getAnswerResult(i)"
-        ></div>
+          [class.background-primary]="(i < currentQuestion) && getAnswerResult(i)"
+          [class.background-accent]="(i < currentQuestion) && !getAnswerResult(i)"></div>
       </div>
-      <div
-        class="audio-game__result"
-        [class.audio-game__result_wrong]="isUserRight === 'false'"
-        [class.audio-game__result_right]="isUserRight === 'true'"
-      >
-        <div class="audio-game__icons-result">
+      <div class="audio-game__result" [class.audio-game__result_wrong]="isUserRight === 'false'"
+        [class.audio-game__result_right]="isUserRight === 'true'">
+        <div *ngIf="isUserRight !== null" class="audio-game__icons-result">
           <span>
-            <mat-icon color="primary" *ngIf="isUserRight === 'true'"
-              >check_circle</mat-icon
-            >
+            <mat-icon class="icon" color="primary" *ngIf="isUserRight === 'true'">check_circle</mat-icon>
           </span>
           <span>
-            <mat-icon color="warn" *ngIf="isUserRight === 'false'"
-              >do_not_disturb_on</mat-icon
-            >
+            <mat-icon class="icon" color="warn" *ngIf="isUserRight === 'false'">do_not_disturb_on</mat-icon>
           </span>
         </div>
         <div class="audio-game__image-wrapper">
-          <mat-icon color="primary" *ngIf="isUserRight === null"
-            >question_mark</mat-icon
-          >
-          <img
-            mat-card-sm-image
-            *ngIf="isUserRight !== null"
-            class="audio-game__image"
-            [src]="getImage()"
-            alt="answer-image"
-            #imageAnswer
-          />
+          <mat-icon color="primary" *ngIf="isUserRight === null">question_mark</mat-icon>
+          <img mat-card-sm-image *ngIf="isUserRight !== null" class="audio-game__image" [src]="getImage()"
+            alt="answer-image" #imageAnswer />
         </div>
         <div class="audio-game__translation" *ngIf="isUserRight !== null">
-          <span>{{ wordsForGame[this.currentQuestion].word }}</span>
-          <span>{{ wordsForGame[this.currentQuestion].wordTranslate }}</span>
+          <span class="word">{{ wordsForGame[this.currentQuestion].word }}</span>
+          <span class="translate">{{ wordsForGame[this.currentQuestion].wordTranslate }}</span>
         </div>
       </div>
-      <button
-        mat-fab
-        color="accent"
-        class="audio-game__hear"
-        (click)="getAudio()"
-      >
+      <button mat-fab color="accent" class="audio-game__hear" (click)="getAudio()">
         <mat-icon>hearing</mat-icon>
       </button>
       <mat-card-content class="audio-game__options" @enterLeave>
-        <button
-          class="audio-game__button"
-          mat-stroked-button
-          color="primary"
-          *ngFor="let option of options; let i = index"
-          (click)="checkAnswer(option.word)"
-          [disabled]="isUserRight !== null"
-        >
+        <button class="audio-game__button" mat-stroked-button color="primary"
+          *ngFor="let option of options; let i = index" (click)="checkAnswer(option.word)"
+          [disabled]="isUserRight !== null">
           {{ i + 1 }}
 
           {{ option.wordTranslate }}
         </button>
       </mat-card-content>
-      <button
-        mat-raised-button
-        color="accent"
-        [disabled]="isUserRight === null"
-        (click)="nextQuestion()"
-      >
+      <button mat-raised-button color="accent" [disabled]="isUserRight === null" (click)="nextQuestion()">
         Следующий
       </button>
     </div>
   </mat-card>
 
-  <app-resulting-page
-    [resultsArray]="results"
-    (byPressCloseButton)="returnToInitials()"
-    *ngIf="showResultsPage"
-  ></app-resulting-page>
+  <app-resulting-page [resultsArray]="results" (byPressCloseButton)="returnToInitials()" *ngIf="showResultsPage">
+  </app-resulting-page>
   <audio src="" #audioPlayer></audio>
 </div>

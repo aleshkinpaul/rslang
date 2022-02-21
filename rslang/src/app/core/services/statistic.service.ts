@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { GameType, IAggregatedResponseWord, IResults, IStatistic, IStatisticParam, IUserWord } from 'src/app/shared/interfaces';
+import { GameType, IAggregatedResponseWord, IResults, IStatistic, IStatisticParam, IStatisticWordsParam, IUserWord } from 'src/app/shared/interfaces';
 import { DATE_PATTERN } from '../constants/constant';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
@@ -52,7 +52,14 @@ export class StatisticService {
     ).subscribe((response) => {
       const statistic: IStatistic = response;
 
-      if (statistic.optional.games.hasOwnProperty(gameType) && statistic.optional.games[gameType][date]) {
+      if (!statistic.optional.hasOwnProperty('games')) {
+        const addOptional = {
+          games: {
+            [gameType]: newStat,
+          }
+        };
+        statistic.optional = Object.assign(statistic.optional, addOptional);
+      } else if (statistic.optional.games.hasOwnProperty(gameType) && statistic.optional.games[gameType][date]) {
         const newCorrectSeries = statistic.optional.games[gameType][date].correctSeries > correctSeries
           ? statistic.optional.games[gameType][date].correctSeries
           : correctSeries;
@@ -74,31 +81,37 @@ export class StatisticService {
           ? statistic.optional.words[date].correctSeries
           : correctSeries;
 
-        (statistic.optional.words[date] as IStatisticParam) = {
+        const studiedWords = this.getStudiedWordsCount(results);
+
+        (statistic.optional.words[date] as IStatisticWordsParam) = {
           newWords: statistic.optional.words[date].newWords + newWords,
           correctAnswers: statistic.optional.words[date].correctAnswers + correctAnswers,
           wrongAnswers: statistic.optional.words[date].wrongAnswers + wrongAnswers,
           correctSeries: newCorrectSeries,
+          studiedWords: statistic.optional.words[date].studiedWords + studiedWords,
         }
       } else {
         statistic.optional.words = Object.assign(statistic.optional.words, newStat);
+        statistic.optional.words[date].studiedWords = this.getStudiedWordsCount(results);
       }
 
-      statistic.optional.words[date].studiedWords = this.getStudiedWordsCount(results);
-
       delete statistic.id;
+
+
       this.api.upsertStatistics(this.auth.userId, statistic).subscribe(() => { });
     });
   }
 
   getStudiedWordsCount(results: IResults[]): number {
     const newWordsCount = results.reduce((count, wordResult) => {
-      if (!wordResult.isCorrect && wordResult.word.userWord) {
+      if (wordResult.isCorrect && wordResult.word.userWord) {
+
         if (wordResult.word.userWord.difficulty === 'hard') {
           count += wordResult.word.userWord.optional.correctSeries === 5 ? 1 : 0;
         } else {
           count += wordResult.word.userWord.optional.correctSeries === 3 ? 1 : 0;
         }
+
       }
       return count;
     }, 0);
@@ -159,5 +172,53 @@ export class StatisticService {
     });
 
     return maxSeries;
+  }
+
+  changeStudiedWordCount(changeCount: number) {
+    const date = this.datePipe.transform(new Date(), DATE_PATTERN)!;
+
+    const newStat = {
+      [date]: {
+        newWords: 0,
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        correctSeries: 0,
+        studiedWords: changeCount,
+      }
+    }
+
+    this.api.getStatistics(this.auth.userId).pipe(
+      catchError((error: HttpErrorResponse) => {
+        const stat = {
+          learnedWords: 0,
+          optional: {
+            games: {
+              audio: {},
+              sprint: {},
+            },
+            words: {},
+          }
+        }
+
+        stat.optional.words = newStat;
+
+        this.api.upsertStatistics(this.auth.userId, stat).subscribe((response) => { });
+        return throwError(() => error);
+      })
+    ).subscribe((response) => {
+      const statistic: IStatistic = response;
+
+      if (statistic.optional.words[date]) {
+        statistic.optional.words[date].studiedWords = !statistic.optional.words[date].studiedWords
+          ? changeCount
+          : statistic.optional.words[date].studiedWords + changeCount;
+      } else {
+        statistic.optional.words = Object.assign(statistic.optional.words, newStat);
+      }
+
+      delete statistic.id;
+
+      this.api.upsertStatistics(this.auth.userId, statistic).subscribe(() => { });
+    });
   }
 }

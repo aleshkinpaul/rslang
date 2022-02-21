@@ -1,6 +1,7 @@
 .word-card {
   position: relative;
   width: 19vw;
+  min-width: 300px;
 
   .word-card-spinner-container {
     position: absolute;
@@ -25,18 +26,27 @@
     .mat-card-title {
       display: flex;
       flex-direction: row;
-      font-size: 1.5rem;
-    
+      font-size: 15px;
+
       .word-card-content-audio {
         margin-top: -10px;
       }
+
+      .word-card-button-icon {
+      cursor: pointer;
+      transition: transform 0.2s ease-in;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+    }
     }
 
     .mat-card-subtitle {
       margin-bottom: 0;
-      font-size: 1.2rem;
+      font-size: 12px;
     }
-  
+
     .word-card-image-container {
       position: relative;
       margin-left: 1vw;
@@ -47,16 +57,21 @@
       justify-content: center;
       flex-shrink: 0;
       overflow: hidden;
+      border-radius: 4px;
 
       .word-card-chart-icon {
         position: absolute;
-        bottom: 0;
-        right: 0;
-        opacity: 0.6;
+        bottom: 2px;
+        right: 2px;
+        opacity: 0.8;
         cursor: pointer;
-      
+        background-color: rgb(255, 255, 255);
+        border-radius: 4px;
+        transition: transform, opacity 0.2s ease-in;
+
         &:hover {
           opacity: 1;
+          transform: scale(1.1);
         }
       }
     }
@@ -77,25 +92,43 @@
       display: flex;
       flex-direction: row;
       column-gap: 1vh;
-      font-size: 1rem;
+      font-size: 10px;
 
-      cursor: pointer;      
       user-select: none;
       -webkit-user-select: none;
       -moz-user-select: none;
-  
-      .word-card-content-list-item {      
+
+      .word-card-content-list-item {
+        cursor: pointer;
         align-self: center;
         list-style: none;
+        transition: opacity, background-color 0.2s ease-in;
+        background-color: #726c6c00;
+        padding: 0 2px;
+        border-radius: 4px;
 
         &:hover {
           opacity: 0.7;
+          background-color: rgba(114, 108, 108, 0.151);
         }
       }
     }
 
     .word-card-button-icon {
       cursor: pointer;
+      transition: transform 0.2s ease-in;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
+        &--disable {
+          cursor: auto;
+
+          &:hover {
+          transform: scale(1);
+        }
+        }
     }
 
     .word-card-content-text {
@@ -105,7 +138,7 @@
       position: absolute;
       left: 0;
       bottom: 0;
-      font-size: 1.4rem;
+      font-size: 14px;
       border-radius: 4px;
       transform: translateY(calc(100% - 10px));
       z-index: 1;
