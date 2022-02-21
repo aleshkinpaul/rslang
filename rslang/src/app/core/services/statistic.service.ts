@@ -96,7 +96,6 @@ export class StatisticService {
       }
 
       delete statistic.id;
-      console.log('sss', statistic);
 
 
       this.api.upsertStatistics(this.auth.userId, statistic).subscribe(() => { });
@@ -210,15 +209,11 @@ export class StatisticService {
       const statistic: IStatistic = response;
 
       if (statistic.optional.words[date]) {
-        console.log('6666ssstat', statistic.optional.words[date].studiedWords, changeCount);
-
         statistic.optional.words[date].studiedWords = !statistic.optional.words[date].studiedWords
           ? changeCount
           : statistic.optional.words[date].studiedWords + changeCount;
-        console.log('111ssstat', statistic);
       } else {
         statistic.optional.words = Object.assign(statistic.optional.words, newStat);
-        console.log('222ssstat', statistic);
       }
 
       delete statistic.id;

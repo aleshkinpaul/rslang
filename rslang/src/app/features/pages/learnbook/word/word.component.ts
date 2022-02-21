@@ -43,7 +43,6 @@ export class WordComponent implements OnInit {
       this.wrongAnswers = this.wordData.userWord ? this.wordData.userWord.optional.wrongAnswers || 0 : 0;
     }
     this.loadingProgress = true;
-    console.log(this.wordData);
   }
 
   getImage() {
