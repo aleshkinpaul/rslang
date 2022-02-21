@@ -210,12 +210,12 @@ export class AudioChallengeComponent implements OnInit {
         .getAllUserAggregatedWords(this.auth.userId, params)
         .subscribe((response) => {
           let needWords = response[0].paginatedResults.filter(
-            (word) => word.page === data['page']
+            (word) => word.page === +data['page']
           );
 
           if (needWords.length < 20) {
             const otherWords = response[0].paginatedResults.filter(
-              (word) => word.page < data['page']
+              (word) => word.page < +data['page']
             );
             const addWords = shuffleArr(<[]>otherWords).slice(
               0,
