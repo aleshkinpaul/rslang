@@ -43,7 +43,7 @@
         wordsForGame[this.currentQuestion].word
         }}</mat-card-subtitle>
       <mat-card-subtitle class="translate">{{
-        wordsForGame[this.currentTranslateVariant].wordTranslate
+        wordsForGame.length > 1 ? wordsForGame[this.currentTranslateVariant].wordTranslate : randomWord.wordTranslate
         }}</mat-card-subtitle>
       <mat-card-content>
         <button class="answer-button answer-button-false" mat-raised-button color="warn" (click)="checkAnswer(false)"

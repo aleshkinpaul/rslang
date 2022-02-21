@@ -57,6 +57,7 @@ export class SprintComponent implements OnInit, OnDestroy {
   wordsForGame: IAggregatedResponseWord[] | IWord[] = [];
   results: IResults[] = [];
   showResultQuestion = false;
+  randomWord!: IAggregatedResponseWord;
 
   @HostListener('window:keydown', ['$event'])
   handleKeyChoice(event: KeyboardEvent) {
@@ -135,6 +136,8 @@ export class SprintComponent implements OnInit, OnDestroy {
           } else {
             this.wordsForGame = shuffleArr(<[]>needWords);
           }
+
+          this.randomWord = response[0].paginatedResults[this.getRandomNumber(response[0].paginatedResults.length - 1)];
 
           this.results = [];
           this.currentQuestion = 0;
@@ -234,12 +237,15 @@ export class SprintComponent implements OnInit, OnDestroy {
   getCurrentTranslateVariant() {
     let wrongVariant: number;
 
-    do {
-      wrongVariant = this.getRandomNumber(this.wordsForGame.length - 1);
-    } while (wrongVariant === this.currentQuestion);
-
+    if (this.wordsForGame.length === 1) {
+      this.randomWord = this.getRandomNumber(1) === 1 ? this.randomWord : <IAggregatedResponseWord>this.wordsForGame[0];
+      return wrongVariant = 22;
+    } else {
+      do {
+        wrongVariant = this.getRandomNumber(this.wordsForGame.length - 1);
+      } while (wrongVariant === this.currentQuestion);
+    }
     const variants = [this.currentQuestion, wrongVariant];
-
     return variants[this.getRandomNumber(variants.length - 1)];
   }
 
@@ -257,9 +263,15 @@ export class SprintComponent implements OnInit, OnDestroy {
   }
 
   checkAnswer(isRight: boolean) {
+    let isRightTranslate: boolean;
     if (!this.results[this.currentQuestion]) {
-      const isRightTranslate =
-        this.currentQuestion === this.currentTranslateVariant;
+      if (this.wordsForGame.length === 1) {
+        isRightTranslate = this.wordsForGame[0].word === this.randomWord.word;
+      } else {
+        isRightTranslate =
+          this.currentQuestion === this.currentTranslateVariant;
+      }
+
       if (isRightTranslate === isRight) {
         this.isUserRight = true;
         this.sound.play(Sounds.right);
