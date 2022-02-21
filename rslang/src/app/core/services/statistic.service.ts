@@ -52,7 +52,14 @@ export class StatisticService {
     ).subscribe((response) => {
       const statistic: IStatistic = response;
 
-      if (statistic.optional.games.hasOwnProperty(gameType) && statistic.optional.games[gameType][date]) {
+      if (!statistic.optional.hasOwnProperty('games')) {
+        const addOptional = {
+          games: {
+            [gameType]: newStat,
+          }
+        };
+        statistic.optional = Object.assign(statistic.optional, addOptional);
+      } else if (statistic.optional.games.hasOwnProperty(gameType) && statistic.optional.games[gameType][date]) {
         const newCorrectSeries = statistic.optional.games[gameType][date].correctSeries > correctSeries
           ? statistic.optional.games[gameType][date].correctSeries
           : correctSeries;
@@ -89,6 +96,8 @@ export class StatisticService {
       }
 
       delete statistic.id;
+      console.log('sss', statistic);
+
 
       this.api.upsertStatistics(this.auth.userId, statistic).subscribe(() => { });
     });
@@ -201,9 +210,15 @@ export class StatisticService {
       const statistic: IStatistic = response;
 
       if (statistic.optional.words[date]) {
-        statistic.optional.words[date].studiedWords += changeCount;
+        console.log('6666ssstat', statistic.optional.words[date].studiedWords, changeCount);
+
+        statistic.optional.words[date].studiedWords = !statistic.optional.words[date].studiedWords
+          ? changeCount
+          : statistic.optional.words[date].studiedWords + changeCount;
+        console.log('111ssstat', statistic);
       } else {
         statistic.optional.words = Object.assign(statistic.optional.words, newStat);
+        console.log('222ssstat', statistic);
       }
 
       delete statistic.id;
